@@ -19,4 +19,9 @@ class Destination extends Model
         'availability',
         'social_media',
     ];
+
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class);
+    }
 }

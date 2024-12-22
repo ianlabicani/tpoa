@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\DestinationController as AdminDestinationController;
+use App\Http\Controllers\User\DestinationController as UserDestinationController;
+use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +30,6 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
     Route::get('dashboard', function () {
         return view('user.dashboard');
     })->name('dashboard');
+    Route::resource('destinations', UserDestinationController::class);
+    Route::resource('feedback', UserFeedbackController::class);
 });
