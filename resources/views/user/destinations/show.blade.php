@@ -49,7 +49,7 @@
                 @endforeach
             </div>
             <div class="card-footer text-end">
-                <a href="{{ {{ url()->previous() }} }}" class="btn btn-secondary">Back</a>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
             </div>
         </div>
 

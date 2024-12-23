@@ -47,7 +47,9 @@ class DestinationController extends Controller
      */
     public function show(Destination $destination)
     {
-        return view('admin.destinations.show', compact('destination'));
+        $feedbacks = $destination->feedback()->orderBy('created_at', 'desc')->paginate(5);
+        $videos = $destination->videos()->orderBy('created_at', 'desc')->paginate(5);
+        return view("admin.destinations.show", compact('destination', 'feedbacks', 'videos'));
     }
 
     /**

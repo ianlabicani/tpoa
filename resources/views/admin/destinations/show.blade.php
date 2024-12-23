@@ -80,9 +80,41 @@
                 </div>
             </div>
             <div class="card-footer text-end">
-                <a href="{{ {{ url()->previous() }} }}" class="btn btn-secondary">Back</a>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
                 <a href="{{ route('admin.destinations.edit', $destination->id) }}" class="btn btn-warning">Edit</a>
             </div>
         </div>
+
+        <h4>Related Videos</h4>
+        <div class="video-list">
+            @if ($videos->isEmpty())
+                <p>No videos available for this destination.</p>
+            @else
+                @foreach ($videos as $video)
+                    <div class="card mb-3 {{ $video->isReviewed ? 'bg-info' : 'bg-warning' }}">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <span class="video-title" id="video-title-{{ $video->id }}">{{ $video->title }}</span>
+                            </h5>
+                            <p class="card-text">
+                                <span class="video-description"
+                                    id="video-description-{{ $video->id }}">{{ $video->description }}</span>
+                            </p>
+                            <a href="{{ $video->url }}" target="_blank" class="btn btn-link">Watch Video</a>
+                            @if (!$video->isReviewed)
+                                <p class="card-text">This video is pending review.</p>
+                                <form action="{{ route('admin.videos.review', $video->id) }}" method="POST"
+                                    class="d-inline">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                </form>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+
     </div>
 @endsection

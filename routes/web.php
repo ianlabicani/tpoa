@@ -1,9 +1,12 @@
 <?php
-
+// admin
 use App\Http\Controllers\Admin\DestinationController as AdminDestinationController;
+use App\Http\Controllers\Admin\VideoController as AdminVideoController;
+// user
 use App\Http\Controllers\User\DestinationController as UserDestinationController;
 use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
 use App\Http\Controllers\User\VideoController as UserVideoController;
+// guest
 use App\Http\Controllers\Guest\DestinationController as GuestDestinationController;
 use App\Http\Controllers\Guest\VideoController as GuestVideoController;
 
@@ -42,6 +45,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
         return view('admin.dashboard');
     })->name('dashboard');
     Route::resource('destinations', AdminDestinationController::class);
+    Route::resource('videos', AdminVideoController::class);
+    Route::put('videos/{video}/review', [AdminVideoController::class, 'review'])->name('videos.review');
+
 });
 
 Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(function () {
