@@ -17,10 +17,6 @@
 </head>
 
 <body class="font-sans antialiased flex">
-
-    <!-- Sidebar -->
-    @include('guest.sidebar')
-
     <!-- Main Content -->
     <main class="flex-1">
         @yield('content')
