@@ -32,7 +32,7 @@ class FeedbackController extends Controller
             abort(403, 'You do not have permission to edit this feedback');
         }
 
-        return view('user.feedback.edit', compact('destination', 'feedback'));
+        return view('user.feedbacks.edit', compact('destination', 'feedback'));
     }
 
     // Update the feedback in the database

@@ -3,12 +3,19 @@
 use App\Http\Controllers\Admin\DestinationController as AdminDestinationController;
 use App\Http\Controllers\User\DestinationController as UserDestinationController;
 use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
+use App\Http\Controllers\User\VideoController as UserVideoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('/');
+
+Route::prefix('guest')->name('guest.')->group(function () {
+    // Destinations - Read-only for guests
+    Route::get('destinations', [UserDestinationController::class, 'index'])->name('destinations.index');
+    Route::get('destinations/{destination}', [UserDestinationController::class, 'show'])->name('destinations.show');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,5 +38,9 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
         return view('user.dashboard');
     })->name('dashboard');
     Route::resource('destinations', UserDestinationController::class);
-    Route::resource('feedback', UserFeedbackController::class);
+    Route::resource('feedbacks', UserFeedbackController::class);
+    Route::prefix('destinations/{destination}')->name('destinations.')->group(function () {
+        Route::resource('videos', UserVideoController::class);
+    });
 });
+

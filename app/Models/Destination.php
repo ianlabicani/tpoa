@@ -24,4 +24,9 @@ class Destination extends Model
     {
         return $this->hasMany(Feedback::class);
     }
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 }
