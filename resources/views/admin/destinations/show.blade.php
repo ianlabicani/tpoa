@@ -80,7 +80,7 @@
                 </div>
             </div>
             <div class="card-footer text-end">
-                <a href="{{ route('admin.destinations.index') }}" class="btn btn-secondary">Back</a>
+                <a href="{{ {{ url()->previous() }} }}" class="btn btn-secondary">Back</a>
                 <a href="{{ route('admin.destinations.edit', $destination->id) }}" class="btn btn-warning">Edit</a>
             </div>
         </div>

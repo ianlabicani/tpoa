@@ -52,7 +52,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('guest.destinations.show', $destination->id) }}"
+                            <a href="{{ route('destinations.show', $destination->id) }}"
                                 class="btn btn-sm btn-primary">View</a>
                         </td>
                     </tr>
