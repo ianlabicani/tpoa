@@ -105,32 +105,6 @@
                                         </button>
                                     </form>
                                 </div> --}}
-                                <!-- Share Section -->
-                                <div class="share-section mt-3 d-flex align-items-center">
-                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('destinations.show', ['destination' => $video->destination])) }}"
-                                        target="_blank" class="text-dark me-3">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-
-                                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(route('destinations.show', ['destination' => $video->destination])) }}&text={{ urlencode($video->title) }}"
-                                        target="_blank" class="text-dark me-3">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
-
-                                    <a href="https://www.instagram.com/?url={{ urlencode(route('destinations.show', ['destination' => $video->destination])) }}"
-                                        target="_blank" class="text-dark me-3">
-                                        <i class="fab fa-instagram"></i>
-                                    </a>
-
-                                    <button class="btn btn-link p-0 text-dark copy-link-btn"
-                                        data-link="{{ route('destinations.show', ['destination' => $video->destination]) }}">
-                                        <i class="fas fa-link"></i>
-                                    </button>
-
-                                    <span class="ms-3">
-                                        <strong>{{ optional($video->shares)->count() }} Shares</strong>
-                                    </span>
-                                </div>
 
                             </div>
                         </div>

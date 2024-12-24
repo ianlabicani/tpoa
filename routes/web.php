@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\DestinationController as AdminDestinationController;
 use App\Http\Controllers\Admin\VideoController as AdminVideoController;
 // user
+use App\Http\Controllers\ShareDestinationController;
+use App\Http\Controllers\ShareVideoController;
 use App\Http\Controllers\User\DestinationController as UserDestinationController;
 use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
 use App\Http\Controllers\User\VideoController as UserVideoController;
@@ -18,6 +20,7 @@ Route::get('/', function () {
 })->name('/');
 Route::get('destinations', [GuestDestinationController::class, 'index'])->name('destinations.index');
 Route::get('destinations/{destination}', [GuestDestinationController::class, 'show'])->name('destinations.show');
+Route::post('destinations/{destination}/share', [ShareDestinationController::class, 'share'])->name('destinations.share');
 Route::get('destinations-videos', [GuestVideoController::class, 'showDestinationVideos'])->name('destinations.videos');
 
 

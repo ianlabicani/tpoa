@@ -18,6 +18,7 @@ class Destination extends Model
         'entrance_fee',
         'availability',
         'social_media',
+        'share_count',
     ];
 
     public function feedback()
