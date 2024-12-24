@@ -2,48 +2,57 @@
 
 
 @section('content')
-    <div class="container mx-auto px-4 py-8">
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-800">Welcome to Our Destinations</h1>
-            <p class="text-xl text-gray-600 mt-4">Explore exciting destinations, watch related videos, and read reviews from
-                other visitors!</p>
+    <section class="hero bg-primary text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-3 fw-bold">Welcome to TPOA</h1>
+            <p class="lead mb-4">Your one-stop solution for all your travel and booking needs.</p>
+            @if (!Auth::user())
+                <a class="btn btn-primary" href="{{ route('register') }}">Get Started</a>
+            @endif
+
         </div>
+    </section>
 
-        <!-- Key Features Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div class="feature-card bg-white shadow-lg rounded-lg p-6 text-center">
-                <h3 class="text-2xl font-semibold text-gray-800">Discover New Destinations</h3>
-                <p class="text-gray-600 mt-4">Browse through various destinations, view their details, and find the perfect
-                    spot for your next adventure!</p>
-                <a href="{{ route('destinations.index') }}"
-                    class="text-blue-500 hover:text-blue-700 mt-4 inline-block">Explore Destinations</a>
-            </div>
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container text-center">
+            <h2 class="display-4">About Us</h2>
+            <p class="lead">We help you plan and book your travel with ease and convenience.</p>
+        </div>
+    </section>
 
-            <div class="feature-card bg-white shadow-lg rounded-lg p-6 text-center">
-                <h3 class="text-2xl font-semibold text-gray-800">Watch Destination Videos</h3>
-                <p class="text-gray-600 mt-4">Watch engaging videos related to destinations, giving you a sneak peek into
-                    what awaits you!</p>
-                <a href="{{ route('destinations.index') }}"
-                    class="text-blue-500 hover:text-blue-700 mt-4 inline-block">Browse Videos</a>
-            </div>
-
-            <div class="feature-card bg-white shadow-lg rounded-lg p-6 text-center">
-                <h3 class="text-2xl font-semibold text-gray-800">Read Visitor Feedback</h3>
-                <p class="text-gray-600 mt-4">Learn from the experiences of others through their reviews and feedback about
-                    each destination.</p>
-                <a href="{{ route('destinations.index') }}" class="text-blue-500 hover:text-blue-700 mt-4 inline-block">Read
-                    Feedback</a>
+    <!-- Services Section -->
+    <section id="services" class="bg-light py-5">
+        <div class="container text-center">
+            <h2 class="display-4">Our Services</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Destinations</h4>
+                    <p>Explore a wide variety of travel destinations for every budget.</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Booking</h4>
+                    <p>Book flights, accommodations, and more, all in one place.</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Customer Support</h4>
+                    <p>Our team is here to help you with all your travel needs.</p>
+                </div>
             </div>
         </div>
+    </section>
 
-        <!-- Call to Action Section -->
-        <div class="text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6">Get Started with Your Next Adventure!</h2>
-            <p class="text-lg text-gray-600 mb-4">Browse destinations, check out videos, and make your next trip
-                unforgettable.</p>
-            <a href="{{ route('destinations.index') }}"
-                class="bg-blue-500 text-white px-6 py-3 rounded-full text-xl hover:bg-blue-600 transition duration-300">Start
-                Exploring</a>
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container text-center">
+            <h2 class="display-4">Contact Us</h2>
+            <p class="lead">Have questions? Reach out to us!</p>
+            <a href="mailto:contact@tpoa.com" class="btn btn-primary btn-lg">Email Us</a>
         </div>
-    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <p>&copy; 2024 TPOA. All Rights Reserved.</p>
+    </footer>
 @endsection

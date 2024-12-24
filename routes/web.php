@@ -16,15 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('guest.welcome');
 })->name('/');
-Route::get('about', function () {
-    return view('guest.about');
-})->name('about');
-Route::get('services', function () {
-    return view('guest.services');
-})->name('services');
-Route::get('contact', function () {
-    return view('guest.contact');
-})->name('contact');
 Route::get('destinations', [GuestDestinationController::class, 'index'])->name('destinations.index');
 Route::get('destinations/{destination}', [GuestDestinationController::class, 'show'])->name('destinations.show');
 Route::get('destinations-videos', [GuestVideoController::class, 'showDestinationVideos'])->name('destinations.videos');
