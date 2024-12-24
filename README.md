@@ -21,6 +21,68 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
+## How to Set Up the Project
+
+After cloning the repository, follow these steps to set up the Laravel application:
+
+1. **Install Dependencies**:
+   Install PHP dependencies using Composer:
+   ```bash
+   composer install
+   ```
+
+   Install Node.js dependencies:
+   ```bash
+   npm install
+   ```
+
+2. **Create and Configure the `.env` File**:
+   Copy the example `.env` file and configure the environment variables:
+   ```bash
+   cp .env.example .env
+   ```
+   Update the `.env` file with your database credentials and other configurations.
+
+5. **Generate Application Key**:
+   Generate a new application key:
+   ```bash
+   php artisan key:generate
+   ```
+
+6. **Run Database Migrations**:
+   Migrate the database to create the required tables:
+   ```bash
+   php artisan migrate
+   ```
+
+7. **Run Frontend Build Tools**:
+   Compile the frontend assets:
+   ```bash
+   npm run dev
+   ```
+
+8. **Serve the Application**:
+   Start the development server:
+   ```bash
+   composer run dev
+   ```
+
+   Your application will be available at `http://127.0.0.1:8000`.
+
+---
+
+### Additional Notes
+- If the project uses Laravel Sail (optional), you can start the application using Docker. Refer to the Laravel Sail documentation for more information.
+- If there are seeded data in the repository, you can use:
+   ```bash
+   php artisan db:seed
+   ```
+- Ensure you have all required software installed, such as PHP, Composer, Node.js, and a database (e.g., MySQL).
+
+Your Laravel application will now include a basic authentication system with registration, login, password reset, and email verification features.
+
+
+
 ## Learning Laravel
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
