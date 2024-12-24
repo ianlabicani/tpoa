@@ -106,6 +106,11 @@
                                         id="video-description-{{ $video->id }}">{{ $video->description }}</span>
                                 </p>
                                 <a href="{{ $video->url }}" target="_blank" class="btn btn-link">Watch Video</a>
+                                <!-- Copy Link Button -->
+                                <button type="button" class="btn btn-primary "
+                                    onclick="copyToClipboard('{{ $video->url }}')">
+                                    Copy Link
+                                </button>
                             @else
                                 <span class="badge bg-secondary">Under Review</span>
                             @endif
@@ -114,5 +119,26 @@
                 @endforeach
             @endif
         </div>
+        <script>
+            function copyToClipboard(url) {
+                navigator.clipboard.writeText(url)
+                    .then(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Copied!',
+                            text: 'Link copied to clipboard!',
+                        });
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy: ', err);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Failed to copy link.',
+                        });
+                    });
+            }
+        </script>
+
     </div>
 @endsection

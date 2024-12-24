@@ -1,3 +1,9 @@
+{{-- TODO:
+    map
+    how to get here?
+    day and night pictures
+--}}
+
 @extends('user.shell')
 
 @section('content')
@@ -47,6 +53,15 @@
                         <hr>
                     </div>
                 @endforeach
+                <form action="{{ route('user.feedbacks.store', ['destination' => $destination->id]) }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="feedback" class="form-label">Leave a Feedback</label>
+                        <textarea name="comment" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
             </div>
             <div class="card-footer text-end">
                 <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
@@ -100,6 +115,13 @@
                                         id="video-description-{{ $video->id }}">{{ $video->description }}</span>
                                 </p>
                                 <a href="{{ $video->url }}" target="_blank" class="btn btn-link">Watch Video</a>
+
+                                <!-- Copy Link Button -->
+                                <button type="button" class="btn btn-primary "
+                                    onclick="copyToClipboard('{{ $video->url }}')">
+                                    Copy Link
+                                </button>
+
                                 @if (auth()->user()->id === $video->user_id)
                                     <form id="edit-video-form-{{ $video->id }}"
                                         action="{{ route('user.destinations.videos.update', ['destination' => $destination->id, 'video' => $video->id]) }}"
@@ -134,6 +156,28 @@
                 @endforeach
             @endif
         </div>
+
+        <script>
+            function copyToClipboard(url) {
+                navigator.clipboard.writeText(url)
+                    .then(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Copied!',
+                            text: 'Link copied to clipboard!',
+                        });
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy: ', err);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Failed to copy link.',
+                        });
+                    });
+            }
+        </script>
+
 
         <script>
             function editVideo(videoId) {
