@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mt-4">
         <div class="card">
-            <div id="map" style="height: 400px;"></div>
+            <div id="map" style="height: 500px; width: 500px;"></div>
 
             <script>
                 // Check if latitude and longitude exist
@@ -19,7 +19,7 @@
                 var map = L.map('map').setView([latitude, longitude], 13);
 
                 // Set up the map tiles (using OpenStreetMap)
-                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
 

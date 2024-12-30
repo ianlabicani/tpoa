@@ -114,7 +114,7 @@
 
                     <div class="form-group">
                         <label for="location_map">Select Location</label>
-                        <div id="map" style="height: 400px;"></div>
+                        <div id="map" style="height: 400px; width: 100%;"></div>
                         <input type="hidden" id="latitude" name="latitude"
                             value="{{ old('latitude', $destination->latitude ?? '') }}">
                         <input type="hidden" id="longitude" name="longitude"
@@ -128,7 +128,7 @@
                         ], 13);
 
                         // Set up the map tiles (you can use OpenStreetMap or other providers)
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         }).addTo(map);
 
