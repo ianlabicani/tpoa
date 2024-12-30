@@ -26,6 +26,8 @@
                      @if (Auth::user())
                          @if (Auth::user()->role === 'admin')
                              <a class="btn btn-primary" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                         @elseif (Auth::user()->role === 'hotel-owner')
+                             <a class="btn btn-primary" href="{{ route('hotel-owner.dashboard') }}">Dashboard</a>
                          @else
                              <a class="btn btn-primary" href="{{ route('user.dashboard') }}">Dashboard</a>
                          @endif
