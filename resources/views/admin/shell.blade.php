@@ -11,6 +11,7 @@
     <title>{{ config('app.name') }}</title>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body class="d-flex" style="min-height: 100vh;">

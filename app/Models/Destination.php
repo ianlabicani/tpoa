@@ -19,6 +19,7 @@ class Destination extends Model
         'availability',
         'social_media',
         'share_count',
+        'how_to_get_there',
     ];
 
     public function feedback()

@@ -87,6 +87,20 @@
                         @enderror
                     </div>
 
+                    <div class="form-group">
+                        <label for="how_to_get_there">How to Get There</label>
+                        <textarea name="how_to_get_there" id="how_to_get_there" rows="5" class="form-control">{{ old('how_to_get_there', $destination->how_to_get_there) }}</textarea>
+                    </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            ClassicEditor.create(document.querySelector('#how_to_get_there'))
+                                .catch(error => {
+                                    console.error('CKEditor initialization error:', error);
+                                });
+                        });
+                    </script>
+
+
                     <!-- Submit Button -->
                     <div class="d-flex justify-content-end">
                         <a href="{{ route('admin.destinations.index') }}" class="btn btn-secondary me-2">Cancel</a>

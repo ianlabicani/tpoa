@@ -78,6 +78,18 @@
                         @endif
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <strong>How to get there:</strong>
+                    </div>
+                    <div class="col-md-8">
+                        @if ($destination->how_to_get_there)
+                            <div>{!! $destination->how_to_get_there !!}</div>
+                        @else
+                            <p>No instructions available at the moment.</p>
+                        @endif
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-end">
                 <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>

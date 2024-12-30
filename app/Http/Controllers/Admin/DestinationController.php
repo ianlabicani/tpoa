@@ -73,6 +73,7 @@ class DestinationController extends Controller
             'entrance_fee' => 'nullable|numeric|min:0',
             'availability' => 'boolean',
             'social_media' => 'nullable|json',
+            'how_to_get_there' => 'nullable|string|max:5000',
         ]);
 
         $destination->update($validated);
