@@ -77,6 +77,9 @@ class DestinationController extends Controller
             'how_to_get_there' => 'nullable|string|max:5000',
             'day_images' => 'nullable|array',
             'night_images' => 'nullable|array',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+
         ]);
 
 

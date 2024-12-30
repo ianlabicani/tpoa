@@ -22,6 +22,8 @@ class Destination extends Model
         'how_to_get_there',
         'day_images',
         'night_images',
+        'latitude',
+        'longitude'
     ];
 
     public function feedback()

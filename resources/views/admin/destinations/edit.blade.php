@@ -112,6 +112,41 @@
                         <input type="file" name="night_images[]" class="form-control" multiple>
                     </div>
 
+                    <div class="form-group">
+                        <label for="location_map">Select Location</label>
+                        <div id="map" style="height: 400px;"></div>
+                        <input type="hidden" id="latitude" name="latitude"
+                            value="{{ old('latitude', $destination->latitude ?? '') }}">
+                        <input type="hidden" id="longitude" name="longitude"
+                            value="{{ old('longitude', $destination->longitude ?? '') }}">
+                    </div>
+
+                    <script>
+                        // Initialize the map
+                        var map = L.map('map').setView([{{ old('latitude', $destination->latitude ?? 0) }},
+                            {{ old('longitude', $destination->longitude ?? 0) }}
+                        ], 13);
+
+                        // Set up the map tiles (you can use OpenStreetMap or other providers)
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+
+                        // Create a draggable marker
+                        var marker = L.marker([{{ old('latitude', $destination->latitude ?? 0) }},
+                            {{ old('longitude', $destination->longitude ?? 0) }}
+                        ], {
+                            draggable: true
+                        }).addTo(map);
+
+                        // Update the hidden inputs when the marker is dragged
+                        marker.on('dragend', function(event) {
+                            var lat = event.target.getLatLng().lat;
+                            var lng = event.target.getLatLng().lng;
+                            document.getElementById('latitude').value = lat;
+                            document.getElementById('longitude').value = lng;
+                        });
+                    </script>
 
 
                     <!-- Submit Button -->
