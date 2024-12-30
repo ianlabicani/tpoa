@@ -3,6 +3,25 @@
 @section('content')
     <div class="container mt-4">
         <div class="card">
+            <div>
+                <h3>Day Images</h3>
+                @foreach (json_decode($destination->day_images) as $dayImage)
+                    <div>
+                        <img src="{{ asset('storage/' . $dayImage) }}" alt="Day Image" width="200" class="mb-2">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </div>
+                @endforeach
+            </div>
+
+            <div>
+                <h3>Night Images</h3>
+                @foreach (json_decode($destination->night_images) as $nightImage)
+                    <div>
+                        <img src="{{ asset('storage/' . $nightImage) }}" alt="Night Image" width="200" class="mb-2">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </div>
+                @endforeach
+            </div>
             <div class="card-header bg-primary text-white">
                 <h3>{{ $destination->name }}</h3>
             </div>

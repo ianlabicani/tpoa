@@ -7,7 +7,8 @@
                 <h3>Edit Destination: {{ $destination->name }}</h3>
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ route('admin.destinations.update', $destination->id) }}">
+                <form method="POST" action="{{ route('admin.destinations.update', $destination->id) }}"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -99,6 +100,18 @@
                                 });
                         });
                     </script>
+
+                    <div class="form-group mb-3">
+                        <label for="day_images">Day Images</label>
+                        <input type="file" name="day_images[]" class="form-control" multiple>
+                    </div>
+
+                    <!-- Night Images -->
+                    <div class="form-group mb-3">
+                        <label for="night_images">Night Images</label>
+                        <input type="file" name="night_images[]" class="form-control" multiple>
+                    </div>
+
 
 
                     <!-- Submit Button -->

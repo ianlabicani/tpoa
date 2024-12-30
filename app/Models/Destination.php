@@ -20,6 +20,8 @@ class Destination extends Model
         'social_media',
         'share_count',
         'how_to_get_there',
+        'day_images',
+        'night_images',
     ];
 
     public function feedback()

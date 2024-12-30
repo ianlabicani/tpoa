@@ -65,6 +65,7 @@ class DestinationController extends Controller
      */
     public function update(Request $request, Destination $destination)
     {
+        // Validate the incoming request
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'nullable|string|max:255',
@@ -74,9 +75,33 @@ class DestinationController extends Controller
             'availability' => 'boolean',
             'social_media' => 'nullable|json',
             'how_to_get_there' => 'nullable|string|max:5000',
+            'day_images' => 'nullable|array',
+            'night_images' => 'nullable|array',
         ]);
 
+
+
+        // Save day images if present
+        if ($request->hasFile('day_images')) {
+            $dayImages = [];
+            foreach ($request->file('day_images') as $image) {
+                $dayImages[] = $image->store('images/day', 'public');
+            }
+            $validated['day_images'] = json_encode($dayImages);  // Save as a JSON array of file paths
+        }
+
+        // Save night images if present
+        if ($request->hasFile('night_images')) {
+            $nightImages = [];
+            foreach ($request->file('night_images') as $image) {
+                $nightImages[] = $image->store('images/night', 'public');
+            }
+            $validated['night_images'] = json_encode($nightImages);  // Save as a JSON array of file paths
+        }
+
+        // Update the destination with the validated data
         $destination->update($validated);
+
         return redirect()->route('admin.destinations.show', $destination)->with('success', 'Destination updated successfully');
     }
 
