@@ -2,70 +2,76 @@
 
 @section('content')
     <div class="container mt-4">
-        <h1>Destinations</h1>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Location</th>
-                    <th>Contact</th>
-                    <th>Email</th>
-                    <th>Cover</th>
-                    <th>Entrance Fee</th>
-                    <th>Availability</th>
-                    <th>Service Offer</th>
-                    <th>Events</th>
-                    <th>Social Media</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($destinations as $destination)
-                    <tr>
-                        <td>{{ $destination->id }}</td>
-                        <td>{{ $destination->name }}</td>
-                        <td>{{ $destination->location }}</td>
-                        <td>{{ $destination->contact }}</td>
-                        <td>{{ $destination->email }}</td>
-                        <td>
-                            @if ($destination->cover)
-                                <img src="{{ asset('storage/' . $destination->cover) }}" alt="Cover" width="50">
-                            @else
+        <h1 class="text-center">Destinations</h1>
+
+        <div class="row">
+            @foreach ($destinations as $destination)
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <!-- Destination Cover -->
+                        @if ($destination->cover)
+                            <img src="{{ asset('storage/' . $destination->cover) }}" class="card-img-top"
+                                alt="{{ $destination->name }}">
+                        @else
+                            <div class="card-img-top bg-secondary text-white text-center py-5">
                                 No Image
-                            @endif
-                        </td>
-                        <td>{{ $destination->entrance_fee ? number_format($destination->entrance_fee, 2) : 'Free' }}</td>
-                        <td>{{ $destination->availability ? 'Available' : 'Unavailable' }}</td>
-                        <td>{{ $destination->service_offer }}</td>
-                        <td>{{ $destination->events }}</td>
-                        <td>
+                            </div>
+                        @endif
+
+                        <div class="card-body">
+                            <!-- Destination Name -->
+                            <h5 class="card-title">{{ $destination->name }}</h5>
+
+                            <!-- Destination Location -->
+                            <p class="card-text">
+                                <strong>Location:</strong> {{ $destination->location }}
+                            </p>
+
+                            <!-- Entrance Fee -->
+                            <p class="card-text">
+                                <strong>Entrance Fee:</strong>
+                                {{ $destination->entrance_fee ? '₱' . number_format($destination->entrance_fee, 2) : 'Free' }}
+                            </p>
+
+                            <!-- Availability -->
+                            <p class="card-text">
+                                <strong>Availability:</strong>
+                                {{ $destination->availability ? 'Available' : 'Unavailable' }}
+                            </p>
+
+                            <!-- Service Offer -->
+                            <p class="card-text">
+                                <strong>Service Offer:</strong> {{ $destination->service_offer }}
+                            </p>
+
+                            <!-- Social Media Links -->
                             @if ($destination->social_media)
-                                @php $socialMedia = json_decode($destination->social_media, true); @endphp
-                                <ul>
+                                <div>
+                                    <strong>Follow:</strong>
+                                    @php $socialMedia = json_decode($destination->social_media, true); @endphp
                                     @foreach ($socialMedia as $platform => $link)
-                                        <li><a href="{{ $link }}" target="_blank">{{ ucfirst($platform) }}</a></li>
+                                        <a href="{{ $link }}" target="_blank" class="btn btn-sm btn-link">
+                                            {{ ucfirst($platform) }}
+                                        </a>
                                     @endforeach
-                                </ul>
-                            @else
-                                No Social Media
+                                </div>
                             @endif
-                        </td>
-                        <td>
+                        </div>
+
+                        <div class="card-footer text-center">
                             <a href="{{ route('admin.destinations.show', $destination->id) }}"
-                                class="btn btn-sm btn-primary">View</a>
-                            <a href="{{ route('admin.destinations.edit', $destination->id) }}"
-                                class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ route('admin.destinations.destroy', $destination->id) }}" method="POST"
-                                style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+                                class="btn btn-primary btn-sm">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ $destinations->links('pagination::bootstrap-4') }}
+        </div>
     </div>
 @endsection
