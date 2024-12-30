@@ -56,31 +56,28 @@
                         @else
                             <p>{{ $feedback->comment }}</p>
                         @endif
-                        @foreach ($feedbacks as $feedback)
-                            @php
-                                $userReaction =
-                                    $feedback->reactions->where('user_id', auth()->id())->first()->reaction ?? null;
-                            @endphp
-                            <div>
-                                <p>Likes: <span
-                                        id="like-count-{{ $feedback->id }}">{{ $feedback->reactions->where('reaction', 'like')->count() }}</span>
-                                </p>
-                                <p>Dislikes: <span
-                                        id="dislike-count-{{ $feedback->id }}">{{ $feedback->reactions->where('reaction', 'dislike')->count() }}</span>
-                                </p>
+                        @php
+                            $userReaction =
+                                $feedback->reactions->where('user_id', auth()->id())->first()->reaction ?? null;
+                        @endphp
+                        <div>
+                            <p>Likes: <span
+                                    id="like-count-{{ $feedback->id }}">{{ $feedback->reactions->where('reaction', 'like')->count() }}</span>
+                            </p>
+                            <p>Dislikes: <span
+                                    id="dislike-count-{{ $feedback->id }}">{{ $feedback->reactions->where('reaction', 'dislike')->count() }}</span>
+                            </p>
 
-                                <button class="btn btn-success like-button {{ $userReaction === 'like' ? 'active' : '' }}"
-                                    data-feedback-id="{{ $feedback->id }}">
-                                    Like
-                                </button>
-                                <button
-                                    class="btn btn-danger dislike-button {{ $userReaction === 'dislike' ? 'active' : '' }}"
-                                    data-feedback-id="{{ $feedback->id }}">
-                                    Dislike
-                                </button>
-                            </div>
-                            <hr>
-                        @endforeach
+                            <button class="btn btn-success like-button {{ $userReaction === 'like' ? 'active' : '' }}"
+                                data-feedback-id="{{ $feedback->id }}">
+                                Like
+                            </button>
+                            <button class="btn btn-danger dislike-button {{ $userReaction === 'dislike' ? 'active' : '' }}"
+                                data-feedback-id="{{ $feedback->id }}">
+                                Dislike
+                            </button>
+                        </div>
+                        <hr>
                         <script>
                             document.addEventListener("DOMContentLoaded", function() {
                                 document.querySelectorAll(".like-button").forEach(button => {
