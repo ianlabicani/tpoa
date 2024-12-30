@@ -15,6 +15,8 @@
                         <p>{{ $feedback->comment }}</p>
                         <hr>
                     </div>
+                    <p>Likes: {{ $destination->like_count ?? 0 }}</p>
+                    <p>Dislikes: {{ $destination->dislike_count ?? 0 }}</p>
                 @endforeach
             </div>
             <div class="card-footer text-end">
@@ -115,6 +117,11 @@
                                 <span class="badge bg-secondary">Under Review</span>
                             @endif
                         </div>
+                    </div>
+
+                    <!-- Pagination links -->
+                    <div class="pagination">
+                        {{ $destinations->links() }}
                     </div>
                 @endforeach
             @endif

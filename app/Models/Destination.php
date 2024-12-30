@@ -30,4 +30,10 @@ class Destination extends Model
     {
         return $this->hasMany(Video::class);
     }
+
+    public function reactions()
+    {
+        return $this->hasMany(FeedbackReaction::class, 'feedback_id');
+    }
+
 }
