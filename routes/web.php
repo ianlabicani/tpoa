@@ -55,3 +55,9 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
     });
 });
 
+Route::prefix('hotel-owner')->name('hotel-owner.')->middleware(['auth', 'role:hotel-owner'])->group(function () {
+    Route::get('dashboard', function () {
+        return view('hotel-owner.dashboard ');
+    })->name('dashboard');
+});
+
