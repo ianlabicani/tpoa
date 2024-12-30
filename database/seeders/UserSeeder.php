@@ -27,9 +27,15 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'admin',
         ]);
+        User::create([
+            'name' => 'Hotel Owner',
+            'email' => 'hotelowner@gmail.com',
+            'password' => Hash::make('password'),
+            'role' => 'hotel-owner',
+        ]);
 
         $faker = Faker::create();
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 1; $i <= 2; $i++) {
             User::create([
                 'name' => "user{$i}",
                 'email' => "user{$i}@gmail.com",
