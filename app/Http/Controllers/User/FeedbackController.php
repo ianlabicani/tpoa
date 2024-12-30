@@ -5,7 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Destination;
 use App\Models\Feedback;
+use App\Models\FeedbackReaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FeedbackController extends Controller
 {
@@ -55,6 +57,93 @@ class FeedbackController extends Controller
 
         return redirect()->back()->with('success', 'Feedback updated successfully');
     }
+
+    public function like(Request $request, $feedbackId)
+    {
+        $userId = auth()->id();
+
+        // Check if the user has already reacted
+        $existingReaction = FeedbackReaction::where('user_id', $userId)
+            ->where('feedback_id', $feedbackId)
+            ->first();
+
+        if ($existingReaction) {
+            if ($existingReaction->reaction === 'like') {
+                return response()->json([
+                    'message' => 'Already liked',
+                    'reaction' => 'like',
+                    'likes' => $this->getReactionCount($feedbackId, 'like'),
+                    'dislikes' => $this->getReactionCount($feedbackId, 'dislike'),
+                ], 200);
+            }
+
+            // Update the reaction
+            $existingReaction->update(['reaction' => 'like']);
+        } else {
+            // Create a new reaction
+            FeedbackReaction::create([
+                'user_id' => $userId,
+                'feedback_id' => $feedbackId,
+                'reaction' => 'like',
+            ]);
+        }
+
+        return $this->getReactionResponse($feedbackId);
+    }
+
+    public function dislike(Request $request, $feedbackId)
+    {
+        $userId = auth()->id();
+
+        // Check if the user has already reacted
+        $existingReaction = FeedbackReaction::where('user_id', $userId)
+            ->where('feedback_id', $feedbackId)
+            ->first();
+
+        if ($existingReaction) {
+            if ($existingReaction->reaction === 'dislike') {
+                return response()->json([
+                    'message' => 'Already disliked',
+                    'reaction' => 'dislike',
+                    'likes' => $this->getReactionCount($feedbackId, 'like'),
+                    'dislikes' => $this->getReactionCount($feedbackId, 'dislike'),
+                ], 200);
+            }
+
+            // Update the reaction
+            $existingReaction->update(['reaction' => 'dislike']);
+        } else {
+            // Create a new reaction
+            FeedbackReaction::create([
+                'user_id' => $userId,
+                'feedback_id' => $feedbackId,
+                'reaction' => 'dislike',
+            ]);
+        }
+
+        return $this->getReactionResponse($feedbackId);
+    }
+
+    private function getReactionResponse($feedbackId)
+    {
+        $userId = Auth::id();
+        $userReaction = FeedbackReaction::where('user_id', $userId)
+            ->where('feedback_id', $feedbackId)
+            ->value('reaction');
+
+        return response()->json([
+            'likes' => $this->getReactionCount($feedbackId, 'like'),
+            'dislikes' => $this->getReactionCount($feedbackId, 'dislike'),
+            'userReaction' => $userReaction,
+        ], 200);
+    }
+
+    private function getReactionCount($feedbackId, $reaction)
+    {
+        return FeedbackReaction::where('feedback_id', $feedbackId)->where('reaction', $reaction)->count();
+    }
+
+
 
 
 }

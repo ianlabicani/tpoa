@@ -49,6 +49,8 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
         return view('user.dashboard');
     })->name('dashboard');
     Route::resource('destinations', UserDestinationController::class);
+    Route::post('feedbacks/{feedback}/like', [UserFeedbackController::class, 'like'])->name('feedbacks.like');
+    Route::post('feedbacks/{feedback}/dislike', [UserFeedbackController::class, 'dislike'])->name('feedbacks.dislike');
     Route::resource('feedbacks', UserFeedbackController::class);
     Route::prefix('destinations/{destination}')->name('destinations.')->group(function () {
         Route::resource('videos', UserVideoController::class);

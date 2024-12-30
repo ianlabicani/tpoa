@@ -22,4 +22,10 @@ class Feedback extends Model
     {
         return $this->belongsTo(Destination::class);
     }
+
+    public function reactions()
+    {
+        return $this->hasMany(FeedbackReaction::class);
+    }
+
 }
