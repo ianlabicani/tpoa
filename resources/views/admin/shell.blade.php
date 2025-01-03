@@ -23,7 +23,7 @@
     @include('admin.sidebar')
 
     <!-- Main Content -->
-    <main>
+    <main class="w-100">
         @yield('content')
     </main>
 
