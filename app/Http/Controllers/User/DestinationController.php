@@ -10,7 +10,7 @@ class DestinationController extends Controller
 {
     public function index()
     {
-        $destinations = Destination::paginate(10);
+        $destinations = Destination::paginate(9);
         return view("user.destinations.index", compact("destinations"));
     }
 
