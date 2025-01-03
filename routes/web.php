@@ -26,6 +26,12 @@ Route::get('destinations', [GuestDestinationController::class, 'index'])->name('
 Route::get('destinations/{destination}', [GuestDestinationController::class, 'show'])->name('destinations.show');
 Route::post('destinations/{destination}/share', [ShareDestinationController::class, 'share'])->name('destinations.share');
 Route::get('destinations-videos', [GuestVideoController::class, 'showDestinationVideos'])->name('destinations.videos');
+Route::get('history', [GuestController::class, 'history'])->name('history');
+Route::get('culture', [GuestController::class, 'culture'])->name('culture');
+Route::get('events', [GuestController::class, 'events'])->name('events');
+Route::get('contact', [GuestController::class, 'contact'])->name('contact');
+Route::get('gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
+
 
 
 
@@ -35,11 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-    Route::get('guest/history', [GuestController::class, 'history'])->name('guest.history');
-    Route::get('guest/culture', [GuestController::class, 'culture'])->name('guest.culture');
-    Route::get('guest/events', [GuestController::class, 'events'])->name('guest.events');
-    Route::get('guest/contact', [GuestController::class, 'contact'])->name('guest.contact');
-    Route::get('/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
 
 require __DIR__ . '/auth.php';
 
@@ -67,13 +68,13 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
     Route::prefix('destinations/{destination}')->name('destinations.')->group(function () {
         Route::resource('videos', UserVideoController::class);
     });
-    
+
     Route::get('history', [GuestController::class, 'user_history'])->name('history');
     Route::get('culture', [GuestController::class, 'user_culture'])->name('culture');
     Route::get('events', [GuestController::class, 'user_events'])->name('events');
     Route::get('contact', [GuestController::class, 'user_contact'])->name('contact');
     Route::get('user/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
-   
+
 });
 
 

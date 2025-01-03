@@ -17,7 +17,13 @@
 
 <body class="font-sans antialiased flex">
 
-    @include('guest.navbar')
+
+
+    @if (Auth::check() && Auth::user()->role == 'user')
+        @include('user.navbar')
+    @else
+        @include('guest.navbar')
+    @endif
 
     <!-- Main Content -->
     <main class="flex-1">
