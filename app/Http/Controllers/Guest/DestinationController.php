@@ -13,7 +13,7 @@ class DestinationController extends Controller
     public function index()
     {
         // Retrieve all destinations
-        $destinations = Destination::paginate(10);
+        $destinations = Destination::paginate(9);
 
         return view('guest.destinations.index', compact('destinations'));
     }
