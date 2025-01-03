@@ -9,8 +9,9 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
                         <!-- Destination Cover -->
-                        @if ($destination->cover)
-                            <img src="{{ asset('storage/' . $destination->cover) }}" class="card-img-top"
+                        @if ($destination->day_images && count(json_decode($destination->day_images, true)) > 0)
+                            @php $dayImages = json_decode($destination->day_images, true); @endphp
+                            <img src="{{ asset('storage/' . $dayImages[0]) }}" class="card-img-top"
                                 alt="{{ $destination->name }}">
                         @else
                             <div class="card-img-top bg-secondary text-white text-center py-5">
