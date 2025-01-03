@@ -16,15 +16,18 @@
 
 </head>
 
-<body class="d-flex" style="min-height: 100vh;">
+<body class="font-sans antialiased flex">
 
-    <!-- Sidebar -->
-    @include('user.sidebar')
+    <!-- Navbar -->
+    @include('user.navbar')
 
     <!-- Main Content -->
     <main class="w-100">
         @yield('content')
     </main>
+
+    {{-- Footer --}}
+    @include('user.footer')
 
 </body>
 

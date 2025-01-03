@@ -11,10 +11,14 @@ use App\Http\Controllers\User\VideoController as UserVideoController;
 // guest
 use App\Http\Controllers\Guest\DestinationController as GuestDestinationController;
 use App\Http\Controllers\Guest\VideoController as GuestVideoController;
-
+use App\Http\Controllers\Guest\GuestController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+
+//ROUTE FOR GUEST
 Route::get('/', function () {
     return view('guest.welcome');
 })->name('/');
@@ -31,9 +35,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+    Route::get('guest/history', [GuestController::class, 'history'])->name('guest.history');
+    Route::get('guest/culture', [GuestController::class, 'culture'])->name('guest.culture');
+    Route::get('guest/events', [GuestController::class, 'events'])->name('guest.events');
+    Route::get('guest/contact', [GuestController::class, 'contact'])->name('guest.contact');
+    Route::get('/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
+
 require __DIR__ . '/auth.php';
 
-
+// ROUTE FOR ADMIN
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('dashboard', function () {
         return view('admin.dashboard');
@@ -44,6 +54,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 
 });
 
+
+//ROUTE FOR USER
 Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(function () {
     Route::get('dashboard', function () {
         return view('user.dashboard');
@@ -55,7 +67,16 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
     Route::prefix('destinations/{destination}')->name('destinations.')->group(function () {
         Route::resource('videos', UserVideoController::class);
     });
+    
+    Route::get('history', [GuestController::class, 'user_history'])->name('history');
+    Route::get('culture', [GuestController::class, 'user_culture'])->name('culture');
+    Route::get('events', [GuestController::class, 'user_events'])->name('events');
+    Route::get('contact', [GuestController::class, 'user_contact'])->name('contact');
+    Route::get('user/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
+   
 });
+
+
 
 Route::prefix('hotel-owner')->name('hotel-owner.')->middleware(['auth', 'role:hotel-owner'])->group(function () {
     Route::get('dashboard', function () {
