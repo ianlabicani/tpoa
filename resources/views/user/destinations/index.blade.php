@@ -60,7 +60,8 @@
                         </div>
 
                         <div class="card-footer text-center">
-                            <a href="{{ route('destinations.show', $destination->id) }}" class="btn btn-primary btn-sm">
+                            <a href="{{ route('user.destinations.show', $destination->id) }}"
+                                class="btn btn-primary btn-sm">
                                 View Details
                             </a>
                         </div>

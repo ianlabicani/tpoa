@@ -146,9 +146,123 @@
         <div class="my-4">
             <h4 class="mb-3">Feedbacks</h4>
             @foreach ($feedbacks as $feedback)
+                {{-- @php
+                    dd($feedback);
+                @endphp --}}
                 <div>
                     <strong>{{ $feedback->user->name }}</strong> ({{ $feedback->created_at->format('M d, Y') }})
                     <p>{{ $feedback->comment }}</p>
+
+                    @if (auth()->check())
+                        @php
+                            $userReaction =
+                                $feedback->reactions->where('user_id', auth()->id())->first()->reaction ?? null;
+                        @endphp
+                        <div>
+                            <p>Likes: <span
+                                    id="like-count-{{ $feedback->id }}">{{ $feedback->reactions->where('reaction', 'like')->count() }}</span>
+                            </p>
+                            <p>Dislikes: <span
+                                    id="dislike-count-{{ $feedback->id }}">{{ $feedback->reactions->where('reaction', 'dislike')->count() }}</span>
+                            </p>
+
+                            <button class="btn btn-success like-button {{ $userReaction === 'like' ? 'active' : '' }}"
+                                data-feedback-id="{{ $feedback->id }}">
+                                Like
+                            </button>
+                            <button class="btn btn-danger dislike-button {{ $userReaction === 'dislike' ? 'active' : '' }}"
+                                data-feedback-id="{{ $feedback->id }}">
+                                Dislike
+                            </button>
+                        </div>
+                        <hr>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                document.querySelectorAll(".like-button").forEach(button => {
+                                    button.addEventListener("click", function() {
+                                        const feedbackId = this.getAttribute("data-feedback-id");
+
+                                        fetch(`{{ route('user.feedbacks.like', ':feedbackId') }}`.replace(
+                                                ':feedbackId', feedbackId), {
+                                                method: "POST",
+                                                headers: {
+                                                    "Content-Type": "application/json",
+                                                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                                }
+                                            })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                // Update counts
+                                                document.getElementById(`like-count-${feedbackId}`).textContent =
+                                                    data.likes;
+                                                document.getElementById(`dislike-count-${feedbackId}`).textContent =
+                                                    data.dislikes;
+
+                                                // Update button states
+                                                updateReactionUI(feedbackId, data.userReaction);
+                                            })
+                                            .catch(error => console.error("Error:", error));
+                                    });
+                                });
+
+                                document.querySelectorAll(".dislike-button").forEach(button => {
+                                    button.addEventListener("click", function() {
+                                        const feedbackId = this.getAttribute("data-feedback-id");
+
+                                        fetch(`{{ route('user.feedbacks.dislike', ':feedbackId') }}`.replace(
+                                                ':feedbackId', feedbackId), {
+                                                method: "POST",
+                                                headers: {
+                                                    "Content-Type": "application/json",
+                                                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                                }
+                                            }).then(response => response.json())
+                                            .then(data => {
+                                                // Update counts
+                                                document.getElementById(`like-count-${feedbackId}`).textContent =
+                                                    data.likes;
+                                                document.getElementById(`dislike-count-${feedbackId}`).textContent =
+                                                    data.dislikes;
+
+                                                // Update button states
+                                                updateReactionUI(feedbackId, data.userReaction);
+                                            })
+                                            .catch(error => console.error("Error:", error));
+                                    });
+                                });
+
+                                function updateReactionUI(feedbackId, userReaction) {
+                                    const likeButton = document.querySelector(`.like-button[data-feedback-id="${feedbackId}"]`);
+                                    const dislikeButton = document.querySelector(`.dislike-button[data-feedback-id="${feedbackId}"]`);
+
+                                    // Reset button states
+                                    likeButton.classList.remove("active");
+                                    dislikeButton.classList.remove("active");
+
+                                    // Set active state based on user reaction
+                                    if (userReaction === "like") {
+                                        likeButton.classList.add("active");
+                                    } else if (userReaction === "dislike") {
+                                        dislikeButton.classList.add("active");
+                                    }
+                                }
+                            });
+                        </script>
+                    @else
+                        <p>
+                            <a href="{{ route('register') }}" class="text-decoration-none text-primary">
+                                Likes: <span
+                                    id="like-count-{{ $feedback->id }}">{{ $feedback->reactions->where('reaction', 'like')->count() }}</span>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="{{ route('register') }}" class="text-decoration-none text-primary">
+                                Dislikes: <span
+                                    id="dislike-count-{{ $feedback->id }}">{{ $feedback->reactions->where('reaction', 'dislike')->count() }}</span>
+                            </a>
+                        </p>
+                    @endif
+
                     <hr>
                 </div>
             @endforeach
