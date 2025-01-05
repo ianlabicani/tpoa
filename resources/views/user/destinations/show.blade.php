@@ -63,21 +63,15 @@
                         <strong>Availability:</strong> {{ $destination->availability ? 'Available' : 'Unavailable' }}
                     </div>
                     <div class="col-md-6 mb-3">
-                        <strong>Services Offered:</strong> {{ $destination->service_offer ?? 'None' }}
-                    </div>
-                    <div class="col-md-6 mb-3">
                         <strong>Events:</strong> {{ $destination->events ?? 'No events listed' }}
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <strong>Social Media:</strong>
-                        @if ($destination->social_media)
-                            @foreach (json_decode($destination->social_media, true) as $platform => $link)
-                                <a href="{{ $link }}" target="_blank"
-                                    class="btn btn-outline-primary btn-sm me-2">{{ ucfirst($platform) }}</a>
-                            @endforeach
-                        @else
-                            No social media links
-                        @endif
+                    <div class="col-md-12">
+                        <strong>Social Media Links:</strong>
+                        {!! $destination->social_media ?? '<p>No links available at the moment.</p>' !!}
+                    </div>
+                    <div class="col-md-12">
+                        <strong>Services Offered:</strong>
+                        {!! $destination->service_offer ?? '<p>No services available at the moment.</p>' !!}
                     </div>
                     <div class="col-md-12">
                         <strong>How to get there:</strong>
