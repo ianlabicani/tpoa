@@ -40,23 +40,10 @@
                                 {{ $destination->availability ? 'Available' : 'Unavailable' }}
                             </p>
 
-                            <!-- Service Offer -->
                             <p class="card-text">
-                                <strong>Service Offer:</strong> {{ $destination->service_offer }}
+                                <strong>Service Offer:</strong> {!! $destination->service_offer ?? '<p>No services available at the moment.</p>' !!}
                             </p>
 
-                            <!-- Social Media Links -->
-                            @if ($destination->social_media)
-                                <div>
-                                    <strong>Follow:</strong>
-                                    @php $socialMedia = json_decode($destination->social_media, true); @endphp
-                                    @foreach ($socialMedia as $platform => $link)
-                                        <a href="{{ $link }}" target="_blank" class="btn btn-sm btn-link">
-                                            {{ ucfirst($platform) }}
-                                        </a>
-                                    @endforeach
-                                </div>
-                            @endif
                         </div>
 
                         <div class="card-footer text-center">
