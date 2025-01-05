@@ -33,7 +33,7 @@ class DestinationController extends Controller
             'email' => 'nullable|email|max:255',
             'entrance_fee' => 'nullable|numeric|min:0',
             'availability' => 'boolean',
-            'social_media' => 'nullable',
+            'social_media' => 'nullable|string|max:5000',
             'service_offer' => 'nullable|string|max:5000',
             'how_to_get_there' => 'nullable|string|max:5000',
             'day_images' => 'nullable|array',
@@ -59,6 +59,7 @@ class DestinationController extends Controller
             }
             $validated['night_images'] = json_encode($nightImages); // Save as a JSON array of file paths
         }
+
 
         // Create a new destination with the validated data
         $destination = Destination::create($validated);
@@ -97,7 +98,8 @@ class DestinationController extends Controller
             'email' => 'nullable|email|max:255',
             'entrance_fee' => 'nullable|numeric|min:0',
             'availability' => 'boolean',
-            'social_media' => 'nullable|json',
+            'social_media' => 'nullable|string|max:5000',
+            'service_offer' => 'nullable|string|max:5000',
             'how_to_get_there' => 'nullable|string|max:5000',
             'day_images' => 'nullable|array',
             'night_images' => 'nullable|array',

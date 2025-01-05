@@ -18,6 +18,7 @@ class Destination extends Model
         'entrance_fee',
         'availability',
         'social_media',
+        'service_offer',
         'share_count',
         'how_to_get_there',
         'day_images',
