@@ -92,14 +92,27 @@
                         </div>
                     </div>
 
-                    <!-- Social Media -->
+                    {{-- social media --}}
                     <div class="mb-3">
-                        <label for="social_media" class="form-label"><strong>Social Media (JSON format)</strong></label>
-                        <textarea id="social_media" name="social_media" class="form-control" rows="3">{{ old('social_media', $destination->social_media) }}</textarea>
-                        @error('social_media')
-                            <div class="text-danger mt-1">{{ $message }}</div>
-                        @enderror
+                        <label for="social_media" class="form-label"><strong>List of Social Media Links</strong></label>
+                        <textarea id="social_media" name="social_media" rows="5" class="form-control">{{ old('social_media', $destination->social_media) }}</textarea>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                ClassicEditor.create(document.querySelector('#social_media')).catch(error => console.error(error));
+                            });
+                        </script>
                     </div>
+                    {{-- service offer --}}
+                    <div class="mb-3">
+                        <label for="service_offer" class="form-label"><strong>List of Services Offered</strong></label>
+                        <textarea id="service_offer" name="service_offer" rows="5" class="form-control">{{ old('service_offer', $destination->service_offer) }}</textarea>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                ClassicEditor.create(document.querySelector('#service_offer')).catch(error => console.error(error));
+                            });
+                        </script>
+                    </div>
+
 
                     <!-- How to Get There -->
                     <div class="mb-3">
