@@ -137,14 +137,14 @@
                         <input type="hidden" id="longitude" name="longitude"
                             value="{{ old('longitude', $destination->longitude ?? '') }}">
                         <script>
-                            var map = L.map('map').setView([{{ old('latitude', $destination->latitude ?? 0) }},
-                                {{ old('longitude', $destination->longitude ?? 0) }}
+                            var map = L.map('map').setView([{{ old('latitude', $destination->latitude ?? 18.356104) }},
+                                {{ old('longitude', $destination->longitude ?? 121.63988) }}
                             ], 13);
                             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                 attribution: '© OpenStreetMap contributors'
                             }).addTo(map);
-                            var marker = L.marker([{{ old('latitude', $destination->latitude ?? 0) }},
-                                {{ old('longitude', $destination->longitude ?? 0) }}
+                            var marker = L.marker([{{ old('latitude', $destination->latitude ?? 18.356104) }},
+                                {{ old('longitude', $destination->longitude ?? 121.63988) }}
                             ], {
                                 draggable: true
                             }).addTo(map);
