@@ -46,25 +46,8 @@
                 </script>
 
                 <div class="row">
-                    <!-- First Column -->
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <strong>Name:</strong> {{ $destination->name ?? 'N/A' }}
-                        </div>
-                        <div class="mb-3">
-                            <strong>Contact:</strong> {{ $destination->contact ?? 'N/A' }}
-                        </div>
-                        <div class="mb-3">
-                            <strong>Email:</strong> {{ $destination->email ?? 'N/A' }}
-                        </div>
-                        <div class="mb-3">
-                            <strong>Location:</strong> {{ $destination->location ?? 'N/A' }}
-                        </div>
-
-                        <div class="mb-3">
-                            <strong>How to Get There:</strong>
-                            {!! $destination->how_to_get_there ?? '<p>No instructions available at the moment.</p>' !!}
-                        </div>
+                    <div class="col-md-6 mb-3">
+                        <strong>Location:</strong> {{ $destination->location ?? 'N/A' }}
                     </div>
                     <div class="col-md-6 mb-3">
                         <strong>Contact:</strong> {{ $destination->contact ?? 'N/A' }}
@@ -93,37 +76,6 @@
                     <div class="col-md-12">
                         <strong>How to get there:</strong>
                         {!! $destination->how_to_get_there ?? '<p>No instructions available at the moment.</p>' !!}
-
-                    <!-- Second Column -->
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <strong>Availability:</strong> {{ $destination->availability ? 'Available' : 'Unavailable' }}
-                        </div>
-                        <div class="mb-3">
-                            <strong>Events:</strong> {{ $destination->events ?? 'No events listed' }}
-                        </div>
-                        <div class="mb-3">
-                            <strong>Social Media:</strong>
-                            @if ($destination->social_media)
-                                @foreach (json_decode($destination->social_media, true) as $platform => $link)
-                                    <a href="{{ $link }}" target="_blank"
-                                        class="btn btn-outline-primary btn-sm me-2">{{ ucfirst($platform) }}</a>
-                                @endforeach
-                            @else
-                                No social media links
-                            @endif
-                        </div>
-
-                        <div class="mb-3">
-                            <strong>Entrance Fee:</strong>
-                            {{ $destination->entrance_fee ? '₱' . number_format($destination->entrance_fee, 2) : 'Free' }}
-                        </div>
-                        <div class="mb-3">
-                            <strong>Service Offer:</strong>
-                            {!! $destination->service_offer ?? '<p>No services offered at the moment.</p>' !!}
-                        </div>
-
-
                     </div>
                 </div>
 
@@ -252,22 +204,22 @@
                         $userReaction = $feedback->reactions->where('user_id', auth()->id())->first()->reaction ?? null;
                     @endphp
 
-                    
-                   <div style="display: flex; align-items: center; gap: 20px;">
-                    <p>
-                        <span style="font-weight: bold;">👍 Likes:</span> 
-                        <span id="like-count-{{ $feedback->id }}">
-                            {{ $feedback->reactions->where('reaction', 'like')->count() }}
-                        </span>
-                    </p>
-                    <p>
-                        <span style="font-weight: bold;">👎 Dislikes:</span> 
-                        <span id="dislike-count-{{ $feedback->id }}">
-                            {{ $feedback->reactions->where('reaction', 'dislike')->count() }}
-                        </span>
-                    </p>
-                </div>
-                
+
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <p>
+                            <span style="font-weight: bold;">👍 Likes:</span>
+                            <span id="like-count-{{ $feedback->id }}">
+                                {{ $feedback->reactions->where('reaction', 'like')->count() }}
+                            </span>
+                        </p>
+                        <p>
+                            <span style="font-weight: bold;">👎 Dislikes:</span>
+                            <span id="dislike-count-{{ $feedback->id }}">
+                                {{ $feedback->reactions->where('reaction', 'dislike')->count() }}
+                            </span>
+                        </p>
+                    </div>
+
                     <hr>
                     <script>
                         document.addEventListener("DOMContentLoaded", function() {
@@ -429,7 +381,7 @@
                 @endif
             </div>
 
-            
+
         </div>
 
 
