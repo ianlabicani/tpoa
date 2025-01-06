@@ -1,77 +1,260 @@
 @extends('guest.shell')
 
+
+
+<style>
+    .btn-primary {
+        background-color: #f1c40f;
+        color: black;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #d4ac0d;
+        color: black;
+    }
+
+    .hero-slider {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .slider-item {
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        color: white;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+        padding: 0 50px;
+    }
+
+    .slider-content {
+        max-width: 600px;
+    }
+
+    .slider-content h1 {
+        font-size: 7rem;
+        font-weight: bold;
+        line-height: 1.2;
+        margin-bottom: 20px;
+    }
+
+    .slider-content p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+
+    .slider-link {
+        display: block;
+        margin-top: 10px;
+        color: #f1c40f;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+    }
+
+    .slider-link:hover {
+        color: #d4ac0d;
+    }
+
+    .btn-main {
+        background-color: #f1c40f;
+        color: black;
+        padding: 10px 20px;
+        border: none;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-main:hover {
+        background-color: #d4ac0d;
+    }
+
+    /* Fade transition for the slider */
+    .carousel-item {
+        display: none;
+        opacity: 0;
+        transition: opacity 1s ease;
+        /* Smooth fade effect */
+    }
+
+    .carousel-item.active {
+        display: block;
+        opacity: 1;
+    }
+
+    .carousel-fade .carousel-item {
+        transform: none;
+        /* Disable slide transform */
+    }
+</style>
+<style>
+    .destination-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .destiantion-image:hover {
+        background-color: #e55b4e;
+        color: white;
+    }
+
+    .card-body {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    .btn-cta {
+        background-color: #ff6f61;
+        color: white;
+        border-radius: 20px;
+        font-weight: bold;
+        padding: 10px 20px;
+        text-transform: uppercase;
+    }
+
+   
+</style>
+
+
+
 @section('content')
+    <div id="heroSlider" class="carousel slide carousel-fade hero-slider" data-bs-ride="carousel" data-bs-pause="false"
+        data-bs-wrap="true">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="slider-item" style="background-image: url('{{ asset('image/arko.jpg') }}');">
+                    <div class="slider-content">
+                        <h1>ARKO  </h1>
+                        <p>
+                            Two roads diverged in a yellow wood, and sorry I could not travel both and be one traveler, long
+                            I stood and looked down one as far as I could to where it bent in the undergrowth.
+                        </p>
+                    
+                        <a href="{{ route('destinations.index') }}" class="slider-link">Discover more destinations</a>
+                    </div>
+                </div>
+            </div>
 
-<Style>
+            <div class="carousel-item">
+                <div class="slider-item" style="background-image: url('{{ asset('image/sunset.jpg') }}');">
+                    <div class="slider-content">
+                        <h1>SUNSET</h1>
+                        <p>
+                            Explore Aparri where the river meets the sea. Discover breathtaking views and serene
+                            surroundings that leave you in awe.
+                        </p>
 
-@font-face {
-    font-family: 'barabara';
-    src: url('{{ asset('fonts/BARABARA-final.otf') }}') format('truetype');
-    font-style: normal;
-    font-weight:thin
-}
+                        <a href="{{ route('destinations.index') }}" class="slider-link">Discover more destinations</a>
+                    </div>
+                </div>
+            </div>
 
-h1{
-    font-family: 'barabara'
-}
+            <div class="carousel-item">
+                <div class="slider-item" style="background-image: url('{{ asset('image/night-pier.jpg') }}');">
+                    <div class="slider-content">
+                        <h1> PAG-ASA   </h1>
+                        <p>
+                            Explore Aparri where the river meets the sea. Discover breathtaking views and serene
+                            surroundings that leave you in awe.
+                        </p>
 
-
-</Style>
-<!-- Hero Section Carousel -->
-<section id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-pause="false" style="height: 550px;">
-    <div class="carousel-inner">
-        <!-- First Slide -->
-        <div class="carousel-item active" style="background-image: url('{{ asset('image/arko.jpg') }}'); background-size: cover; background-position: center; height: 550px;">
-            <div class="container h-100 d-flex justify-content-start align-items-center">
-                <div>
-                    <h1 class="display-3 text-white">WELCOME TO TPOA</h1>
-                    <p class="lead mb-4 text-white">Your one-stop solution for all your travel and booking needs.</p>
-                    @if (!Auth::user())
-                        <a class="btn btn-primary" href="{{ route('register') }}">Get Started</a>
-                    @endif
+                        <a href="{{ route('destinations.index') }}" class="slider-link">Discover more destinations</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Second Slide -->
-        <div class="carousel-item" style="background-image: url('{{ asset('image/waves.jpg') }}'); background-size: cover; background-position: center; height: 550px;">
-            <div class="container h-100 d-flex justify-content-start align-items-center">
-                <div>
-                    <h1 class="display-3 fw-bold text-white">HATDOG</h1>
-                    <p class="lead mb-4 text-white">Your adventure begins with us.</p>
-                    @if (!Auth::user())
-                        <a class="btn btn-primary" href="{{ route('register') }}">Get Started</a>
-                    @endif
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroSlider" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroSlider" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <section class="overview-section py-5">
+        <div class="container">
+            <h2 class="text-center display-6 mb-4">Tourism of Aparri</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="lead mb-4" style="text-align: justify">
+                        Aparri is known for its foods such as the "bulung-unas", or Ribbon Fish (aka Belt Fish), which are in abundance during January and early February. "Kilawin naguilas-asan" is a fillet of smaller "bulung-unas" which are leftover baits, soaked in Ilocos vinegar, seasoned with salt and pepper, finely cut onions and ginger. Ludong, a variety of Pacific salmon, is the Philippines' most expensive fish, ranging from 4,000 pesos to 5,000 per kilo. Because of its price and its distinct taste and smell, it is also nicknamed "President Fish". Caught only in the Aparri delta when, after a heavy rainfall, these fish are washed down by the fast raging water from the south, down to the mouth of the Cagayan River where it meets the Babuyan Sea. Freshwater fish by nature, the salt water contributes to their super delicious taste. Ludong is available only in the rainy months of October and early November.
+    
+                       
+                    </p>
+                    <p class="lead mb-4" style="text-align: justify">
+                        Aparri's attractions also include its sandy beaches and town fiesta. May 1 to 12 of every year, the town's fiesta celebrates the patron saint San Pedro Gonzales of Thelmo with nightly festivities at the auditorium, crowning of Miss Aparri beauty pageant and the "Comparza."
+                    </p>
                 </div>
+                <div class="col-md-6">
+                    <img 
+                        src="{{ asset('image/bulung-unas.jpg') }}" 
+                        alt="Map showing the location of Aparri" 
+                        class="img-fluid shadow" 
+                        style="height: 600px; border-radius:5px">
+                    <p class="text-center text-muted mt-2">
+                        <small>Source: Jerc Cariño Cinco</small>
+                    </p>
+                </div>
+    
             </div>
         </div>
-        <!-- Third Slide -->
-        <div class="carousel-item" style="background-image: url('{{ asset('image/sunset.jpg') }}'); background-size: cover; background-position: center; height: 550px;">
-            <div class="container h-100 d-flex justify-content-start align-items-center">
-                <div>
-                    <h1 class="display-3  text-white">ADVENTURE AWAITS</h1>
-                    <p class="lead mb-4 text-white">Join us for the journey of a lifetime.</p>
-                    @if (!Auth::user())
-                        <a class="btn btn-primary" href="{{ route('register') }}">Get Started</a>
-                    @endif
-                </div>
+    </section>  
+
+    
+<section class="py-5">
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <!-- Culture Card -->
+            <div class="col-md-10">
+                <img src="{{ asset('image/fiesta.png') }}" class="destination-image" alt="Aparri Town Fiesta">
+               
+                <h2 class="text-center display-6 mb-4">Aparri Town Fiesta</h2>
+                    <p class="lead mb-4" style="text-align: justify">
+                        The Aparri Town Fiesta is the traditional annual festivities in honor of St. Peter Gonzales of Telmo
+                        – the municipality’s Patron Saint whose feast day is May 11. It is celebrated every 1st to 11th day
+                        of May since 16th century, this week-long celebration showcases the Aparrianos ingenuity as a people
+                        and serves as an act of thanksgiving of the people to their patron saint for an abundant life, good
+                    </p>
+                   
+               
             </div>
         </div>
     </div>
-    <!-- Carousel Controls -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</section>
-
-
+</section>  
 
     <!-- About Section -->
-    <section id="about" class="py-5 bg-light">
+    <section id="about" class="py-5">
         <div class="container text-center">
             <h2 class="display-4">About Us</h2>
             <p class="lead">We help you plan and book your travel with ease and convenience.</p>
@@ -84,17 +267,14 @@ h1{
             <h2 class="display-4">Our Services</h2>
             <div class="row">
                 <div class="col-md-4">
-                    <i class="fas fa-map-marker-alt fa-3x mb-3"></i>
                     <h4>Destinations</h4>
                     <p>Explore a wide variety of travel destinations for every budget.</p>
                 </div>
                 <div class="col-md-4">
-                    <i class="fas fa-book fa-3x mb-3"></i>
                     <h4>Booking</h4>
                     <p>Book flights, accommodations, and more, all in one place.</p>
                 </div>
                 <div class="col-md-4">
-                    <i class="fas fa-headset fa-3x mb-3"></i>
                     <h4>Customer Support</h4>
                     <p>Our team is here to help you with all your travel needs.</p>
                 </div>
@@ -111,5 +291,25 @@ h1{
         </div>
     </section>
 
-    
+
+
+
+    <script>
+        let lastScrollPosition = 0;
+
+        document.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            const currentScrollPosition = window.scrollY;
+
+            if (currentScrollPosition > lastScrollPosition && currentScrollPosition > 50) {
+                // Scrolling down, hide navbar
+                navbar.classList.add('hidden');
+            } else {
+                // Scrolling up, show navbar
+                navbar.classList.remove('hidden');
+            }
+
+            lastScrollPosition = currentScrollPosition;
+        });
+    </script>
 @endsection

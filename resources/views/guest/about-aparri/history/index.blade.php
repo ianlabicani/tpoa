@@ -54,12 +54,31 @@
         }
     </style>
 
+<!-- Vision and Mission Section -->
+<div class="container my-5">
+    <div class="row">
+        <!-- Vision Column -->
+        <div class="col-md-6">
+            <h4 class="text-center mb-3">Aparri Vision</h4>
+            <p class="lead mb-4" style="text-align: justify">
+                “The golden frontier of the North on international and local trade and commerce, education and training, agro-fishery industry and eco-tourism with modern, green, disaster-resilient and balanced infrastructure geared towards an innovative, competitive and sustained economy with God-loving, empowered and self-reliant citizenry living in a safe and ecologically balanced environment under a responsive, transparent and dynamic governance”
+            </p>
+        </div>
+        <!-- Mission Column -->
+        <div class="col-md-6">
+            <h4 class="text-center mb-3">Aparri Mission</h4>
+            <p class="lead mb-4" style="text-align: justify">
+                The Local Government of Aparri has to serve with humility and advocate earnestly the provisions and intentions of Republic Act 7160 known as the Local Government Code of 1991 for lifelong excellent governance.
+            </p>
+        </div>
+    </div>
+</div>
 
 
     <!-- Overview Section -->
     <section class="overview-section py-5">
         <div class="container">
-            <h2 class="text-center display-6 mb-4">Geographical Location of Aparri</h2>
+            <h2 class="text-center display-6 mb-4">Subdivision Map of Aparri</h2>
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <p class="lead mb-4" style="text-align: justify">
@@ -85,10 +104,10 @@
                     </p>
                 </div>
                 <div class="col-md-6">
-                    <img src="{{ asset('image/map.png') }}" alt="Map showing the location of Aparri"
+                    <img src="{{ asset('image/subdivision-map.jpg') }}" alt="Map showing the location of Aparri"
                         class="img-fluid  shadow">
                     <p class="text-center text-muted mt-2">
-                        <small>Source: Google Map</small>
+                        <small>Source: ATOP</small>
                     </p>
                 </div>
             </div>
@@ -163,7 +182,7 @@
                 <div class="col-md-4">
                     <a href="{{ route('gallery.show', ['id' => 2]) }}">
                         <div class="gallery-item">
-                            <img src="{{ asset('image/history/fishing-boat-unloading.jpg') }}"
+                            <img src="{{ asset('image/history/boat-unloading.jpg') }}"
                                 alt="Fishing Boat Unloading Image 2" class="gallery-image">
                             <p class="gallery-caption">FISHING BOAT UNLOADING -CA. 1900s-1930s</p>
                         </div>
@@ -193,7 +212,7 @@
                 <div class="col-md-4">
                     <a href="{{ route('gallery.show', ['id' => 5]) }}">
                         <div class="gallery-item">
-                            <img src="{{ asset('image/history/fish-net-and-poles.jpg') }}"
+                            <img src="{{ asset('image/history/fish-net-poles.jpg') }}"
                                 alt="Fishing Net and Poles Image 3" class="gallery-image">
                             <p class="gallery-caption">FISHING NETS AND POLES, APARRI – CA. 1900S-1930s</p>
                         </div>

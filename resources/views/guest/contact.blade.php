@@ -14,7 +14,7 @@
                 <div class="contact-info-item">
                     <i class="fas fa-map-marker-alt fa-3x mb-3"></i>
                     <h4>Our Address</h4>
-                    <p>123 Travel Avenue, City, Province, Country</p>
+                    <p>Centro 1, Aparri, Cagayan, Philippines, 3515</p>
                 </div>
             </div>
             <!-- Phone -->
@@ -22,7 +22,7 @@
                 <div class="contact-info-item">
                     <i class="fas fa-phone fa-3x mb-3"></i>
                     <h4>Call Us</h4>
-                    <p>+123 456 7890</p>
+                    <p>0945 637 4167</p>
                 </div>
             </div>
             <!-- Email -->

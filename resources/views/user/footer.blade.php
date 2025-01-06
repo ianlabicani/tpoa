@@ -1,37 +1,32 @@
-
-<Style>
-    @font-face {
-        font-family: 'barabara';
-        src: url('{{ asset('fonts/BARABARA-final.otf') }}') format('truetype');
-        
-     
+<style>
+    #footer a {
+        text-decoration: none;
+      
     }
 
-    .mb-3 {
-        font-family: 'barabara';
-        font-size: 14px;
-        
+    ul{
+        list-style: none;
     }
-    
-    
-</Style>
+</style>
+
+
 
 <!-- Footer -->
 <footer id="footer" class="bg-dark text-white text-center py-5">
     <div class="top-footer">
         <div class="container">
-            <div class="row justify-content-around">
+            <div class="row justify-content-around" >
                 <!-- About Section -->
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <h3 class="mb-3">ABOUT</h3>
-                    <p style="text-align: justify;">Integer posuere erat a ante venenati dapibus posuere velit aliquet. 
+                    <h6 class="mb-3">ABOUT</h6>
+                    <p style="text-align: justify;">Integer posuere erat a ante venenati dapibus posuere velit aliquet.
                         Fusce dapibus, tellus cursus commodo, tortor mauris sed posuere.</p>
                 </div>
 
                 <!-- Our Services Section -->
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h3 class="mb-3">OUR SERVICES</h3>
-                    <ul class="list-unstyled">
+                <div class="col-lg-3 col-md-6 mb-4" style="text-decoration: none">
+                    <h6 class="mb-3">OUR SERVICES</h6>
+                    <ul>
                         <li><a href="service.html" class="text-white">Lorem</a></li>
                         <li><a href="service.html" class="text-white">Lorem</a></li>
                         <li><a href="service.html" class="text-white">Lorem</a></li>
@@ -41,8 +36,8 @@
 
 
                 <!-- Social Media Section -->
-                <div class="col-lg-3 col-md-6">
-                    <h3 class="mb-3">CONNECT WITH US</h3>
+                <div class="col-lg-3 col-md-6" style="text-decoration: none">
+                    <h6 class="mb-3">CONNECT WITH US</h6>
                     <ul class="list-unstyled">
                         <li><a href="#" class="text-white">Facebook</a></li>
                         <li><a href="#" class="text-white">Twitter</a></li>

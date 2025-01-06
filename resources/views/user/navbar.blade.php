@@ -1,15 +1,15 @@
 <Style>
-    @font-face {
+    /* @font-face {
         font-family: 'barabara';
         src: url('{{ asset('fonts/BARABARA-final.otf') }}') format('truetype');
         font-style: normal;
         font-weight: thin
-    }
-
+    } */
+/* 
     .navbar-brand {
         font-family: 'barabara';
         font-weight: 100
-    }
+    } */
 
     .nav-item.dropdown:hover .dropdown-menu {
         display: block;
@@ -81,33 +81,4 @@
         </div>
     </div>
 </nav>
-<Style>
-    @font-face {
-        font-family: 'barabara';
-        src: url('{{ asset('fonts/BARABARA-final.otf') }}') format('truetype');
-        font-style: normal;
-        font-weight: thin
-    }
 
-    .navbar-brand {
-        font-family: 'barabara';
-        font-weight: 100
-    }
-
-    .nav-item.dropdown:hover .dropdown-menu {
-        display: block;
-    }
-
-    .dropdown-menu {
-        display: none;
-    }
-
-    .navbar {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        /* Make sure it sits on top of other content */
-        background-color: #fff;
-        /* or any background color */
-    }
-</Style>

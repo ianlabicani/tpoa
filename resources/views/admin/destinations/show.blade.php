@@ -1,10 +1,15 @@
-@extends('admin.shell')
+@extends('layouts.admin')
 
 @section('content')
+<h1 class="mt-4">Destinations</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active"> View Destinations</li>
+</ol>
     <div class="container mt-4">
         <!-- Destination Card -->
         <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white text-center">
+            <div class="card-header      text-center">
                 <h3>{{ $destination->name }}</h3>
             </div>
             <div class="card-body">
@@ -34,9 +39,7 @@
                 </script>
 
                 <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <strong>Location:</strong> {{ $destination->location ?? 'N/A' }}
-                    </div>
+                 
                     <div class="col-md-6 mb-3">
                         <strong>Contact:</strong> {{ $destination->contact ?? 'N/A' }}
                     </div>
@@ -44,11 +47,18 @@
                         <strong>Email:</strong> {{ $destination->email ?? 'N/A' }}
                     </div>
                     <div class="col-md-6 mb-3">
+                        <strong>Location:</strong> {{ $destination->location ?? 'N/A' }}
+                    </div>
+                    <div class="col-md-6 mb-3">
                         <strong>Entrance Fee:</strong>
                         {{ $destination->entrance_fee ? '₱' . number_format($destination->entrance_fee, 2) : 'Free' }}
                     </div>
                     <div class="col-md-6 mb-3">
                         <strong>Availability:</strong> {{ $destination->availability ? 'Available' : 'Unavailable' }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Service Offer:</strong>
+                        {!! $destination->service_offer?? '<p>No instructions available at the moment.</p>' !!}
                     </div>
                     <div class="col-md-6 mb-3">
                         <strong>Events:</strong> {{ $destination->events ?? 'No events listed' }}

@@ -14,7 +14,7 @@
 
             <!-- Back to Gallery Button -->
             <div class="mt-4">
-                <a href="{{ route('guest.history') }}#gallery-section" class="btn btn-primary" id="backToGalleryBtn">Back to
+                <a href="{{ route('history') }}#gallery-section" class="btn btn-primary" id="backToGalleryBtn">Back to
                     Gallery</a>
             </div>
         </div>

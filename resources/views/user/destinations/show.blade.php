@@ -14,9 +14,9 @@
 @extends('user.shell')
 
 @section('content')
-    <div class="container mt-4">
-        <div class="card">
-            <div class="card-header bg-primary text-white">
+    <div class="container mt-4 p-4">
+        <div >
+            <div class="text-center">
                 <h3>{{ $destination->name }}</h3>
             </div>
             <div class="card-body">
@@ -24,7 +24,7 @@
                 <div class="map-container mb-4">
                     <div id="map" class="rounded" style="height: 500px; width: 100%;"></div>
                 </div>
-
+        
                 <script>
                     window.onload = function() {
                         @if ($destination->latitude && $destination->longitude)
@@ -35,7 +35,7 @@
                             var longitude = 0;
                         @endif
                         var map = L.map('map').setView([latitude, longitude], 13);
-
+        
                         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                             attribution: '&copy; OpenStreetMap contributors'
                         }).addTo(map);
@@ -77,54 +77,141 @@
                         <strong>How to get there:</strong>
                         {!! $destination->how_to_get_there ?? '<p>No instructions available at the moment.</p>' !!}
                     </div>
+        
+        <div class="row">
+            <!-- First Column -->
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <strong>Name:</strong> {{ $destination->name ?? 'N/A' }}
                 </div>
+                <div class="mb-3">
+                    <strong>Contact:</strong> {{ $destination->contact ?? 'N/A' }}
+                </div>
+                <div class="mb-3">
+                    <strong>Email:</strong> {{ $destination->email ?? 'N/A' }}
+                </div>
+                <div class="mb-3">
+                    <strong>Location:</strong> {{ $destination->location ?? 'N/A' }}
+                </div>
+              
+                <div class="mb-3">
+                    <strong>How to Get There:</strong>
+                    {!! $destination->how_to_get_there ?? '<p>No instructions available at the moment.</p>' !!}
+                </div>
+            </div>
+        
+            <!-- Second Column -->
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <strong>Availability:</strong> {{ $destination->availability ? 'Available' : 'Unavailable' }}
+                </div>
+                <div class="mb-3">
+                    <strong>Events:</strong> {{ $destination->events ?? 'No events listed' }}
+                </div>
+                <div class="mb-3">
+                    <strong>Social Media:</strong>
+                    @if ($destination->social_media)
+                        @foreach (json_decode($destination->social_media, true) as $platform => $link)
+                            <a href="{{ $link }}" target="_blank"
+                                class="btn btn-outline-primary btn-sm me-2">{{ ucfirst($platform) }}</a>
+                        @endforeach
+                    @else
+                        No social media links
+                    @endif
+                </div>
+        
+                <div class="mb-3">
+                    <strong>Entrance Fee:</strong>
+                    {{ $destination->entrance_fee ? '₱' . number_format($destination->entrance_fee, 2) : 'Free' }}
+                </div>
+                <div class="mb-3">
+                    <strong>Service Offer:</strong>
+                    {!! $destination->service_offer ?? '<p>No services offered at the moment.</p>' !!}
+                </div>
+        
+              
+            </div>
+        </div>
+        
+        
+        
             </div>
             <div class="card-footer text-end">
                 <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
             </div>
-        </div>
 
-        <!-- Day Images -->
-        <div class="my-4">
-            <h4 class="mb-3">Day Images</h4>
-            <div class="row g-3">
-                @forelse (json_decode($destination->day_images, true) ?? [] as $dayImage)
-                    <div class="col-md-3">
-                        <div class="card shadow-sm h-100">
-                            <a href="{{ asset('storage/' . $dayImage) }}" target="_blank">
-                                <img src="{{ asset('storage/' . $dayImage) }}" alt="Day Image" class="card-img-top rounded"
-                                    style="height: 180px; object-fit: cover;">
-                            </a>
+            <div class=" d-flex flex-column align-items-center">
+                <div class="my-4" style="width: 700px; margin-bottom: 50px;"> <!-- Reduced margin-bottom -->
+                    <h4 class="mb-3 text-center">Day Images</h4>
+                    <div id="dayImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @forelse (json_decode($destination->day_images, true) ?? [] as $index => $dayImage)
+                                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                    <img src="{{ asset('storage/' . $dayImage) }}" alt="Day Image" class="d-block w-100 rounded"
+                                        style="object-fit: cover;" data-bs-toggle="modal" data-bs-target="#imageModal" 
+                                        data-bs-src="{{ asset('storage/' . $dayImage) }}">
+                                </div>
+                            @empty
+                                <div class="carousel-item active text-center">
+                                    <p class="text-muted">No day images available.</p>
+                                </div>
+                            @endforelse
                         </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#dayImagesCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#dayImagesCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
-                @empty
-                    <div class="col-12 text-center">
-                        <p class="text-muted">No day images available.</p>
+                </div>
+            
+                <div class="my-4" style="width: 700px; margin-top: 100px;"> <!-- Added margin-top -->
+                    <h4 class="mb-3 text-center">Night Images</h4>
+                    <div id="nightImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @forelse (json_decode($destination->night_images, true) ?? [] as $index => $nightImage)
+                                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                    <img src="{{ asset('storage/' . $nightImage) }}" alt="Night Image" class="d-block w-100 rounded"
+                                        style="width: 80%; height: 300px; object-fit: cover;" data-bs-toggle="modal" data-bs-target="#imageModal" 
+                                        data-bs-src="{{ asset('storage/' . $nightImage) }}">
+                                </div>
+                            @empty
+                                <div class="carousel-item active text-center">
+                                    <p class="text-muted">No night images available.</p>
+                                </div>
+                            @endforelse
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#nightImagesCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#nightImagesCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
-                @endforelse
+                </div>
+            </div>
+            
+        
+        <!-- Modal for Full Image View -->
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <img id="modalImage" src="" class="img-fluid" alt="Full Image" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
+        
 
-        <!-- Night Images -->
-        <div class="my-4">
-            <h4 class="mb-3">Night Images</h4>
-            <div class="row g-3">
-                @forelse (json_decode($destination->night_images, true) ?? [] as $nightImage)
-                    <div class="col-md-3">
-                        <div class="card shadow-sm h-100">
-                            <a href="{{ asset('storage/' . $nightImage) }}" target="_blank">
-                                <img src="{{ asset('storage/' . $nightImage) }}" alt="Night Image"
-                                    class="card-img-top rounded" style="height: 180px; object-fit: cover;">
-                            </a>
-                        </div>
-                    </div>
-                @empty
-                    <div class="col-12 text-center">
-                        <p class="text-muted">No night images available.</p>
-                    </div>
-                @endforelse
-            </div>
-        </div>
 
         <!-- Displaying feedbacks -->
         @foreach ($feedbacks as $feedback)
@@ -271,6 +358,8 @@
             <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
         </div>
         <hr>
+
+        
         <h4>Related Videos</h4>
         <div class="video-list">
             @if ($videos->isEmpty())
@@ -334,6 +423,7 @@
                 @endforeach
             @endif
         </div>
+
         <form action="{{ route('user.destinations.videos.store', $destination->id) }}" method="POST">
             @csrf
             <h4>Add Videos</h4>
@@ -358,9 +448,6 @@
         </form>
     </div>
 
-
-
-    <hr>
 
 
 
@@ -456,5 +543,15 @@
             saveBtn.classList.add('d-none');
             cancelBtn.classList.add('d-none');
         }
+
+                // Update the modal image source when an image is clicked
+                var modal = document.getElementById('imageModal');
+            var modalImage = document.getElementById('modalImage');
+        
+            modal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var imageSrc = button.getAttribute('data-bs-src');
+                modalImage.src = imageSrc;
+            });
     </script>
 @endsection

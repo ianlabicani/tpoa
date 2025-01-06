@@ -3,7 +3,10 @@
 @section('content')
     <div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
         <div class="container">
+
+           
             <div class="row justify-content-center">
+                
                 <div class="col-lg-4 col-md-6 col-sm-8 col-12 bg-white p-4 rounded shadow-sm"
                     style="max-height: 90vh; overflow: auto;">
 
@@ -13,7 +16,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    <a class="navbar-brand text-dark text-center " href="/">
+                        <h1 class="m-0">TPOA</h1>
+                    </a>
                     <!-- Login Form -->
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

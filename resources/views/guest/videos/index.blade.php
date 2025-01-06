@@ -1,7 +1,7 @@
 @extends('guest.shell')
 @section('content')
     <style>
-        /* Ensure reaction button spacing is maintained */
+        /* Styling updates */
         .reaction-buttons .btn-link span {
             display: flex;
             align-items: center;
@@ -9,23 +9,29 @@
 
         .reaction-buttons .btn-link i {
             margin-right: 5px;
-            /* Icon and count spacing */
         }
 
         .reaction-buttons .btn-link span {
             margin-right: 10px;
-            /* Space after the count */
         }
 
-        /* Share icons and their spacing */
         .share-section a {
             margin-right: 10px;
-            /* Space between share icons */
         }
 
-        /* Space between share icons and the 'Shares' text */
         .share-section .ms-3 {
             margin-left: 10px;
+        }
+
+        .video-thumbnail {
+            cursor: pointer;
+            height: 260px;
+            object-fit: cover;
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: bold;
         }
     </style>
 
@@ -42,70 +48,26 @@
                 @foreach ($videos as $video)
                     <div class="col-lg-4 col-md-6 col-sm-12 single-video mb-4">
                         <div class="card">
-                            <!-- Video Embed -->
-                            <iframe class="card-img-top" width="100%" height="260" src="{{ $video->url }}" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
+                            <!-- Video Thumbnail -->
+                            @php
+                                // Extract YouTube video ID
+                                preg_match('/[\\?\\&]v=([^\\?\\&]+)/', $video->url, $matches);
+                                $youtubeId = $matches[1] ?? '';
+                                $thumbnailUrl = "https://img.youtube.com/vi/{$youtubeId}/hqdefault.jpg";
+                            @endphp
+
+                            <img src="{{ $thumbnailUrl }}" alt="Video Thumbnail" class="card-img-top video-thumbnail"
+                                data-bs-toggle="modal" data-bs-target="#videoModal" data-video-url="{{ $video->url }}">
 
                             <div class="card-body">
                                 <!-- Video Title -->
                                 <a href="{{ route('destinations.show', ['destination' => $video->destination]) }}">
                                     <h3 class="video-title">{{ $video->title }}</h3>
-                                </a>
-                                <p class="text-muted">
+                                    </a>
+                                    <p class="text-muted">
                                     Uploaded by {{ $video->user_id }} on
                                     {{ $video->created_at->format('F d, Y') }}
                                 </p>
-
-                                <!-- Reaction Section -->
-                                {{-- <div class="reaction-buttons d-flex align-items-center">
-                                    <!-- Like Button -->
-                                    <form action="{{ route('reactions.store') }}" method="POST" class="me-3">
-                                        @csrf
-                                        <input type="hidden" name="video_id" value="{{ $video->id }}">
-                                        <input type="hidden" name="type" value="like">
-
-                                        @php
-                                            $hasLiked = $video->reactions
-                                                ->where('type', 'like')
-                                                ->where(
-                                                    fn($q) => $q->guest_ip == request()->ip() ||
-                                                        $q->user_id == auth()->id(),
-                                                )
-                                                ->isNotEmpty();
-                                        @endphp
-
-                                        <button type="submit" class="btn btn-link p-0 text-dark"
-                                            @if ($hasLiked) disabled @endif>
-                                            <i class="fas fa-thumbs-up me-2"></i>
-                                            <span>{{ $video->reactions->where('type', 'like')->count() }}</span>
-                                        </button>
-                                    </form>
-
-                                    <!-- Dislike Button -->
-                                    <form action="{{ route('reactions.store') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="video_id" value="{{ $video->id }}">
-                                        <input type="hidden" name="type" value="dislike">
-
-                                        @php
-                                            $hasDisliked = $video->reactions
-                                                ->where('type', 'dislike')
-                                                ->where(
-                                                    fn($q) => $q->guest_ip == request()->ip() ||
-                                                        $q->user_id == auth()->id(),
-                                                )
-                                                ->isNotEmpty();
-                                        @endphp
-
-                                        <button type="submit" class="btn btn-link p-0 text-dark"
-                                            @if ($hasDisliked) disabled @endif>
-                                            <i class="fas fa-thumbs-down me-2"></i>
-                                            <span>{{ $video->reactions->where('type', 'dislike')->count() }}</span>
-                                        </button>
-                                    </form>
-                                </div> --}}
-
                             </div>
                         </div>
                     </div>
@@ -114,17 +76,24 @@
         </div>
     </div>
 
-    <!-- JavaScript for Copy Link -->
+ 
+
+    <!-- JavaScript -->
     <script>
-        document.querySelectorAll('.copy-link-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const link = this.getAttribute('data-link');
-                navigator.clipboard.writeText(link).then(() => {
-                    alert('Link copied to clipboard!');
-                });
+        document.addEventListener('DOMContentLoaded', () => {
+            // Video Modal Logic
+            const videoModal = document.getElementById('videoModal');
+            const videoPlayer = document.getElementById('videoPlayer');
+
+            videoModal.addEventListener('show.bs.modal', function(event) {
+                const thumbnail = event.relatedTarget; // Element that triggered the modal
+                const videoUrl = thumbnail.getAttribute('data-video-url'); // Get video URL from thumbnail
+                videoPlayer.src = videoUrl.replace('watch?v=', 'embed/') + "?autoplay=1";
+            });
+
+            videoModal.addEventListener('hide.bs.modal', function() {
+                videoPlayer.src = ''; // Stop video playback on modal close
             });
         });
     </script>
-
-
 @endsection

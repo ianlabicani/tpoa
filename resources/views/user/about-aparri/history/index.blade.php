@@ -140,108 +140,7 @@
         </div>
 
 
-        <div class="mt-5">
-            <h2 class=" display-6 mb-4">Early Inhabitants and Pre-Spanish Era</h2>
-            <div class="row align-items-center">
-                <div class="col-md-4">
-                    <img src="{{ asset('images/history/priests_residence.jpg') }}" alt="Priests' Residence"
-                        class="img-fluid rounded shadow history-image">
-                    <p class="text-center text-muted mt-2">
-                        <small>Source: Wikimedia Commons</small>
-                    </p>
-                </div>
-                <div class="col-md-8">
-                    <p class="lead mb-4" style="text-align: justify">
-                        Before the arrival of the Spaniards, the first inhabitants were the “atta” (Negritoes), short
-                        dark-skinned nomads. Later, Indo-Malays, later known as Ibanag, Itawit,
-                        Yogad, Gaddang, Iraya, and Malaweg, settled in Cagayan Valley, forming one ethnic family.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-5">
-            <h2 class=" display-6 mb-4">The Spanish Era</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="{{ asset('images/history/priests_residence.jpg') }}" alt="Priests' Residence"
-                        class="img-fluid rounded shadow history-image">
-                    <p class="text-center text-muted mt-2">
-                        <small>Source: Wikimedia Commons</small>
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <p class="lead mb-4" style="text-align: justify">
-                        Aparri's prominence as a trading port attracted population growth. By May 1653, the first town
-                        fiesta was celebrated, coinciding with trading activities involving
-                        Spanish galleons and local goods.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-5">
-            <h2 class=" display-6 mb-4">The Revolution and Independence</h2>
-            <div class="row align-items-center">
-                <div class="col-md-4">
-                    <img src="{{ asset('images/history/priests_residence.jpg') }}" alt="Priests' Residence"
-                        class="img-fluid rounded shadow history-image">
-                    <p class="text-center text-muted mt-2">
-                        <small>Source: Wikimedia Commons</small>
-                    </p>
-                </div>
-                <div class="col-md-8">
-                    <p class="lead mb-4" style="text-align: justify">
-                        Aparri played a pivotal role in the Philippine Revolution. On August 10, 1898, Col. Daniel Tirona
-                        established the Revolutionary Government in Northern Luzon.
-                        During the American era, Aparri's status as a trading port grew, further bolstered by infrastructure
-                        like the National Highway and airfield.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-5">
-            <h2 class=" display-6 mb-4">World War II and Post-War Reconstruction</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="{{ asset('images/history/priests_residence.jpg') }}" alt="Priests' Residence"
-                        class="img-fluid rounded shadow history-image">
-                    <p class="text-center text-muted mt-2">
-                        <small>Source: Wikimedia Commons</small>
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <p class="lead mb-4" style="text-align: justify">
-                        Aparri suffered during the Japanese occupation beginning December 10, 1941, but was liberated on
-                        June 26, 1945. Despite post-war devastation, the town slowly regained
-                        its economic and cultural prominence.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-5">
-            <h2 class=" display-6 mb-4">Notable Figures and Contributions</h2>
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <p class="lead mb-4" style="text-align: justify">
-                        Various individuals contributed to Aparri's growth, including Don Pedro Alvarado, who founded an
-                        arts and trades school, and Don Fermin Macanaya, who initiated key
-                        infrastructure projects. Aparri remains a testament to its rich and resilient history.
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <img src="{{ asset('images/history/priests_residence.jpg') }}" alt="Priests' Residence"
-                        class="img-fluid rounded shadow history-image">
-                    <p class="text-center text-muted mt-2">
-                        <small>Source: Wikimedia Commons</small>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
+       
     <!-- Gallery of History Section -->
     <section id="gallery-section" class="gallery-section py-5 bg-light">
         <div class="container">
@@ -264,7 +163,7 @@
                 <div class="col-md-4">
                     <a href="{{ route('gallery.show', ['id' => 2]) }}">
                         <div class="gallery-item">
-                            <img src="{{ asset('image/history/fishing-boat-unloading.jpg') }}"
+                            <img src="{{ asset('image/history/boat-unloading.jpg') }}"
                                 alt="Fishing Boat Unloading Image 2" class="gallery-image">
                             <p class="gallery-caption">FISHING BOAT UNLOADING -CA. 1900s-1930s</p>
                         </div>
@@ -294,7 +193,7 @@
                 <div class="col-md-4">
                     <a href="{{ route('gallery.show', ['id' => 5]) }}">
                         <div class="gallery-item">
-                            <img src="{{ asset('image/history/fish-net-and-poles.jpg') }}"
+                            <img src="{{ asset('image/history/fish-net-poles.jpg') }}"
                                 alt="Fishing Net and Poles Image 3" class="gallery-image">
                             <p class="gallery-caption">FISHING NETS AND POLES, APARRI – CA. 1900S-1930s</p>
                         </div>

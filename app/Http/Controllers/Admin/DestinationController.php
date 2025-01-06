@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Destination;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 
 class DestinationController extends Controller
@@ -40,6 +41,8 @@ class DestinationController extends Controller
             'night_images' => 'nullable|array',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
+
+            
         ]);
 
         // Save day images if present
@@ -90,7 +93,6 @@ class DestinationController extends Controller
      */
     public function update(Request $request, Destination $destination)
     {
-        // Validate the incoming request
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'nullable|string|max:255',
@@ -105,11 +107,9 @@ class DestinationController extends Controller
             'night_images' => 'nullable|array',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
-
+            
         ]);
-
-
-
+    
         // Save day images if present
         if ($request->hasFile('day_images')) {
             $dayImages = [];
@@ -118,7 +118,7 @@ class DestinationController extends Controller
             }
             $validated['day_images'] = json_encode($dayImages);  // Save as a JSON array of file paths
         }
-
+    
         // Save night images if present
         if ($request->hasFile('night_images')) {
             $nightImages = [];
@@ -127,12 +127,13 @@ class DestinationController extends Controller
             }
             $validated['night_images'] = json_encode($nightImages);  // Save as a JSON array of file paths
         }
-
+    
         // Update the destination with the validated data
         $destination->update($validated);
-
+    
         return redirect()->route('admin.destinations.show', $destination)->with('success', 'Destination updated successfully');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -142,4 +143,30 @@ class DestinationController extends Controller
         $destination->delete();
         return redirect()->route('admin.destinations.index')->with('success', 'Destination deleted successfully');
     }
+
+ 
+ 
+ 
+   // Method to manage feedbacks
+   public function manageFeedbacks()
+   {
+       // Fetch feedbacks associated with destinations
+       $feedbacks = Feedback::with('user', 'reactions', 'destination') // Eager load related data
+                           ->orderBy('created_at', 'desc')
+                           ->paginate(6);
+
+       // Pass feedbacks to the view
+       return view('admin.feedbacks.index', compact('feedbacks'));
+   }
+     
+     
+   public function manageActivityLogs()
+   {
+  
+       // Pass feedbacks to the view
+       return view('admin.activity-logs.index');
+   }
+  
+     
+
 }
