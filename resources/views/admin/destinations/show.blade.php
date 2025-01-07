@@ -135,6 +135,7 @@
 
 
         <!-- Related Videos -->
+        <!-- Related Videos -->
         <div class="my-4">
             <h4>Related Videos</h4>
             @if ($videos->isEmpty())
@@ -145,10 +146,25 @@
                         <div class="col-md-6 mb-3">
                             <div class="card {{ $video->isReviewed ? 'border-info' : 'border-warning' }}">
                                 <div class="card-body">
+                                    <!-- Video Title -->
                                     <h5 class="card-title">{{ $video->title }}</h5>
+
+                                    <!-- Video Embed -->
+                                    <div class="mb-3">
+                                        @if (str_contains($video->url, 'youtube') || str_contains($video->url, 'vimeo'))
+                                            <iframe src="{{ $video->url }}" class="w-100 rounded"
+                                                style="height: 300px; border: none;" allowfullscreen>
+                                            </iframe>
+                                        @else
+                                            <p class="text-muted">Cannot embed this video. <a href="{{ $video->url }}"
+                                                    target="_blank">Watch here</a>.</p>
+                                        @endif
+                                    </div>
+
+                                    <!-- Video Description -->
                                     <p class="card-text">{{ $video->description }}</p>
-                                    <a href="{{ $video->url }}" target="_blank" class="btn btn-outline-primary">Watch
-                                        Video</a>
+
+                                    <!-- Approval for Admins -->
                                     @if (!$video->isReviewed)
                                         <p class="mt-2">This video is pending review.</p>
                                         <form action="{{ route('admin.videos.review', $video->id) }}" method="POST"

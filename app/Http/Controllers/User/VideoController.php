@@ -12,25 +12,26 @@ class VideoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'video_title.*' => 'required|string|max:255',
-            'video_url.*' => 'required|url',
+            'video_title' => 'required|string|max:255',
+            'video_url' => 'required|string|max:5000',
             'video_description.*' => 'nullable|string',
+            'yt_embed_link' => 'nullable|string|max:255',
         ]);
 
         $destination = Destination::findOrFail($request->destination);
 
-        foreach ($request->video_title as $index => $title) {
-            $destination->videos()->create([
-                'title' => $title,
-                'url' => $request->video_url[$index],
-                'isReviewed' => false,
-                'description' => $request->video_description[$index],
-                'user_id' => auth()->id(),
-            ]);
-        }
+        $destination->videos()->create([
+            'title' => $request->video_title,
+            'url' => $request->video_url,
+            'isReviewed' => false,
+            'description' => $request->video_description,
+            'user_id' => auth()->id(),
+        ]);
+
 
         return redirect()->back()->with('success', 'Destination created successfully.');
     }
+
 
     public function update(Request $request, $destinationId, $videoId)
     {
@@ -42,7 +43,7 @@ class VideoController extends Controller
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'url' => 'required|url',
+            'url' => 'required|string|max:5000',
             'description' => 'nullable|string',
         ]);
 
