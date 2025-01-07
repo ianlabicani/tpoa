@@ -6,13 +6,15 @@ use App\Http\Controllers\Admin\DestinationController as AdminDestinationControll
 use App\Http\Controllers\Admin\EventController;
 
 use App\Http\Controllers\Admin\VideoController as AdminVideoController;
+use App\Http\Controllers\HotelController as AdminHotelController;
+
 // user
-use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ShareDestinationController;
 use App\Http\Controllers\ShareVideoController;
 use App\Http\Controllers\User\DestinationController as UserDestinationController;
 use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
 use App\Http\Controllers\User\VideoController as UserVideoController;
+use App\Http\Controllers\User\HotelController as UserHotelController;
 // guest
 use App\Http\Controllers\Guest\DestinationController as GuestDestinationController;
 use App\Http\Controllers\Guest\VideoController as GuestVideoController;
@@ -37,6 +39,8 @@ Route::get('culture', [GuestController::class, 'culture'])->name('culture');
 Route::get('events', [GuestController::class, 'events'])->name('guest.events');
 Route::get('events/{event}', [GuestController::class, 'show_event'])->name('events.show');
 Route::get('contact', [GuestController::class, 'contact'])->name('contact');
+Route::resource('hotels', UserHotelController::class)->only(['index', 'show']);
+
 
 
 
@@ -87,7 +91,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::put('events/{event}', [EventController::class, 'update'])->name('events.update');
     Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 
-    Route::resource('hotels', HotelController::class);
+    Route::resource('hotels', AdminHotelController::class);
 
 });
 
@@ -118,6 +122,7 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
     Route::get('alamang', [GuestController::class, 'alamang'])->name('alamang');
     Route::get('daing', [GuestController::class, 'daing'])->name('daing');
     Route::get('nipa_wine', [GuestController::class, 'nipa_wine'])->name('nipa_wine');
+    Route::resource('hotels', UserHotelController::class)->only(['index', 'show']);
 });
 
 

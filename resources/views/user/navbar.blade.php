@@ -3,10 +3,10 @@
         font-family: 'gugi';
         src: url('{{ asset('fonts/Gugi-Regular.ttf') }}') format('truetype');
         font-style: normal;
-      
-    } 
-    
-    
+
+    }
+
+
     .navbar-brand {
         font-family: 'gugi';
         font-weight: 200
@@ -74,6 +74,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('user.destinations.index') }}">Destinations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('user.hotels.index') }}">Hotels</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('destinations.videos') }}">Videos</a>
