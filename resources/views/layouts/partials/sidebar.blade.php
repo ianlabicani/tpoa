@@ -8,9 +8,23 @@
             </a>
             <hr>
 
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHotels"
+                aria-expanded="false" aria-controls="collapseHotels">
+                <div class="sb-nav-link-icon"><i class="fas fa-map-marker-alt"></i></div>
+                Hotels
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="collapseHotels" aria-labelledby="headingHotels"
+                data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link" href="{{ route('admin.hotels.index') }}">View Hotels</a>
+                    <a class="nav-link" href="{{ route('admin.hotels.create') }}">Add Hotels</a>
+                </nav>
+            </div>
+
             <!-- Destinations Section -->
-            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDestinations"
-                aria-expanded="false" aria-controls="collapseDestinations">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                data-bs-target="#collapseDestinations" aria-expanded="false" aria-controls="collapseDestinations">
                 <div class="sb-nav-link-icon"><i class="fas fa-map-marker-alt"></i></div>
                 Destinations
                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>

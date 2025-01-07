@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EventController;
 
 use App\Http\Controllers\Admin\VideoController as AdminVideoController;
 // user
+use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ShareDestinationController;
 use App\Http\Controllers\ShareVideoController;
 use App\Http\Controllers\User\DestinationController as UserDestinationController;
@@ -85,6 +86,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
     Route::put('events/{event}', [EventController::class, 'update'])->name('events.update');
     Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
+
+    Route::resource('hotels', HotelController::class);
+
 });
 
 
