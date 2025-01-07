@@ -49,22 +49,34 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 single-video mb-4">
                         <div class="card">
                             <!-- Video Thumbnail -->
-                            @php
-                                // Extract YouTube video ID
-                                preg_match('/[\\?\\&]v=([^\\?\\&]+)/', $video->url, $matches);
-                                $youtubeId = $matches[1] ?? '';
-                                $thumbnailUrl = "https://img.youtube.com/vi/{$youtubeId}/hqdefault.jpg";
-                            @endphp
+                            @if (strpos($video->url, 'youtube.com') !== false || strpos($video->url, 'youtu.be') !== false)
+                                @php
+                                    if (strpos($video->url, 'youtu.be') !== false) {
+                                        $videoId = basename($video->url);
+                                        $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
+                                    } elseif (strpos($video->url, 'youtube.com') !== false) {
+                                        parse_str(parse_url($video->url, PHP_URL_QUERY), $params);
+                                        $embedUrl = 'https://www.youtube.com/embed/' . $params['v'];
+                                    }
+                                @endphp
 
-                            <img src="{{ $thumbnailUrl }}" alt="Video Thumbnail" class="card-img-top video-thumbnail"
-                                data-bs-toggle="modal" data-bs-target="#videoModal" data-video-url="{{ $video->url }}">
+                                <!-- Embed YouTube Video -->
+                                <iframe width="100%" height="315" src="{{ $embedUrl }}" title="Video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            @else
+                                <!-- If it's not a YouTube link, just show the media link -->
+                                <a href="{{ $video->url }}" target="_blank" class="btn btn-outline-primary">Watch
+                                    Video</a>
+                            @endif
 
                             <div class="card-body">
                                 <!-- Video Title -->
                                 <a href="{{ route('destinations.show', ['destination' => $video->destination]) }}">
                                     <h3 class="video-title">{{ $video->title }}</h3>
-                                    </a>
-                                    <p class="text-muted">
+                                </a>
+                                <p class="text-muted">
                                     Uploaded by {{ $video->user_id }} on
                                     {{ $video->created_at->format('F d, Y') }}
                                 </p>
@@ -76,7 +88,7 @@
         </div>
     </div>
 
- 
+
 
     <!-- JavaScript -->
     <script>
