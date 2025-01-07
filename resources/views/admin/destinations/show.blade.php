@@ -1,89 +1,103 @@
 @extends('layouts.admin')
 
 @section('content')
-<h1 class="mt-4">Destinations</h1>
-<ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-    <li class="breadcrumb-item active"> View Destinations</li>
-</ol>
+    <h1 class="mt-4">Destinations</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active"> View Destinations</li>
+    </ol>
     <div class="container mt-4">
         <!-- Destination Card -->
         <div class="card shadow-sm">
             <div class="card-header      text-center">
                 <h3>{{ $destination->name }}</h3>
             </div>
-         <!-- Location Map View -->
-<div class="mb-4 p-4">
+            <!-- Location Map View -->
+            <div class="mb-4 p-4">
 
-    <div id="map" style="height: 400px;"></div>
+                <div id="map" style="height: 400px;"></div>
 
-    <!-- Display Latitude, Longitude, and Location Name -->
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <label for="location_name" class="form-label"><strong>Location Name</strong></label>
-            <input type="text" id="location_name" name="location_name" class="form-control" 
-                value="{{ $destination->name ?? 'Unnamed Location' }}" readonly>
-        </div>
-        <div class="col-md-6 mt-3">
-            <label for="latitude" class="form-label"><strong>Latitude</strong></label>
-            <input type="text" id="latitude" name="latitude" class="form-control" 
-                value="{{ $destination->latitude }}" readonly>
-        </div>
-        <div class="col-md-6 mt-3">
-            <label for="longitude" class="form-label"><strong>Longitude</strong></label>
-            <input type="text" id="longitude" name="longitude" class="form-control" 
-                value="{{ $destination->longitude }}" readonly>
-        </div>
-    </div>
+                <!-- Display Latitude, Longitude, and Location Name -->
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label for="location_name" class="form-label"><strong>Location Name</strong></label>
+                        <input type="text" id="location_name" name="location_name" class="form-control"
+                            value="{{ $destination->name ?? 'Unnamed Location' }}" readonly>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <label for="latitude" class="form-label"><strong>Latitude</strong></label>
+                        <input type="text" id="latitude" name="latitude" class="form-control"
+                            value="{{ $destination->latitude }}" readonly>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <label for="longitude" class="form-label"><strong>Longitude</strong></label>
+                        <input type="text" id="longitude" name="longitude" class="form-control"
+                            value="{{ $destination->longitude }}" readonly>
+                    </div>
+                </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Get latitude, longitude, and name from server-side variables
-            const latitude = {{ $destination->latitude }};
-            const longitude = {{ $destination->longitude }};
-            const locationName = "{{ $destination->name ?? 'Unnamed Location' }}";
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        // Get latitude, longitude, and name from server-side variables
+                        const latitude = {{ $destination->latitude }};
+                        const longitude = {{ $destination->longitude }};
+                        const locationName = "{{ $destination->name ?? 'Unnamed Location' }}";
 
-            // Initialize the map
-            const map = L.map('map').setView([latitude, longitude], 13);
+                        // Initialize the map
+                        const map = L.map('map').setView([latitude, longitude], 13);
 
-            // Add multiple tile layers
-            const baseLayers = {
-                "OpenStreetMap": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap contributors'
-                }),
-                "Google Streets": L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
-                    attribution: '© Google Maps'
-                }),
-                "Google Satellite": L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-                    attribution: '© Google Maps'
-                })
-            };
+                        // Add multiple tile layers
+                        const baseLayers = {
+                            "OpenStreetMap": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; OpenStreetMap contributors'
+                            }),
+                            "Google Streets": L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+                                attribution: '© Google Maps'
+                            }),
+                            "Google Satellite": L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+                                attribution: '© Google Maps'
+                            })
+                        };
 
-            // Add OpenStreetMap as the default tile layer
-            baseLayers["OpenStreetMap"].addTo(map);
+                        // Add OpenStreetMap as the default tile layer
+                        baseLayers["OpenStreetMap"].addTo(map);
 
-            // Add layer control to switch between layers
-            L.control.layers(baseLayers).addTo(map);
+                        // Add layer control to switch between layers
+                        L.control.layers(baseLayers).addTo(map);
 
-            // Add a marker for the location
-            L.marker([latitude, longitude]).addTo(map)
-                .bindPopup(`<b>${locationName}</b><br>Latitude: ${latitude}<br>Longitude: ${longitude}`)
-                .openPopup();
+                        // Add a marker for the location
+                        L.marker([latitude, longitude]).addTo(map)
+                            .bindPopup(`<b>${locationName}</b><br>Latitude: ${latitude}<br>Longitude: ${longitude}`)
+                            .openPopup();
 
-            // Add points of interest (POIs) if applicable
-            const pointsOfInterest = [
-                { lat: 18.35563019274085, lng: 121.63384768213126, name: "Aparri Beach", description: "Famous for its natural beauty." },
-                { lat: 18.355379815926486, lng: 121.64200090392804, name: "St Peter Thelmo Parish", description: "Historic church in Aparri." },
-                { lat: 18.362924430961094, lng: 121.62882759800767, name: "Port of Aparri", description: "Old Port of Aparri." }
-            ];
+                        // Add points of interest (POIs) if applicable
+                        const pointsOfInterest = [{
+                                lat: 18.35563019274085,
+                                lng: 121.63384768213126,
+                                name: "Aparri Beach",
+                                description: "Famous for its natural beauty."
+                            },
+                            {
+                                lat: 18.355379815926486,
+                                lng: 121.64200090392804,
+                                name: "St Peter Thelmo Parish",
+                                description: "Historic church in Aparri."
+                            },
+                            {
+                                lat: 18.362924430961094,
+                                lng: 121.62882759800767,
+                                name: "Port of Aparri",
+                                description: "Old Port of Aparri."
+                            }
+                        ];
 
-            pointsOfInterest.forEach(poi => {
-                L.marker([poi.lat, poi.lng]).addTo(map)
-                    .bindPopup(`<strong>${poi.name}</strong><br>${poi.description}`);
-            });
-        });
-    </script>
-</div>
+                        pointsOfInterest.forEach(poi => {
+                            L.marker([poi.lat, poi.lng]).addTo(map)
+                                .bindPopup(`<strong>${poi.name}</strong><br>${poi.description}`);
+                        });
+                    });
+                </script>
+            </div>
 
             <div class="card-footer text-end">
                 <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
@@ -151,14 +165,28 @@
 
                                     <!-- Video Embed -->
                                     <div class="mb-3">
-                                        @if (str_contains($video->url, 'youtube') || str_contains($video->url, 'vimeo'))
-                                            <iframe src="{{ $video->url }}" class="w-100 rounded"
-                                                style="height: 300px; border: none;" allowfullscreen>
-                                            </iframe>
+                                        @if (strpos($video->url, 'youtube.com') !== false || strpos($video->url, 'youtu.be') !== false)
+                                            @php
+                                                if (strpos($video->url, 'youtu.be') !== false) {
+                                                    $videoId = basename($video->url);
+                                                    $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
+                                                } elseif (strpos($video->url, 'youtube.com') !== false) {
+                                                    parse_str(parse_url($video->url, PHP_URL_QUERY), $params);
+                                                    $embedUrl = 'https://www.youtube.com/embed/' . $params['v'];
+                                                }
+                                            @endphp
+
+                                            <!-- Embed YouTube Video -->
+                                            <iframe width="100%" height="315" src="{{ $embedUrl }}"
+                                                title="Video player" frameborder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                         @else
-                                            <p class="text-muted">Cannot embed this video. <a href="{{ $video->url }}"
-                                                    target="_blank">Watch here</a>.</p>
+                                            <!-- If it's not a YouTube link, just show the media link -->
+                                            <a href="{{ $video->url }}" target="_blank"
+                                                class="btn btn-outline-primary">Watch Video</a>
                                         @endif
+
                                     </div>
 
                                     <!-- Video Description -->

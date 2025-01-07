@@ -1,18 +1,18 @@
 @extends('layouts.admin')
 
 @section('content')
-<h1 class="mt-4">Videos</h1>
-<ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-    <li class="breadcrumb-item active">Manage Videos</li>
-</ol>
+    <h1 class="mt-4">Videos</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Manage Videos</li>
+    </ol>
     @if (session('success'))
         <div class="alert alert-success text-center">
             {{ session('success') }}
         </div>
     @endif
 
-  
+
     @if ($videos->isEmpty())
         <div class="text-center">
             <p class="text-muted">No videos pending review.</p>
@@ -30,7 +30,27 @@
                                 </a>
                             </h5>
                             <p class="card-text text-muted text-truncate mb-3">{{ $video->description }}</p>
-                            <a href="{{ $video->url }}" target="_blank" class="btn btn-primary mt-auto">Watch Video</a>
+                            @if (strpos($video->url, 'youtube.com') !== false || strpos($video->url, 'youtu.be') !== false)
+                                @php
+                                    if (strpos($video->url, 'youtu.be') !== false) {
+                                        $videoId = basename($video->url);
+                                        $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
+                                    } elseif (strpos($video->url, 'youtube.com') !== false) {
+                                        parse_str(parse_url($video->url, PHP_URL_QUERY), $params);
+                                        $embedUrl = 'https://www.youtube.com/embed/' . $params['v'];
+                                    }
+                                @endphp
+
+                                <!-- Embed YouTube Video -->
+                                <iframe width="100%" height="315" src="{{ $embedUrl }}" title="Video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            @else
+                                <!-- If it's not a YouTube link, just show the media link -->
+                                <a href="{{ $video->url }}" target="_blank" class="btn btn-outline-primary">Watch
+                                    Video</a>
+                            @endif
 
                             @if (!$video->isReviewed)
                                 <form action="{{ route('admin.videos.review', $video->id) }}" method="POST" class="mt-3">

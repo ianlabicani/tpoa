@@ -8,6 +8,8 @@
     <title>@yield('title')</title>
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href=" {{ asset('admin_asset/css/styles.css') }}" rel="stylesheet" />
@@ -35,7 +37,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    @yield('content')   
+                    @yield('content')
                 </div>
             </main>
 
