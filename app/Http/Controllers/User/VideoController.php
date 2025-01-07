@@ -28,6 +28,7 @@ class VideoController extends Controller
             'user_id' => auth()->id(),
         ]);
 
+        activity()->log('user added video');
 
         return redirect()->back()->with('success', 'Destination created successfully.');
     }

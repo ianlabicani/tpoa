@@ -23,6 +23,7 @@ class FeedbackController extends Controller
             'user_id' => auth()->id(),
             'comment' => $request->comment,
         ]);
+        activity()->log('user added feedback');
 
         return redirect()->back()->with('success', 'Thank you for your feedback!');
     }
@@ -54,6 +55,7 @@ class FeedbackController extends Controller
         $feedback->update([
             'comment' => $request->comment,
         ]);
+        activity()->log('user updated feedback');
 
         return redirect()->back()->with('success', 'Feedback updated successfully');
     }
@@ -120,6 +122,7 @@ class FeedbackController extends Controller
                 'reaction' => 'dislike',
             ]);
         }
+        activity()->log('user reacted to feedback');
 
         return $this->getReactionResponse($feedbackId);
     }

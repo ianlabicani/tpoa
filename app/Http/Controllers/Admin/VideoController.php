@@ -19,6 +19,8 @@ class VideoController extends Controller
         $video = Video::findOrFail($id);
         $video->isReviewed = true;
         $video->save();
+        activity()->log('admin reviewed video');
+
         return redirect()->route('admin.videos.index')->with('success', 'Video marked as reviewed.');
     }
 }

@@ -67,6 +67,7 @@ class DestinationController extends Controller
 
         // Create a new destination with the validated data
         $destination = Destination::create($validated);
+        activity()->log('admin created destination');
 
         return redirect()->route('admin.destinations.show', $destination)->with('success', 'Destination created successfully');
     }
@@ -132,6 +133,7 @@ class DestinationController extends Controller
 
         // Update the destination with the validated data
         $destination->update($validated);
+        activity()->log('admin updated destination');
 
         return redirect()->route('admin.destinations.show', $destination)->with('success', 'Destination updated successfully');
     }
@@ -143,6 +145,7 @@ class DestinationController extends Controller
     public function destroy(Destination $destination)
     {
         $destination->delete();
+        activity()->log('admin deleted destination');
         return redirect()->route('admin.destinations.index')->with('success', 'Destination deleted successfully');
     }
 
