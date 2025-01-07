@@ -1,5 +1,17 @@
 @extends('auth.shell')
+<style>
+     @font-face {
+        font-family: 'gugi';
+        src: url('{{ asset('fonts/Gugi-Regular.ttf') }}') format('truetype');
+        font-style: normal;
+      
+    }
 
+
+    .navbar-brand{
+        font-family: 'gugi'
+    }
+</style>
 @section('content')
     <div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
         <div class="container">
@@ -49,13 +61,7 @@
                             @enderror
                         </div>
 
-                        <!-- Remember Me -->
-                        <div class="mb-3 form-check">
-                            <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
-                            <label for="remember_me" class="form-check-label">
-                                {{ __('Remember me') }}
-                            </label>
-                        </div>
+                    
 
                         <!-- Submit and Links -->
                         <div class="d-grid gap-3 mt-4">
@@ -63,11 +69,7 @@
                                 {{ __('Log in') }}
                             </button>
 
-                            @if (Route::has('password.request'))
-                                <a class="text-decoration-none small text-center" href="{{ route('password.request') }}">
-                                    {{ __('Forgot your password?') }}
-                                </a>
-                            @endif
+                           
                         </div>
 
                         <p class="text-center mt-3 small">

@@ -12,71 +12,79 @@
             <div class="card-header      text-center">
                 <h3>{{ $destination->name }}</h3>
             </div>
-            <div class="card-body">
-                <div class="map-coontainer">
-                    <div id="map" class="mb-4 rounded" style="height: 500px; width: 100%;"></div>
-                </div>
+         <!-- Location Map View -->
+<div class="mb-4 p-4">
 
-                <script>
-                    window.onload = function() {
-                        @if ($destination->latitude && $destination->longitude)
-                            var latitude = {{ $destination->latitude }};
-                            var longitude = {{ $destination->longitude }};
-                        @else
-                            var latitude = 0;
-                            var longitude = 0;
-                        @endif
-                        var map = L.map('map').setView([latitude, longitude], 13);
+    <div id="map" style="height: 400px;"></div>
 
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            attribution: '&copy; OpenStreetMap contributors'
-                        }).addTo(map);
-                        L.marker([latitude, longitude]).addTo(map)
-                            .bindPopup('Destination: {{ $destination->name }}')
-                            .openPopup();
+    <!-- Display Latitude, Longitude, and Location Name -->
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <label for="location_name" class="form-label"><strong>Location Name</strong></label>
+            <input type="text" id="location_name" name="location_name" class="form-control" 
+                value="{{ $destination->name ?? 'Unnamed Location' }}" readonly>
+        </div>
+        <div class="col-md-6 mt-3">
+            <label for="latitude" class="form-label"><strong>Latitude</strong></label>
+            <input type="text" id="latitude" name="latitude" class="form-control" 
+                value="{{ $destination->latitude }}" readonly>
+        </div>
+        <div class="col-md-6 mt-3">
+            <label for="longitude" class="form-label"><strong>Longitude</strong></label>
+            <input type="text" id="longitude" name="longitude" class="form-control" 
+                value="{{ $destination->longitude }}" readonly>
+        </div>
+    </div>
 
-                    };
-                </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Get latitude, longitude, and name from server-side variables
+            const latitude = {{ $destination->latitude }};
+            const longitude = {{ $destination->longitude }};
+            const locationName = "{{ $destination->name ?? 'Unnamed Location' }}";
 
-                <div class="row">
-                 
-                    <div class="col-md-6 mb-3">
-                        <strong>Contact:</strong> {{ $destination->contact ?? 'N/A' }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <strong>Email:</strong> {{ $destination->email ?? 'N/A' }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <strong>Location:</strong> {{ $destination->location ?? 'N/A' }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <strong>Entrance Fee:</strong>
-                        {{ $destination->entrance_fee ? '₱' . number_format($destination->entrance_fee, 2) : 'Free' }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <strong>Availability:</strong> {{ $destination->availability ? 'Available' : 'Unavailable' }}
-                    </div>
-                    <div class="col-md-6">
-                        <strong>Service Offer:</strong>
-                        {!! $destination->service_offer?? '<p>No instructions available at the moment.</p>' !!}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <strong>Events:</strong> {{ $destination->events ?? 'No events listed' }}
-                    </div>
-                    <div class="col-md-12">
-                        <strong>Social Media Links:</strong>
-                        {!! $destination->social_media ?? '<p>No links available at the moment.</p>' !!}
-                    </div>
-                    <div class="col-md-12">
-                        <strong>Services Offered:</strong>
-                        {!! $destination->service_offer ?? '<p>No services available at the moment.</p>' !!}
-                    </div>
-                    <div class="col-md-12">
-                        <strong>How to get there:</strong>
-                        {!! $destination->how_to_get_there ?? '<p>No instructions available at the moment.</p>' !!}
-                    </div>
-                </div>
-            </div>
+            // Initialize the map
+            const map = L.map('map').setView([latitude, longitude], 13);
+
+            // Add multiple tile layers
+            const baseLayers = {
+                "OpenStreetMap": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }),
+                "Google Streets": L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+                    attribution: '© Google Maps'
+                }),
+                "Google Satellite": L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+                    attribution: '© Google Maps'
+                })
+            };
+
+            // Add OpenStreetMap as the default tile layer
+            baseLayers["OpenStreetMap"].addTo(map);
+
+            // Add layer control to switch between layers
+            L.control.layers(baseLayers).addTo(map);
+
+            // Add a marker for the location
+            L.marker([latitude, longitude]).addTo(map)
+                .bindPopup(`<b>${locationName}</b><br>Latitude: ${latitude}<br>Longitude: ${longitude}`)
+                .openPopup();
+
+            // Add points of interest (POIs) if applicable
+            const pointsOfInterest = [
+                { lat: 18.35563019274085, lng: 121.63384768213126, name: "Aparri Beach", description: "Famous for its natural beauty." },
+                { lat: 18.355379815926486, lng: 121.64200090392804, name: "St Peter Thelmo Parish", description: "Historic church in Aparri." },
+                { lat: 18.362924430961094, lng: 121.62882759800767, name: "Port of Aparri", description: "Old Port of Aparri." }
+            ];
+
+            pointsOfInterest.forEach(poi => {
+                L.marker([poi.lat, poi.lng]).addTo(map)
+                    .bindPopup(`<strong>${poi.name}</strong><br>${poi.description}`);
+            });
+        });
+    </script>
+</div>
+
             <div class="card-footer text-end">
                 <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
                 <a href="{{ route('admin.destinations.edit', $destination->id) }}" class="btn btn-warning">Edit</a>

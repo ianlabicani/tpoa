@@ -51,6 +51,6 @@
 
     <!-- Footer Bottom Section -->
     <div class="footer-bottom pt-4">
-        <p class="mb-0">&copy; 2025 Your Company Name. All Rights Reserved.</p>
+        
     </div>
 </footer>

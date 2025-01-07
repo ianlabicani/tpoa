@@ -5,7 +5,6 @@
 use App\Http\Controllers\Admin\DestinationController as AdminDestinationController;
 use App\Http\Controllers\Admin\EventController;
 
-
 use App\Http\Controllers\Admin\VideoController as AdminVideoController;
 // user
 use App\Http\Controllers\ShareDestinationController;
@@ -19,6 +18,7 @@ use App\Http\Controllers\Guest\VideoController as GuestVideoController;
 use App\Http\Controllers\Guest\GuestController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController as ControllersSearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +33,7 @@ Route::post('destinations/{destination}/share', [ShareDestinationController::cla
 Route::get('destinations-videos', [GuestVideoController::class, 'showDestinationVideos'])->name('destinations.videos');
 Route::get('history', [GuestController::class, 'history'])->name('history');
 Route::get('culture', [GuestController::class, 'culture'])->name('culture');
-Route::get('events', [GuestController::class, 'events'])->name('events');
+Route::get('events', [GuestController::class, 'events'])->name('guest.events');
 Route::get('events/{event}', [GuestController::class, 'show_event'])->name('events.show');
 Route::get('contact', [GuestController::class, 'contact'])->name('contact');
 
@@ -49,6 +49,11 @@ Route::get('miki_niladdit', [GuestController::class, 'miki_niladdit'])->name('mi
 Route::get('web/culture/aramang_ukoy', [GuestController::class, 'aramang_ukoy'])->name('aramang_ukoy');
 Route::get('gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
 
+//PRODUCTS 
+Route::get('products', [GuestController::class, 'products'])->name('products');
+Route::get('alamang', [GuestController::class, 'alamang'])->name('alamang');
+Route::get('daing', [GuestController::class, 'daing'])->name('daing');
+Route::get('nipa_wine', [GuestController::class, 'nipa_wine'])->name('nipa_wine');
 
 
 
@@ -70,18 +75,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::resource('videos', AdminVideoController::class);
     Route::put('videos/{video}/review', [AdminVideoController::class, 'review'])->name('videos.review');
 
-   
+
     Route::get('feedbacks', [AdminDestinationController::class, 'manageFeedbacks'])->name('feedbacks.index');
     Route::get('activity-logs', [AdminDestinationController::class, 'manageActivityLogs'])->name('activity-logs.index');
 
     Route::get('events', [EventController::class, 'index'])->name('events.index');
- 
+
     Route::resource('events', EventController::class)->only(['index', 'create', 'store', 'edit', 'update']);
     Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
     Route::put('events/{event}', [EventController::class, 'update'])->name('events.update');
-
     Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
-
 });
 
 
@@ -102,9 +105,15 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
 
     Route::get('history', [GuestController::class, 'user_history'])->name('history');
     Route::get('culture', [GuestController::class, 'user_culture'])->name('culture');
-    Route::get('events', [GuestController::class, 'user_events'])->name('events');
+    Route::get('events', [GuestController::class, 'events'])->name('events');
+    Route::get('events/{event}', [GuestController::class, 'show_event'])->name('events.show');
     Route::get('contact', [GuestController::class, 'user_contact'])->name('contact');
-    Route::get('user/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
+    Route::get('/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
+
+    Route::get('products', [GuestController::class, 'products'])->name('products');
+    Route::get('alamang', [GuestController::class, 'alamang'])->name('alamang');
+    Route::get('daing', [GuestController::class, 'daing'])->name('daing');
+    Route::get('nipa_wine', [GuestController::class, 'nipa_wine'])->name('nipa_wine');
 });
 
 
@@ -114,3 +123,5 @@ Route::prefix('hotel-owner')->name('hotel-owner.')->middleware(['auth', 'role:ho
         return view('hotel-owner.dashboard ');
     })->name('dashboard');
 });
+
+Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');

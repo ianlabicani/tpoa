@@ -17,6 +17,7 @@ class Destination extends Model
         'email',
         'entrance_fee',
         'availability',
+        'events',
         'service_offer',
         'social_media',
         'service_offer',

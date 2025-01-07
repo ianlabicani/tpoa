@@ -34,6 +34,7 @@ class DestinationController extends Controller
             'email' => 'nullable|email|max:255',
             'entrance_fee' => 'nullable|numeric|min:0',
             'availability' => 'boolean',
+            'events' => 'nullable|string|max:255',
             'social_media' => 'nullable|string|max:5000',
             'service_offer' => 'nullable|string|max:5000',
             'how_to_get_there' => 'nullable|string|max:5000',
@@ -42,7 +43,7 @@ class DestinationController extends Controller
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
 
-            
+
         ]);
 
         // Save day images if present
@@ -98,8 +99,9 @@ class DestinationController extends Controller
             'location' => 'nullable|string|max:255',
             'contact' => 'nullable|string|max:15',
             'email' => 'nullable|email|max:255',
-            'entrance_fee' => 'nullable|numeric|min:0',
+            'entrance_fee' => 'nullable|numeric|min:0   ',
             'availability' => 'boolean',
+            'events' => 'nullable|string|max:255',
             'social_media' => 'nullable|string|max:5000',
             'service_offer' => 'nullable|string|max:5000',
             'how_to_get_there' => 'nullable|string|max:5000',
@@ -107,9 +109,9 @@ class DestinationController extends Controller
             'night_images' => 'nullable|array',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
-            
+
         ]);
-    
+
         // Save day images if present
         if ($request->hasFile('day_images')) {
             $dayImages = [];
@@ -118,7 +120,7 @@ class DestinationController extends Controller
             }
             $validated['day_images'] = json_encode($dayImages);  // Save as a JSON array of file paths
         }
-    
+
         // Save night images if present
         if ($request->hasFile('night_images')) {
             $nightImages = [];
@@ -127,13 +129,13 @@ class DestinationController extends Controller
             }
             $validated['night_images'] = json_encode($nightImages);  // Save as a JSON array of file paths
         }
-    
+
         // Update the destination with the validated data
         $destination->update($validated);
-    
+
         return redirect()->route('admin.destinations.show', $destination)->with('success', 'Destination updated successfully');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -144,29 +146,26 @@ class DestinationController extends Controller
         return redirect()->route('admin.destinations.index')->with('success', 'Destination deleted successfully');
     }
 
- 
- 
- 
-   // Method to manage feedbacks
-   public function manageFeedbacks()
-   {
-       // Fetch feedbacks associated with destinations
-       $feedbacks = Feedback::with('user', 'reactions', 'destination') // Eager load related data
-                           ->orderBy('created_at', 'desc')
-                           ->paginate(6);
 
-       // Pass feedbacks to the view
-       return view('admin.feedbacks.index', compact('feedbacks'));
-   }
-     
-     
-   public function manageActivityLogs()
-   {
-  
-       // Pass feedbacks to the view
-       return view('admin.activity-logs.index');
-   }
-  
-     
 
+
+    // Method to manage feedbacks
+    public function manageFeedbacks()
+    {
+        // Fetch feedbacks associated with destinations
+        $feedbacks = Feedback::with('user', 'reactions', 'destination') // Eager load related data
+            ->orderBy('created_at', 'desc')
+            ->paginate(6);
+
+        // Pass feedbacks to the view
+        return view('admin.feedbacks.index', compact('feedbacks'));
+    }
+
+
+    public function manageActivityLogs()
+    {
+
+        // Pass feedbacks to the view
+        return view('admin.activity-logs.index');
+    }
 }

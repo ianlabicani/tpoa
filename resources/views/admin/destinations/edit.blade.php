@@ -66,7 +66,8 @@
                         </div>
                     </div>
 
-                    <!-- Entrance Fee & Availability -->
+
+                    <!-- Entrance Fee -->
                     <div class="row">
                         <div class="col-12">
                             <div class="mb-3">
@@ -79,6 +80,19 @@
                                 @enderror
                             </div>
                         </div>
+
+                    {{-- Events --}}
+                    <div class="mb-3">
+                        <label for="service_offer" class="form-label"><strong>List of Events</strong></label>
+                        <textarea id="events" name="events" rows="5" class="form-control">{{ old('events', $destination->events) }}</textarea>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                ClassicEditor.create(document.querySelector('#events')).catch(error => console.error(error));
+                            });
+                        </script>
+                    </div>
+                        
+
                         <div class="col-12">
                             <div class="mb-3">
                                 <label for="availability" class="form-label"><strong>Availability</strong></label>
@@ -119,7 +133,6 @@
                         </script>
                     </div>
 
-
                     <!-- How to Get There -->
                     <div class="mb-3">
                         <label for="how_to_get_there" class="form-label"><strong>How to Get There</strong></label>
@@ -130,18 +143,6 @@
                             });
                         </script>
                     </div>
-
-                    <!-- Service Offer -->
-                    <div class="mb-3">
-                        <label for="service_offer" class="form-label"><strong>Service Offer</strong></label>
-                        <textarea id="service_offer" name="service_offer" rows="5" class="form-control">{{ old('service_offer', $destination->service_offer ?? '') }}</textarea>
-                        <script>
-                            document.addEventListener("DOMContentLoaded", () => {
-                                ClassicEditor.create(document.querySelector('#service_offer')).catch(error => console.error(error));
-                            });
-                        </script>
-                    </div>
-
 
                     <!-- Images -->
                     <div class="row">
@@ -159,105 +160,84 @@
                         </div>
                     </div>
 
-                    <!-- Location Map -->
-                    <div class="mb-4">
-                        <label for="location_map" class="form-label"><strong>Select Location</strong></label>
-                        <div id="map" style="height: 400px;"></div>
+                    <!-- Location Map Edit -->
+<div class="mb-4">
+    <label for="location_map" class="form-label"><strong>Edit Location</strong></label>
+    <div id="edit-map" style="height: 400px;"></div>
 
-                        <!-- Latitude and Longitude Input Fields -->
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <label for="latitude" class="form-label"><strong>Latitude</strong></label>
-                                <input type="text" id="latitude" name="latitude" class="form-control"
-                                    value="{{ old('latitude', $destination->latitude ?? '') }}"
-                                    placeholder="Enter Latitude">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="longitude" class="form-label"><strong>Longitude</strong></label>
-                                <input type="text" id="longitude" name="longitude" class="form-control"
-                                    value="{{ old('longitude', $destination->longitude ?? '') }}"
-                                    placeholder="Enter Longitude">
-                            </div>
-                        </div>
+    
+        <label for="location_name" class="form-label"><strong>Location Name</strong></label>
+        <input type="text" id="location_name" name="location_name" class="form-control mb-3" 
+            value="{{ old('location_name', $destination->name ?? '') }}" placeholder="Enter Location Name">
+    
+        <label for="location_map" class="form-label"><strong>Select Location</strong></label>
+        <div id="map" style="height: 400px;"></div>
+    
+        <!-- Latitude and Longitude Input Fields -->
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <label for="latitude" class="form-label"><strong>Latitude</strong></label>
+                <input type="text" id="latitude" name="latitude" class="form-control"
+                    value="{{ old('latitude', $destination->latitude ?? '') }}"
+                    placeholder="Enter Latitude">
+            </div>
+            <div class="col-md-6">
+                <label for="longitude" class="form-label"><strong>Longitude</strong></label>
+                <input type="text" id="longitude" name="longitude" class="form-control"
+                    value="{{ old('longitude', $destination->longitude ?? '') }}"
+                    placeholder="Enter Longitude">
+            </div>
+        </div>
 
-                        <script>
-                            var map = L.map('map').setView([{{ old('latitude', $destination->latitude ?? 18.356104) }},
-                                {{ old('longitude', $destination->longitude ?? 121.63988) }}
-                            ], 13);
-                            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                attribution: '© OpenStreetMap contributors'
-                            }).addTo(map);
-                            var marker = L.marker([{{ old('latitude', $destination->latitude ?? 18.356104) }},
-                                {{ old('longitude', $destination->longitude ?? 121.63988) }}
-                            ], {
-                                draggable: true
-                            }).addTo(map);
-                            marker.on('dragend', function(event) {
-                                var latLng = event.target.getLatLng();
-                                document.getElementById('latitude').value = latLng.lat;
-                                document.getElementById('longitude').value = latLng.lng;
-                            document.addEventListener("DOMContentLoaded", () => {
-                                // Initialize the map
-                                var map = L.map('map').setView(
-                                    [{{ old('latitude', $destination->latitude ?? 0) }},
-                                        {{ old('longitude', $destination->longitude ?? 0) }}
-                                    ],
-                                    13
-                                );
+        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+   
 
-                                // Add multiple tile layers
-                                var baseLayers = {
-                                    "OpenStreetMap": L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                        attribution: '© OpenStreetMap contributors'
-                                    }),
-                                    "Satellite": L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-                                        attribution: '© OpenStreetMap contributors'
-                                    }),
-                                    "Dark Mode": L.tileLayer(
-                                        'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png', {
-                                            attribution: '© Stadia Maps, © OpenMapTiles, © OpenStreetMap contributors'
-                                        })
-                                };
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initialize map with the destination's current location
+            const latitude = {{ old('latitude', $destination->latitude ?? 18.3564) }};
+            const longitude = {{ old('longitude', $destination->longitude ?? 121.6402) }};
+            const map = L.map('edit-map').setView([latitude, longitude], 13);
 
-                                // Add the default layer to the map
-                                baseLayers["OpenStreetMap"].addTo(map);
+            // Add tile layers
+            const baseLayers = {
+                "OpenStreetMap": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }),
+                "Google Streets": L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+                    attribution: '© Google Maps'
+                }),
+                "Google Satellite": L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+                    attribution: '© Google Maps'
+                })
+            };
 
-                                // Add layer control to switch between layers
-                                L.control.layers(baseLayers).addTo(map);
+            baseLayers["OpenStreetMap"].addTo(map);
+            L.control.layers(baseLayers).addTo(map);
 
-                                // Add a draggable marker
-                                var marker = L.marker(
-                                    [{{ old('latitude', $destination->latitude ?? 0) }},
-                                        {{ old('longitude', $destination->longitude ?? 0) }}
-                                    ], {
-                                        draggable: true
-                                    }
-                                ).addTo(map);
+            // Draggable marker for selecting new location
+            const marker = L.marker([latitude, longitude], { draggable: true }).addTo(map);
 
-                                // Update latitude and longitude on marker drag
-                                marker.on('dragend', function(event) {
-                                    var latLng = event.target.getLatLng();
-                                    document.getElementById('latitude').value = latLng.lat.toFixed(6);
-                                    document.getElementById('longitude').value = latLng.lng.toFixed(6);
-                                });
+            // Update input fields when marker is dragged
+            marker.on('dragend', () => {
+                const latLng = marker.getLatLng();
+                document.getElementById('latitude').value = latLng.lat.toFixed(6);
+                document.getElementById('longitude').value = latLng.lng.toFixed(6);
+            });
 
-                                // Update marker position when latitude and longitude inputs are manually updated
-                                document.getElementById('latitude').addEventListener('input', function() {
-                                    updateMarker();
-                                });
-                                document.getElementById('longitude').addEventListener('input', function() {
-                                    updateMarker();
-                                });
+            // Update marker position when input fields change
+            const updateMarker = () => {
+                const lat = parseFloat(document.getElementById('latitude').value) || 0;
+                const lng = parseFloat(document.getElementById('longitude').value) || 0;
+                marker.setLatLng([lat, lng]);
+                map.setView([lat, lng], 13);
+            };
 
-                                function updateMarker() {
-                                    var lat = parseFloat(document.getElementById('latitude').value) || 0;
-                                    var lng = parseFloat(document.getElementById('longitude').value) || 0;
-                                    marker.setLatLng([lat, lng]);
-                                    map.setView([lat, lng], 13);
-                                }
-                            });
-                        </script>
-                    </div>
+            document.getElementById('latitude').addEventListener('input', updateMarker);
+            document.getElementById('longitude').addEventListener('input', updateMarker);
+        });
+    </script>
+</div>
 
 
                     <!-- Actions -->

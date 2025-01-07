@@ -1,15 +1,16 @@
 <Style>
-    /* @font-face {
-        font-family: 'barabara';
-        src: url('{{ asset('fonts/BARABARA-final.otf') }}') format('truetype');
+    @font-face {
+        font-family: 'gugi';
+        src: url('{{ asset('fonts/Gugi-Regular.ttf') }}') format('truetype');
         font-style: normal;
-        font-weight: thin
-    } */
-/* 
+      
+    } 
+    
+    
     .navbar-brand {
-        font-family: 'barabara';
-        font-weight: 100
-    } */
+        font-family: 'gugi';
+        font-weight: 200
+    }
 
     .nav-item.dropdown:hover .dropdown-menu {
         display: block;
@@ -28,6 +29,8 @@
         /* or any background color */
     }
 </Style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 
 <nav class="navbar navbar-expand-lg bg-white shadow p-3">
     <div class="container">
@@ -42,9 +45,19 @@
         <!-- Navbar Links -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user.dashboard') }}">Home</a>
-                </li>
+
+                <!-- Search Bar -->
+                <form action="{{ route('user.destinations.index') }}" method="GET" class="mb-4">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search for..."
+                            value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i> <!-- Font Awesome Search Icon -->
+                        </button>
+                    </div>
+                </form>
+
+
                 <!-- About Aparri Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -55,7 +68,7 @@
                         <li><a class="dropdown-item" href="{{ route('user.history') }}">History</a></li>
                         <li><a class="dropdown-item" href="{{ route('user.culture') }}">Culture</a></li>
                         <li><a class="dropdown-item" href="{{ route('user.events') }}">Events</a></li>
-
+                        <li><a class="dropdown-item" href="{{ route('products') }}">Products</a></li>
 
                     </ul>
                 </li>
@@ -65,8 +78,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('destinations.videos') }}">Videos</a>
                 </li>
+
                 {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('/') }}#accomodations">Accomodations</a>
+                    <a class="nav-link" href="{{ route('/') }}#hotels">Hotels</a>
                 </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('user.contact') }}">Contact</a>
@@ -81,4 +95,3 @@
         </div>
     </div>
 </nav>
-

@@ -180,44 +180,270 @@
         </div>
     </section>  
 
+    <style>
+        /* Section Styling */
+        .article-section {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .article-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .article-image {
+            flex: 1;
+            width: 600px;
+            /* Fixed width for all images */
+            height: 400px;
+            /* Fixed height for all images */
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .article-content {
+            flex: 2;
+            padding: 10px;
+        }
+
+        .article-content .tag {
+            display: inline-block;
+            border: 1px solid #000;
+            border-radius: 20px;
+            padding: 5px 15px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #000;
+            text-align: justify
+        }
+
+        .article-content h3 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #333;
+        }
+
+        .article-content p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .article-item {
+                flex-direction: column;
+            }
+
+            .article-image {
+                width: 100%;
+                /* Full width on smaller screens */
+                height: auto;
+                /* Maintain aspect ratio */
+            }
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        p {
+            text-align: justify
+        }
+    </style>
+
+
+
+    <!-- Articles Section -->
+    <div class="container">
+
+        <div class="article-section">
+            <div class="section-header text-center">
+                <h3>Explore the Aparri Culture</h3>
+
+            </div>
+            <!-- Article Item 1 -->
+            <div class="article-item">
+
+                <img src="{{ asset('image/farming.jpg') }}" alt="Farming in Aparri" class="article-image">
+
+                <div class="article-content">
+                  
+                    <h3>Farming</h3>
+                    <p class="text-justify">
+                        Farming is integral to Aparri's culture, showcasing traditional agricultural
+                    </p>
+
+                </div>
+            </div>
+
+            <!-- Article Item 2 -->
+            <div class="article-item">
+
+                <img src="{{ asset('image/fishing.jpg') }}" alt="Fishing in Aparri" class="article-image">
+
+                <div class="article-content">
+                   
+                    <h3>Fishing</h3>
+                    <p class="text-justify">
+                        Fishing has been a cornerstone of Aparri's livelihood and culture. The town is known for its
+                        sustainable practices and reverence for the sea.
+                    </p>
+                </div>
+                
+            </div>
+            <a href="{{ route('user.culture') }}">See More...</a>
+         
+        </div>
+    </div>
+
     <!-- About Section -->
+ 
     <section id="about" class="py-5">
         <div class="container text-center">
             <h2 class="display-4">About Us</h2>
-            <p class="lead">We help you plan and book your travel with ease and convenience.</p>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="bg-light py-5">
-        <div class="container text-center">
-            <h2 class="display-4">Our Services</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>Destinations</h4>
-                    <p>Explore a wide variety of travel destinations for every budget.</p>
-                </div>
-                <div class="col-md-4">
-                    <h4>Booking</h4>
-                    <p>Book flights, accommodations, and more, all in one place.</p>
-                </div>
-                <div class="col-md-4">
-                    <h4>Customer Support</h4>
-                    <p>Our team is here to help you with all your travel needs.</p>
+            <!-- Vision and Mission Section -->
+            <div class="container my-5">
+                <div class="row">
+                    <!-- Vision Column -->
+                    <div class="col-md-6">
+                        <h4 class="text-center mb-3">Aparri Vision</h4>
+                        <p class="lead mb-4" style="text-align: justify">
+                            “The golden frontier of the North on international and local trade and commerce,
+                            education and training, agro-fishery industry and eco-tourism with modern, green,
+                            disaster-resilient and balanced infrastructure geared towards an innovative, competitive
+                            and sustained economy with God-loving, empowered and self-reliant citizenry living in a
+                            safe and ecologically balanced environment under a responsive, transparent and dynamic
+                            governance”
+                        </p>
+                    </div>
+                    <!-- Mission Column -->
+                    <div class="col-md-6">
+                        <h4 class="text-center mb-3">Aparri Mission</h4>
+                        <p class="lead mb-4" style="text-align: justify">
+                            The Local Government of Aparri has to serve with humility and advocate earnestly the
+                            provisions and intentions of Republic Act 7160 known as the Local Government Code of
+                            1991 for lifelong excellent governance.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-5">
-        <div class="container text-center">
-            <h2 class="display-4">Contact Us</h2>
-            <p class="lead">Have questions? Reach out to us!</p>
-            <a href="mailto:contact@tpoa.com" class="btn btn-primary btn-lg">Email Us</a>
+    <!-- Map Section -->
+    <section class="map-section py-5">
+        <div class="container">
+            <h2 class="text-center display-5 mb-4">Emergency Contact Services in Aparri</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <!-- Leaflet Map -->
+                    <div id="leaflet-map"></div>
+                </div>
+            </div>
         </div>
     </section>
 
+
+    <style>
+        #leaflet-map {
+            width: 100%;
+            height: 500px;
+        }
+
+        @media (max-width: 768px) {
+            #leaflet-map {
+                height: 300px;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize the map centered on Aparri, Cagayan
+            const map = L.map('leaflet-map').setView([18.3564, 121.6402], 13);
+
+            // Define multiple base layers
+            const baseLayers = {
+                "OpenStreetMap": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '© OpenStreetMap contributors'
+                }),
+                "Google Streets": L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+                    attribution: '© Google Maps'
+                }),
+                "Google Satellite": L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+                    attribution: '© Google Maps'
+                }),
+                "Dark Mode": L.tileLayer(
+                    'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png', {
+                        attribution: '© Stadia Maps, © OpenMapTiles, © OpenStreetMap contributors'
+                    })
+            };
+
+            // Add OpenStreetMap layer by default
+            baseLayers["OpenStreetMap"].addTo(map);
+
+            // Add layer control for users to toggle between different layers
+            L.control.layers(baseLayers).addTo(map);
+
+            // Define emergency locations and contact info
+            const emergencyLocations = [{
+                    name: "MDRRMO Aparri",
+                    coordinates: [18.356580564653186, 121.63725569021658],
+                    contacts: ["0956-654-2894", "0961-971-2006"]
+                },
+                {
+                    name: "PNP Aparri",
+                    coordinates: [18.358665289774418, 121.637634584608],
+                    contacts: ["0917-203-2003"]
+                },
+                {
+                    name: "BFP Aparri",
+                    coordinates: [18.357179143194944, 121.63688827724887],
+                    contacts: ["0916-491-0946", "0956-260-7818"]
+                },
+                {
+                    name: "RHU East",
+                    coordinates: [18.3580, 121.6380],
+                    contacts: ["0953-190-8364"]
+                },
+                {
+                    name: "RHU West",
+                    coordinates: [18.309552736331312, 121.61265416087967],
+                    contacts: ["0935-951-9786"]
+                },
+                {
+                    name: "Maritime",
+                    coordinates: [18.359970124838533, 121.6329723077469],
+                    contacts: ["0906-842-5879"]
+                },
+                {
+                    name: "Coast Guard",
+                    coordinates: [18.354910024649616, 121.63835571678456],
+                    contacts: ["0956-830-1802"]
+                }
+            ];
+
+            // Add markers for each emergency location
+            emergencyLocations.forEach(function(location) {
+                const contactList = location.contacts.map(contact =>
+                    `<a href="tel:+63${contact.replace(/-/g, '')}">${contact}</a>`).join(' / ');
+                L.marker(location.coordinates)
+                    .addTo(map)
+                    .bindPopup(`
+            <b>${location.name}</b><br>
+            Contact: ${contactList}
+        `);
+            });
+        });
+    </script>
 
 
 

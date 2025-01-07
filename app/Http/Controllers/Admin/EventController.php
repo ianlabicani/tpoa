@@ -12,7 +12,7 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::paginate(5);
+        $events = Event::paginate(9);
         return view('admin.events.index', compact('events'));
     }
     
@@ -24,33 +24,38 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+        // Debug request data to ensure 'source' is present
+        // dd($request->all());
+    
         // Validate the incoming request
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation for image
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'source' => 'nullable|string|max:255',
         ]);
-        
-        // Handle the event image if it's uploaded
+    
+        // Handle the event image if uploaded
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('events', 'public'); // Store image in 'events' folder
+            $imagePath = $request->file('image')->store('events', 'public');
         }
-        
-        // Create a new event with the validated data
+    
+        // Create a new event
         $event = Event::create([
             'name' => $validated['name'],
             'description' => $validated['description'],
             'start_date' => $validated['start_date'],
             'end_date' => $validated['end_date'],
-            'image' => $imagePath, // Save the image path in the database
+            'image' => $imagePath,
+            'source' => $validated['source'] ?? null, // Save the 'source' or null
         ]);
-        
-        // Redirect to the event's show page with success message
-        return redirect()->route('admin.events.show', ['event' => $event->id])->with('success', 'Event created successfully!');
+    
+        return redirect()->route('admin.events.index')->with('success', 'Event created successfully!');
     }
+    
     
     
     
@@ -66,26 +71,33 @@ class EventController extends Controller
 
  public function update(Request $request, Event $event)
  {
-     // Validate the incoming request
-     $validated = $request->validate([
+     $request->validate([
          'name' => 'required|string|max:255',
          'description' => 'nullable|string',
          'start_date' => 'required|date',
          'end_date' => 'required|date',
-         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation for image
+         'image' => 'nullable|image|max:1024',
+         'source' => 'nullable|string|max:255', // Validate the source field
      ]);
-     
-     // Handle image upload if present
+ 
+     // Handle file upload (if any)
      if ($request->hasFile('image')) {
-         $validated['image'] = $request->file('image')->store('events', 'public'); // Store new image
+         $imagePath = $request->file('image')->store('events', 'public');
+         $event->image = $imagePath;
      }
-     
-     // Update the event with the validated data
-     $event->update($validated);
-     
-     // Redirect to the updated event's show page
-     return redirect()->route('admin.events.show', ['event' => $event->id])->with('success', 'Event updated successfully!');
+ 
+     // Update the event
+     $event->update([
+         'name' => $request->input('name'),
+         'description' => $request->input('description'),
+         'start_date' => $request->input('start_date'),
+         'end_date' => $request->input('end_date'),
+         'source' => $request->input('source'), // Update the source
+     ]);
+ 
+     return redirect()->route('admin.events.index')->with('success', 'Event updated successfully');
  }
+ 
  
  
  

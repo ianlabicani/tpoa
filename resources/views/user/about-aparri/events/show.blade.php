@@ -1,4 +1,4 @@
-@extends('guest.shell')
+@extends('user.shell')
 
 @section('content')
     <h3 class="mt-4 text-center">Event Details</h3>

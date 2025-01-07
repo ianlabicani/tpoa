@@ -6,7 +6,7 @@
         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
         <li class="breadcrumb-item active">Create Events</li>
     </ol>
-    
+
     <div class="container-fluid mt-5">
         <div class="row justify-content-center">
             <!-- Main Content Area -->
@@ -14,7 +14,7 @@
                 <div class="card shadow">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h3>Create New Event</h3>
-                        <a href="" class="btn btn-secondary btn-sm">Back to List</a>
+                        <a href=" {{ route('admin.events.index') }} " class="btn btn-secondary btn-sm">Back to List</a>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data">
@@ -44,7 +44,17 @@
                                 <input type="file" name="image" class="form-control" id="image">
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Create Event</button>
+
+                            <div class="form-group">
+                                <label for="source">Source</label>
+                                <input type="text" name="source" id="source" class="form-control"
+                                    placeholder="Enter the image source">
+                            </div>
+
+                            <div class="d-flex justify-content-end mt-4">
+                                <a href="{{ route('admin.events.index') }}" class="btn btn-secondary me-2">Cancel</a>
+                                <button type="submit" class="btn btn-success">Create Events</button>
+                            </div>
                         </form>
                     </div>
                 </div>

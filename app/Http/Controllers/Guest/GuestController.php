@@ -22,18 +22,14 @@ class GuestController extends Controller
         return view('guest.about-aparri.culture.index');
     }
 
-
     public function events()
     {
-
-
         $events = Event::all();
         return view('guest.about-aparri.events.index', compact('events'));
     }
 
-    
     public function show_event($id)
-    { 
+    {
         $event = Event::findOrFail($id);
         return view('guest.about-aparri.events.show', compact('event'));
     }
@@ -45,6 +41,8 @@ class GuestController extends Controller
         return view('guest.contact');
     }
 
+
+    //CULTURE
     public function farming()
     {
         return view('guest.about-aparri.culture.farming');
@@ -81,10 +79,32 @@ class GuestController extends Controller
     }
 
 
+    //PRODUCTS
+    public function products()
+    {
+        return view('guest.about-aparri.products.index');
+    }
+
+    public function alamang()
+    {
+        return view('guest.about-aparri.products.alamang');
+    }
+
+    public function daing()
+    {
+        return view('guest.about-aparri.products.daing');
+    }
+
+    public function nipa_wine()
+    {
+        return view('guest.about-aparri.products.nipa_wine');
+    }
 
 
 
-    //FOR USER
+
+    //USER
+
     public function user_history()
     {
 
@@ -97,12 +117,6 @@ class GuestController extends Controller
         return view('user.about-aparri.culture.index');
     }
 
-
-    public function user_events()
-    {
-
-        return view('user.about-aparri.events.index');
-    }
 
     public function user_contact()
     {

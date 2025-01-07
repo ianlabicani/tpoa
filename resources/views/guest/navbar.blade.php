@@ -1,21 +1,34 @@
- <Style>
-  
+<Style>
+    @font-face {
+        font-family: 'gugi';
+        src: url('{{ asset('fonts/Gugi-Regular.ttf') }}') format('truetype');
+        font-style: normal;
+      
+    } 
+    
+    
+    .navbar-brand {
+        font-family: 'gugi';
+        font-weight: 200
+    }
 
-     .nav-item.dropdown:hover .dropdown-menu {
-         display: block;
-     }
+    .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+    }
 
-     .dropdown-menu {
-         display: none;
-     }
+    .dropdown-menu {
+        display: none;
+    }
 
-     .navbar {
-         position: sticky;
-         top: 0;
-         z-index: 1000;
-         
-     }
- </Style>
+    .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        /* Make sure it sits on top of other content */
+        background-color: #fff;
+        /* or any background color */
+    }
+</Style>
 
  <nav class="navbar navbar-expand-lg bg-white shadow p-3">
      <div class="container">
@@ -31,9 +44,7 @@
          <!-- Navbar Links -->
          <div class="collapse navbar-collapse" id="navbarNav">
              <ul class="navbar-nav ms-auto">
-                 <li class="nav-item">
-                     <a class="nav-link" href="/">Home</a>
-                 </li>
+            
 
                  <div class="collapse navbar-collapse" id="navbarNav">
                      <ul class="navbar-nav ms-auto">
@@ -46,7 +57,8 @@
                              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                  <li><a class="dropdown-item" href="{{ route('history') }}">History</a></li>
                                  <li><a class="dropdown-item" href="{{ route('culture') }}">Culture</a></li>
-                                 <li><a class="dropdown-item" href="{{ route('events') }}">Events</a></li>
+                                 <li><a class="dropdown-item" href="{{ route('guest.events') }}">Events</a></li>
+                                 <li><a class="dropdown-item" href="{{ route('products') }}">Products</a></li>
                              </ul>
                          </li>
                          <!-- Other Navbar Items -->
@@ -57,7 +69,7 @@
                              <a class="nav-link" href="{{ route('destinations.videos') }}">Videos</a>
                          </li>
                          {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('/') }}#accomodations">Accomodations</a>
+                    <a class="nav-link" href="{{ route('/') }}#hotels">Hotels</a>
                 </li> --}}
                          <li class="nav-item">
                              <a class="nav-link" href="{{ route('contact') }}">Contact</a>

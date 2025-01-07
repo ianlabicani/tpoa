@@ -1,18 +1,80 @@
 @extends('guest.shell')
 
 @section('content')
+    <style>
+        /* General Styling */
+        .destination-image {
+            width: 100%;
+            height: 300px; /* Increased height for larger image */
+            object-fit: cover;
+        }
+
+        /* Card Design */
+        .card {
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-body {
+            flex-grow: 1; /* Ensures cards have equal height */
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        /* Button Styling for Cards */
+        .btn-learn-more {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .btn-learn-more:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        /* Section Margins and Padding */
+        section {
+            padding: 60px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .destination-image {
+                height: 200px; /* Adjusted for smaller screens */
+            }
+        }
+    </style>
+
     <div class="container mt-5">
         <!-- Page Title -->
-
         <div class="row">
             @foreach ($destinations as $destination)
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100 border-0">
+                <div class="col-md-4 mb-4 d-flex">
+                    <div class="card w-100">
                         <!-- Destination Cover -->
                         @if ($destination->day_images && count(json_decode($destination->day_images, true)) > 0)
                             @php $dayImages = json_decode($destination->day_images, true); @endphp
-                            <img src="{{ asset('storage/' . $dayImages[0]) }}" class="card-img-top rounded-top"
-                                alt="{{ $destination->name }}" style="height: 200px; object-fit: cover;">
+                            
+                                <a href="{{ route('destinations.show', $destination->id) }}"
+                                    >
+                                    <img src="{{ asset('storage/' . $dayImages[0]) }}" class="destination-image"
+                                alt="{{ $destination->name }}">
+                                </a>
                         @else
                             <div class="card-img-top bg-secondary text-white text-center py-5 rounded-top">
                                 No Image Available
@@ -22,37 +84,9 @@
                         <div class="card-body text-center">
                             <!-- Destination Name -->
                             <h5 class="card-title mb-3">{{ $destination->name }}</h5>
-
-                            <!-- Destination Location -->
-                            <p class="card-text text-muted mb-3">
-                                <strong>Location:</strong> {{ $destination->location }}
-                            </p>
-
-                            <!-- Entrance Fee -->
-                            <p class="card-text">
-                                <strong>Entrance Fee:</strong>
-                                {{ $destination->entrance_fee ? '₱' . number_format($destination->entrance_fee, 2) : 'Free' }}
-                            </p>
-
-                            <!-- Availability -->
-                            <p class="card-text">
-                                <strong>Availability:</strong>
-                                {{ $destination->availability ? 'Available' : 'Unavailable' }}
-                            </p>
-                            <!-- Service Offer -->
-                            <p class="card-text">
-                                <strong>Service Offer:</strong> {!! $destination->service_offer ?? '<p>No services available at the moment.</p>' !!}
-                            </p>
-
                         </div>
 
-                        <div class="card-footer text-center">
-                            <!-- View Details Button -->
-                            <a href="{{ route('destinations.show', $destination->id) }}"
-                                class="btn btn-primary btn-sm px-4">
-                                View Details
-                            </a>
-                        </div>
+                       
                     </div>
                 </div>
             @endforeach
