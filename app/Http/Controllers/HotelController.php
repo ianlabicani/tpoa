@@ -68,21 +68,40 @@ class HotelController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'nullable|string|max:255',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
             'price_per_night' => 'nullable|numeric',
             'description' => 'nullable|string',
             'cover' => 'nullable|image|max:2048',
+            'images.*' => 'nullable|image|max:2048', // Validate multiple images
             'social_media' => 'nullable|json',
             'services' => 'nullable|string',
             'availability' => 'boolean',
         ]);
 
+        // Handle cover image update
         if ($request->hasFile('cover')) {
+            // Delete the old cover image if it exists
+            if ($hotel->cover) {
+                \Storage::disk('public')->delete($hotel->cover);
+            }
+
+            // Store the new cover image
             $validated['cover'] = $request->file('cover')->store('hotels', 'public');
         }
 
-        $hotel->update($validated);
-        activity()->log('Hotel updated successfully.');
+        // Handle multiple images upload
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('hotels', 'public');
+                $hotel->images()->create(['path' => $path]); // Assuming a relationship exists
+            }
+        }
 
+        // Update the hotel with validated data
+        $hotel->update($validated);
+
+        activity()->log('Hotel updated successfully.');
 
         return redirect()->route('admin.hotels.index')->with('success', 'Hotel updated successfully.');
     }
