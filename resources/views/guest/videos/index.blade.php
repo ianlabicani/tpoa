@@ -77,7 +77,11 @@
                                     <h3 class="video-title">{{ $video->title }}</h3>
                                 </a>
                                 <p class="text-muted">
-                                    Uploaded by {{ $video->user_id }} on
+                                    @php
+                                        $user = \App\Models\User::find($video->user_id);
+                                        $username = $user ? $user->name : 'Anonymous';
+                                    @endphp
+                                    Uploaded by {{ $username }} on
                                     {{ $video->created_at->format('F d, Y') }}
                                 </p>
                             </div>
