@@ -62,6 +62,14 @@
                     </div>
                 @endif
             </div>
+            <div class="row">
+                @foreach ($hotel->images as $image)
+                    <div class="col-md-4 mb-3">
+                        <img src="{{ asset('storage/' . $image->path) }}" class="img-fluid rounded" alt="Hotel Image">
+                    </div>
+                @endforeach
+            </div>
+
 
             <div class="card-footer d-flex justify-content-between">
                 <!-- Back Button -->

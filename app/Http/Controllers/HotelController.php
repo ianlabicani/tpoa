@@ -24,21 +24,33 @@ class HotelController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'nullable|string|max:255',
-            'price_per_night' => 'nullable|numeric',
+            'price_per_night' => 'nullable|numeric|min:0',
             'description' => 'nullable|string',
-            'cover' => 'nullable|image|max:2048',
+            'cover' => 'nullable|image|max:2048', // For single cover image
+            'images.*' => 'nullable|image|max:2048', // Validate multiple images
             'social_media' => 'nullable|json',
             'services' => 'nullable|string',
             'availability' => 'boolean',
         ]);
 
+        // Handle cover image upload
         if ($request->hasFile('cover')) {
-            $validated['cover'] = $request->file('cover')->store('hotels', 'public');
+            $validated['cover'] = $request->file('cover')->store('hotels/covers', 'public');
         }
 
-        Hotel::create($validated);
-        activity()->log('Hotel created successfully.');
+        // Create the hotel
+        $hotel = Hotel::create($validated);
 
+        // Handle multiple image uploads
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('hotels/images', 'public');
+                $hotel->images()->create(['path' => $path]);
+            }
+        }
+
+        // Log the activity
+        activity()->log("Hotel '{$hotel->name}' created successfully.");
 
         return redirect()->route('admin.hotels.index')->with('success', 'Hotel added successfully.');
     }

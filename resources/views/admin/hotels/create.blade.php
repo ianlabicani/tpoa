@@ -36,6 +36,11 @@
                 <label for="cover" class="form-label">Cover Image</label>
                 <input type="file" name="cover" id="cover" class="form-control">
             </div>
+            <div class="mb-3">
+                <label for="images" class="form-label">Hotel Images</label>
+                <input type="file" name="images[]" id="images" class="form-control" multiple>
+            </div>
+
 
             <!-- Social Media Links -->
             <div class="mb-3">

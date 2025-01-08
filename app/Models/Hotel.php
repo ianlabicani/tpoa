@@ -21,4 +21,10 @@ class Hotel extends Model
         'availability',
     ];
 
+    public function images()
+    {
+        return $this->hasMany(HotelImage::class);
+    }
+
+
 }
