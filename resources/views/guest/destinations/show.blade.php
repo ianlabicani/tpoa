@@ -130,7 +130,7 @@
                             L.marker([poi.lat, poi.lng]).addTo(map)
                                 .bindPopup(
                                     `<strong>${poi.name}</strong><br>${poi.description}<br>Latitude: ${poi.lat}<br>Longitude: ${poi.lng}`
-                                    );
+                                );
                         });
                     };
                 </script>
@@ -311,13 +311,15 @@
                                     </div>
                                     <div class="card-body">
                                         @if ($feedbacks->isEmpty())
-                                            <p class="text-muted">No feedbacks available for this destination. Be the first to leave one!</p>
+                                            <p class="text-muted">No feedbacks available for this destination. Be the first
+                                                to leave one!</p>
                                         @else
                                             @foreach ($feedbacks as $feedback)
                                                 <div class="border-bottom pb-3 mb-3">
                                                     <strong>{{ $feedback->user->name }}</strong>
-                                                    <span class="text-muted">({{ $feedback->created_at->format('M d, Y') }})</span>
-                        
+                                                    <span
+                                                        class="text-muted">({{ $feedback->created_at->format('M d, Y') }})</span>
+
                                                     <!-- Feedback content -->
                                                     @if (auth()->check() && auth()->user()->id === $feedback->user_id)
                                                         <form method="POST"
@@ -325,34 +327,40 @@
                                                             class="d-inline" id="feedback-form-{{ $feedback->id }}">
                                                             @csrf
                                                             @method('PUT')
-                        
+
                                                             <div class="editable-feedback">
-                                                                <div id="feedback-content-{{ $feedback->id }}" class="editable-content"
+                                                                <div id="feedback-content-{{ $feedback->id }}"
+                                                                    class="editable-content"
                                                                     data-feedback-id="{{ $feedback->id }}">
                                                                     {{ $feedback->comment }}
                                                                 </div>
-                                                                <input type="hidden" name="comment" class="feedback-comment-input">
+                                                                <input type="hidden" name="comment"
+                                                                    class="feedback-comment-input">
                                                             </div>
-                        
+
                                                             <!-- Buttons for Save and Cancel -->
                                                             <button type="button" class="btn btn-primary btn-sm"
-                                                                id="edit-btn-{{ $feedback->id }}" onclick="toggleEdit({{ $feedback->id }})">Edit</button>
+                                                                id="edit-btn-{{ $feedback->id }}"
+                                                                onclick="toggleEdit({{ $feedback->id }})">Edit</button>
                                                             <button type="submit" class="btn btn-success btn-sm d-none"
                                                                 id="save-btn-{{ $feedback->id }}">Save</button>
                                                             <button type="button" class="btn btn-danger btn-sm d-none"
-                                                                id="cancel-btn-{{ $feedback->id }}" onclick="cancelEdit({{ $feedback->id }})">Cancel</button>
+                                                                id="cancel-btn-{{ $feedback->id }}"
+                                                                onclick="cancelEdit({{ $feedback->id }})">Cancel</button>
                                                         </form>
                                                     @else
                                                         <p>{{ $feedback->comment }}</p>
                                                     @endif
-                        
-                                                   
+
+
                                                 </div>
                                             @endforeach
                                         @endif
-                        
+
                                         <!-- Leave Feedback Form -->
-                                        <form action="{{ route('user.feedbacks.store', ['destination' => $destination->id]) }}" method="POST">
+                                        <form
+                                            action="{{ route('user.feedbacks.store', ['destination' => $destination->id]) }}"
+                                            method="POST">
                                             @csrf
                                             <div class="mb-3">
                                                 <label for="feedback" class="form-label">Leave a Feedback</label>
@@ -363,7 +371,7 @@
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <!-- Column 2: Related Videos -->
                             <div class="col-md-6">
                                 <!-- related videos Card -->
@@ -377,26 +385,52 @@
                                             <p class="text-muted">No videos available for this destination.</p>
                                         @else
                                             @foreach ($videos as $video)
-                                                <div class="border-bottom pb-3 mb-3">
-                                                    <h5 class="card-title">
-                                                        <span class="video-title" id="video-title-{{ $video->id }}">{{ $video->title }}</span>
-                                                    </h5>
-                        
-                                                    <p class="card-text">
-                                                        <span class="video-description" id="video-description-{{ $video->id }}">{{ $video->description }}</span>
+                                                @if (strpos($video->url, 'youtube.com') !== false || strpos($video->url, 'youtu.be') !== false)
+                                                    @php
+                                                        if (strpos($video->url, 'youtu.be') !== false) {
+                                                            $videoId = basename($video->url);
+                                                            $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
+                                                        } elseif (strpos($video->url, 'youtube.com') !== false) {
+                                                            parse_str(parse_url($video->url, PHP_URL_QUERY), $params);
+                                                            $embedUrl = 'https://www.youtube.com/embed/' . $params['v'];
+                                                        }
+                                                    @endphp
+
+                                                    <!-- Embed YouTube Video -->
+                                                    <iframe width="100%" height="315" src="{{ $embedUrl }}"
+                                                        title="Video player" frameborder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                        referrerpolicy="strict-origin-when-cross-origin"
+                                                        allowfullscreen></iframe>
+                                                @else
+                                                    <!-- If it's not a YouTube link, just show the media link -->
+                                                    <a href="{{ $video->url }}" target="_blank"
+                                                        class="btn btn-outline-primary">Watch
+                                                        Video</a>
+                                                @endif
+
+                                                <div class="card-body">
+                                                    <!-- Video Title -->
+                                                    <a
+                                                        href="{{ route('destinations.show', ['destination' => $video->destination]) }}">
+                                                        <h3 class="video-title">{{ $video->title }}</h3>
+                                                    </a>
+                                                    <p class="text-muted">
+                                                        Uploaded by {{ $video->user_id }} on
+                                                        {{ $video->created_at->format('F d, Y') }}
                                                     </p>
-                                                    <a href="{{ $video->url }}" target="_blank" class="btn btn-link">Watch Video</a>
                                                 </div>
+                                                <hr>
                                             @endforeach
                                         @endif
 
-                                      
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    
-                        
+
+
                     </div>
                     <script>
                         // Toggle contenteditable mode and show/hide buttons

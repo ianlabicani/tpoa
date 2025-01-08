@@ -17,6 +17,8 @@ class VideoController extends Controller
             ->unique('destination_id');
 
         // Return the view with the videos data
+
+
         return view('guest.videos.index', compact('videos'));
     }
 }
