@@ -24,6 +24,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController as ControllersSearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Activitylog\Models\Activity;
 
 
 //ROUTE FOR GUEST
@@ -82,7 +83,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 
 
     Route::get('feedbacks', [AdminDestinationController::class, 'manageFeedbacks'])->name('feedbacks.index');
-    Route::get('activity-logs', [AdminDestinationController::class, 'manageActivityLogs'])->name('activity-logs.index');
+    Route::get('activity-logs', function () {
+        $activityLogs = Activity::latest()->paginate(10);
+        return view('admin.activity-logs.index', compact('activityLogs'));
+    })->name('activity-logs.index');
 
     Route::get('events', [EventController::class, 'index'])->name('events.index');
 
