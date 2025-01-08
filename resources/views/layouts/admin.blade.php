@@ -23,7 +23,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.7/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.7/plugin/relativeTime.js"></script>
+
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.1/classic/ckeditor.js"></script>
 
 </head>
 
@@ -61,6 +64,7 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src=" {{ asset('admin_asset/assets/demo/datatables-demo.js') }}"></script>
+    @yield('script')
 </body>
 
 </html>

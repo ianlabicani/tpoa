@@ -46,16 +46,6 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
 
-                <!-- Search Bar -->
-                <form action="{{ route('user.destinations.index') }}" method="GET" class="mb-4">
-                    <div class="input-group">
-                        <input type="text" name="search" class="form-control" placeholder="Search for..."
-                            value="{{ request('search') }}">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-search"></i> <!-- Font Awesome Search Icon -->
-                        </button>
-                    </div>
-                </form>
 
 
                 <!-- About Aparri Dropdown -->

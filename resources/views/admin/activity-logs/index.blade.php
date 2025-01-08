@@ -1,10 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="mt-4">Activity Logs</h1>
+<h1 class="mt-4">Activity Logs</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Activity Logs</li>
+</ol>
     <div class="container mt-4">
-        <h1 class="text-center">Activity Logs</h1>
-
         <div class="table-responsive mt-4">
             <table class="table table-bordered">
                 <thead class="thead-dark">

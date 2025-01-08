@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Destination;
+use App\Models\Event;
 use App\Models\Feedback;
+use App\Models\Hotel;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class DestinationController extends Controller
 {
+   
     public function index()
     {
         $destinations = Destination::paginate(9);

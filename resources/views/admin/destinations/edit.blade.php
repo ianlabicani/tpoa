@@ -81,17 +81,16 @@
                             </div>
                         </div>
 
-                    {{-- Events --}}
-                    <div class="mb-3">
-                        <label for="service_offer" class="form-label"><strong>List of Events</strong></label>
-                        <textarea id="events" name="events" rows="5" class="form-control">{{ old('events', $destination->events) }}</textarea>
-                        <script>
-                            document.addEventListener("DOMContentLoaded", () => {
-                                ClassicEditor.create(document.querySelector('#events')).catch(error => console.error(error));
-                            });
-                        </script>
-                    </div>
-                        
+                        {{-- Events --}}
+                        <div class="mb-3">
+                            <label for="service_offer" class="form-label"><strong>List of Events</strong></label>
+                            <textarea id="events" name="events" rows="5" class="form-control">{{ old('events', $destination->events) }}</textarea>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", () => {
+                                    ClassicEditor.create(document.querySelector('#events')).catch(error => console.error(error));
+                                });
+                            </script>
+                        </div>
 
                         <div class="col-12">
                             <div class="mb-3">
@@ -110,7 +109,6 @@
                             </div>
                         </div>
                     </div>
-
 
                     <!-- Social Media -->
                     <div class="mb-3">
@@ -160,37 +158,28 @@
                         </div>
                     </div>
 
-                    <!-- Location Map Edit -->
+                   <!-- Location Map Edit -->
 <div class="mb-4">
     <label for="location_map" class="form-label"><strong>Edit Location</strong></label>
     <div id="edit-map" style="height: 400px;"></div>
 
-    
-        <label for="location_name" class="form-label"><strong>Location Name</strong></label>
-        <input type="text" id="location_name" name="location_name" class="form-control mb-3" 
-            value="{{ old('location_name', $destination->name ?? '') }}" placeholder="Enter Location Name">
-    
-        <label for="location_map" class="form-label"><strong>Select Location</strong></label>
-        <div id="map" style="height: 400px;"></div>
-    
-        <!-- Latitude and Longitude Input Fields -->
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <label for="latitude" class="form-label"><strong>Latitude</strong></label>
-                <input type="text" id="latitude" name="latitude" class="form-control"
-                    value="{{ old('latitude', $destination->latitude ?? '') }}"
-                    placeholder="Enter Latitude">
-            </div>
-            <div class="col-md-6">
-                <label for="longitude" class="form-label"><strong>Longitude</strong></label>
-                <input type="text" id="longitude" name="longitude" class="form-control"
-                    value="{{ old('longitude', $destination->longitude ?? '') }}"
-                    placeholder="Enter Longitude">
-            </div>
+    <!-- Latitude and Longitude Inputs -->
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <label for="latitude" class="form-label"><strong>Latitude</strong></label>
+            <input type="text" id="latitude" name="latitude" value="{{ old('latitude', $destination->latitude ?? 18.3564) }}" class="form-control">
+            @error('latitude')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
-
-        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
-   
+        <div class="col-md-6">
+            <label for="longitude" class="form-label"><strong>Longitude</strong></label>
+            <input type="text" id="longitude" name="longitude" value="{{ old('longitude', $destination->longitude ?? 121.6402) }}" class="form-control">
+            @error('longitude')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -216,7 +205,9 @@
             L.control.layers(baseLayers).addTo(map);
 
             // Draggable marker for selecting new location
-            const marker = L.marker([latitude, longitude], { draggable: true }).addTo(map);
+            const marker = L.marker([latitude, longitude], {
+                draggable: true
+            }).addTo(map);
 
             // Update input fields when marker is dragged
             marker.on('dragend', () => {
@@ -227,8 +218,8 @@
 
             // Update marker position when input fields change
             const updateMarker = () => {
-                const lat = parseFloat(document.getElementById('latitude').value) || 0;
-                const lng = parseFloat(document.getElementById('longitude').value) || 0;
+                const lat = parseFloat(document.getElementById('latitude').value) || latitude;
+                const lng = parseFloat(document.getElementById('longitude').value) || longitude;
                 marker.setLatLng([lat, lng]);
                 map.setView([lat, lng], 13);
             };

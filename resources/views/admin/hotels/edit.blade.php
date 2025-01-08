@@ -1,8 +1,14 @@
 @extends('layouts.admin')
+<script src="https://cdn.ckeditor.com/ckeditor5/35.3.1/classic/ckeditor.js"></script>
 
 @section('content')
+<h1 class="mt-4">Edit Hotel</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Edit Hotel</li>
+</ol>
     <div class="container">
-        <h1>Edit Hotel</h1>
+       
 
         <form action="{{ route('admin.hotels.update', $hotel->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -19,6 +25,48 @@
                 <label for="location" class="form-label">Location</label>
                 <input type="text" name="location" id="location" class="form-control" value="{{ $hotel->location }}">
             </div>
+
+              <!-- Price Per Night -->
+              <div class="mb-3">
+                <label for="price_per_night" class="form-label">Price Per Night</label>
+                <input type="number" name="price_per_night" id="price_per_night" class="form-control" step="0.01"
+                    value="{{ $hotel->price_per_night }}">
+            </div>
+
+             <!-- Social Media Links -->
+             <div class="mb-3">
+                <label for="social_media" class="form-label">Social Media Links (JSON)</label>
+                <textarea name="social_media" id="social_media" rows="3" class="form-control">{{ $hotel->social_media }}</textarea>
+            </div>
+
+             <!-- Services Offered -->
+             <div class="mb-3">
+                <label for="services" class="form-label">Services Offered</label>
+                <textarea name="services" id="services" rows="3" class="form-control">{{ old('services', $hotel->services ?? '') }}</textarea>
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        ClassicEditor.create(document.querySelector('#services'))
+                            .catch(error => console.error(error));
+                    });
+                </script>
+            </div>
+            
+
+            <!-- Availability -->
+            <div class="mb-3">
+                <label for="availability" class="form-label">Availability</label>
+                <select name="availability" id="availability" class="form-select">
+                    <option value="1" {{ $hotel->availability ? 'selected' : '' }}>Available</option>
+                    <option value="0" {{ !$hotel->availability ? 'selected' : '' }}>Unavailable</option>
+                </select>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="description" id="description" rows="4" class="form-control">{{ $hotel->description }}</textarea>
+            </div>
+
 
             <!-- Map for selecting latitude and longitude -->
             <div id="map" style="height: 400px; margin-bottom: 15px;"></div>
@@ -78,63 +126,32 @@
                 });
             </script>
 
-            <!-- Price Per Night -->
-            <div class="mb-3">
-                <label for="price_per_night" class="form-label">Price Per Night</label>
-                <input type="number" name="price_per_night" id="price_per_night" class="form-control" step="0.01"
-                    value="{{ $hotel->price_per_night }}">
-            </div>
-
-            <!-- Description -->
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea name="description" id="description" rows="4" class="form-control">{{ $hotel->description }}</textarea>
-            </div>
-
+          
             <!-- Cover Image -->
             <div class="mb-3">
                 <label for="cover" class="form-label">Cover Image</label>
                 <input type="file" name="cover" id="cover" class="form-control">
-                @if ($hotel->cover)
+                {{-- @if ($hotel->cover)
                     <img src="{{ asset('storage/' . $hotel->cover) }}" alt="Cover Image"
                         style="max-height: 200px; margin-top: 10px;">
-                @endif
+                @endif --}}
             </div>
 
             <!-- Multiple Images -->
             <div class="mb-3">
                 <label for="images" class="form-label">Hotel Images</label>
                 <input type="file" name="images[]" id="images" class="form-control" multiple>
-                @if ($hotel->images)
+                {{-- @if ($hotel->images)
                     <div class="mt-3">
                         @foreach ($hotel->images as $image)
                             <img src="{{ asset('storage/' . $image->path) }}" alt="Hotel Image"
                                 style="max-height: 100px; margin-right: 10px;">
                         @endforeach
                     </div>
-                @endif
+                @endif --}}
             </div>
 
-            <!-- Social Media Links -->
-            <div class="mb-3">
-                <label for="social_media" class="form-label">Social Media Links (JSON)</label>
-                <textarea name="social_media" id="social_media" rows="3" class="form-control">{{ $hotel->social_media }}</textarea>
-            </div>
-
-            <!-- Services -->
-            <div class="mb-3">
-                <label for="services" class="form-label">Services Offered</label>
-                <textarea name="services" id="services" rows="3" class="form-control">{{ $hotel->services }}</textarea>
-            </div>
-
-            <!-- Availability -->
-            <div class="mb-3">
-                <label for="availability" class="form-label">Availability</label>
-                <select name="availability" id="availability" class="form-select">
-                    <option value="1" {{ $hotel->availability ? 'selected' : '' }}>Available</option>
-                    <option value="0" {{ !$hotel->availability ? 'selected' : '' }}>Unavailable</option>
-                </select>
-            </div>
+           
 
             <!-- Submit Button -->
             <button type="submit" class="btn btn-primary">Update Hotel</button>

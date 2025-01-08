@@ -52,17 +52,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- Location --}}
-                    <div class="col-12">
-                        <div class="mb-3">
-                            <label for="location" class="form-label"><strong>Location</strong></label>
-                            <input type="text" id="location" name="location" value="{{ old('location') }}"
-                                class="form-control">
-                            @error('location')
-                                <div class="text-danger mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
+                    
                     {{-- Entrance Fee --}}
                     <div class="col-12">
                         <div class="mb-3">
@@ -155,28 +145,12 @@
                     </div>
                    <!-- Location Map -->
 <div class="mb-4">
-    <label for="location_name" class="form-label"><strong>Location Name</strong></label>
-    <input type="text" id="location_name" name="location_name" class="form-control mb-3" 
-        value="{{ old('location_name', $destination->name ?? '') }}" placeholder="Enter Location Name">
+    
 
     <label for="location_map" class="form-label"><strong>Select Location</strong></label>
     <div id="map" style="height: 400px;"></div>
 
-    <!-- Latitude and Longitude Input Fields -->
-    <div class="row mt-3">
-        <div class="col-md-6">
-            <label for="latitude" class="form-label"><strong>Latitude</strong></label>
-            <input type="text" id="latitude" name="latitude" class="form-control"
-                value="{{ old('latitude', $destination->latitude ?? '') }}"
-                placeholder="Enter Latitude">
-        </div>
-        <div class="col-md-6">
-            <label for="longitude" class="form-label"><strong>Longitude</strong></label>
-            <input type="text" id="longitude" name="longitude" class="form-control"
-                value="{{ old('longitude', $destination->longitude ?? '') }}"
-                placeholder="Enter Longitude">
-        </div>
-    </div>
+    
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {

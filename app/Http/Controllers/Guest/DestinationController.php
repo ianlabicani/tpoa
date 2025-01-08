@@ -36,10 +36,10 @@ class DestinationController extends Controller
         $videos = $destination->videos()->orderBy('created_at', 'desc')->paginate(5);
 
         if (auth()->check()) {
-            return redirect()->route('user.destinations.show', [$destination, $feedbacks, $videos]);
-            // return view('user.destinations.show', compact('destination', 'feedbacks', 'videos'));
+            // return redirect()->route('user.destinations.show', [$destination, $feedbacks, $videos]);
+            return view('user.destinations.show', compact('destination', 'feedbacks', 'videos'));
         }
-        dd('test');
+        // dd('test');
         return view("guest.destinations.show", compact('destination', 'feedbacks', 'videos'));
     }
 }

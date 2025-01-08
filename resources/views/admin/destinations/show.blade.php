@@ -9,7 +9,7 @@
     <div class="container mt-4">
         <!-- Destination Card -->
         <div class="card shadow-sm">
-            <div class="card-header      text-center">
+            <div class="card-header text-center">
                 <h3>{{ $destination->name }}</h3>
             </div>
             <!-- Location Map View -->
@@ -38,15 +38,12 @@
 
                 <script>
                     document.addEventListener("DOMContentLoaded", () => {
-                        // Get latitude, longitude, and name from server-side variables
                         const latitude = {{ $destination->latitude }};
                         const longitude = {{ $destination->longitude }};
                         const locationName = "{{ $destination->name ?? 'Unnamed Location' }}";
 
-                        // Initialize the map
                         const map = L.map('map').setView([latitude, longitude], 13);
 
-                        // Add multiple tile layers
                         const baseLayers = {
                             "OpenStreetMap": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                 attribution: '&copy; OpenStreetMap contributors'
@@ -59,42 +56,13 @@
                             })
                         };
 
-                        // Add OpenStreetMap as the default tile layer
                         baseLayers["OpenStreetMap"].addTo(map);
 
-                        // Add layer control to switch between layers
                         L.control.layers(baseLayers).addTo(map);
 
-                        // Add a marker for the location
                         L.marker([latitude, longitude]).addTo(map)
                             .bindPopup(`<b>${locationName}</b><br>Latitude: ${latitude}<br>Longitude: ${longitude}`)
                             .openPopup();
-
-                        // Add points of interest (POIs) if applicable
-                        const pointsOfInterest = [{
-                                lat: 18.35563019274085,
-                                lng: 121.63384768213126,
-                                name: "Aparri Beach",
-                                description: "Famous for its natural beauty."
-                            },
-                            {
-                                lat: 18.355379815926486,
-                                lng: 121.64200090392804,
-                                name: "St Peter Thelmo Parish",
-                                description: "Historic church in Aparri."
-                            },
-                            {
-                                lat: 18.362924430961094,
-                                lng: 121.62882759800767,
-                                name: "Port of Aparri",
-                                description: "Old Port of Aparri."
-                            }
-                        ];
-
-                        pointsOfInterest.forEach(poi => {
-                            L.marker([poi.lat, poi.lng]).addTo(map)
-                                .bindPopup(`<strong>${poi.name}</strong><br>${poi.description}`);
-                        });
                     });
                 </script>
             </div>
@@ -105,50 +73,43 @@
             </div>
         </div>
 
-        <!-- Day Images -->
+        <!-- Image Galleries -->
         <div class="my-4">
             <h4 class="mb-3">Day Images</h4>
-            <div class="row g-3">
+            <div class="row">
                 @forelse (json_decode($destination->day_images, true) ?? [] as $dayImage)
-                    <div class="col-md-3">
-                        <div class="card shadow-sm h-100">
+                    <div class="col-lg-3 col-md-4 col-6 mb-4">
+                        <div class="card shadow-sm">
                             <a href="{{ asset('storage/' . $dayImage) }}" target="_blank">
-                                <img src="{{ asset('storage/' . $dayImage) }}" alt="Day Image" class="card-img-top rounded"
-                                    style="height: 180px; object-fit: cover;">
+                                <img src="{{ asset('storage/' . $dayImage) }}" alt="Day Image"
+                                    class="card-img-top img-fluid rounded">
                             </a>
                         </div>
                     </div>
                 @empty
-                    <div class="col-12 text-center">
-                        <p class="text-muted">No day images available.</p>
-                    </div>
+                    <p class="text-muted">No day images available.</p>
                 @endforelse
             </div>
         </div>
 
-        <!-- Night Images -->
         <div class="my-4">
             <h4 class="mb-3">Night Images</h4>
-            <div class="row g-3">
+            <div class="row">
                 @forelse (json_decode($destination->night_images, true) ?? [] as $nightImage)
-                    <div class="col-md-3">
-                        <div class="card shadow-sm h-100">
+                    <div class="col-lg-3 col-md-4 col-6 mb-4">
+                        <div class="card shadow-sm">
                             <a href="{{ asset('storage/' . $nightImage) }}" target="_blank">
                                 <img src="{{ asset('storage/' . $nightImage) }}" alt="Night Image"
-                                    class="card-img-top rounded" style="height: 180px; object-fit: cover;">
+                                    class="card-img-top img-fluid rounded">
                             </a>
                         </div>
                     </div>
                 @empty
-                    <div class="col-12 text-center">
-                        <p class="text-muted">No night images available.</p>
-                    </div>
+                    <p class="text-muted">No night images available.</p>
                 @endforelse
             </div>
         </div>
 
-
-        <!-- Related Videos -->
         <!-- Related Videos -->
         <div class="my-4">
             <h4>Related Videos</h4>
@@ -160,10 +121,8 @@
                         <div class="col-md-6 mb-3">
                             <div class="card {{ $video->isReviewed ? 'border-info' : 'border-warning' }}">
                                 <div class="card-body">
-                                    <!-- Video Title -->
                                     <h5 class="card-title">{{ $video->title }}</h5>
 
-                                    <!-- Video Embed -->
                                     <div class="mb-3">
                                         @if (strpos($video->url, 'youtube.com') !== false || strpos($video->url, 'youtu.be') !== false)
                                             @php
@@ -175,24 +134,18 @@
                                                     $embedUrl = 'https://www.youtube.com/embed/' . $params['v'];
                                                 }
                                             @endphp
-
-                                            <!-- Embed YouTube Video -->
                                             <iframe width="100%" height="315" src="{{ $embedUrl }}"
                                                 title="Video player" frameborder="0"
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                 referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                         @else
-                                            <!-- If it's not a YouTube link, just show the media link -->
                                             <a href="{{ $video->url }}" target="_blank"
                                                 class="btn btn-outline-primary">Watch Video</a>
                                         @endif
-
                                     </div>
 
-                                    <!-- Video Description -->
                                     <p class="card-text">{{ $video->description }}</p>
 
-                                    <!-- Approval for Admins -->
                                     @if (!$video->isReviewed)
                                         <p class="mt-2">This video is pending review.</p>
                                         <form action="{{ route('admin.videos.review', $video->id) }}" method="POST"

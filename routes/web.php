@@ -96,7 +96,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 
     Route::resource('hotels', AdminHotelController::class);
-
 });
 
 

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Destination;
 use App\Models\Video;
 use App\Models\Event;
+use App\Models\Hotel;
 
 class SearchController extends Controller
 {
@@ -26,7 +27,12 @@ class SearchController extends Controller
         ->orWhere('description', 'LIKE', "%$query%")
         ->paginate(5, ['*'], 'events');
 
-    return view('admin.search-results', compact('query', 'destinations', 'videos', 'events'));
+        $hotels = Hotel::where('name', 'LIKE', "%$query%")
+        ->orWhere('location', 'LIKE', "%$query%")
+        ->orWhere('description', 'LIKE', "%$query%")
+        ->paginate(5, ['*'], 'hotels');
+
+    return view('admin.search-results', compact('query', 'destinations', 'videos', 'events', 'hotels'));
 }
 
 }

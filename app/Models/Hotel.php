@@ -20,7 +20,7 @@ class Hotel extends Model
         'services',
         'latitude',
         'longitude',
-        'availability',
+        'availability', 
     ];
 
     public function images()

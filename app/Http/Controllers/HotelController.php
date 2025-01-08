@@ -33,6 +33,7 @@ class HotelController extends Controller
             'social_media' => 'nullable|json',
             'services' => 'nullable|string',
             'availability' => 'boolean',
+            
         ]);
 
         // dd($validated);
@@ -83,7 +84,7 @@ class HotelController extends Controller
         if ($request->hasFile('cover')) {
             // Delete the old cover image if it exists
             if ($hotel->cover) {
-                \Storage::disk('public')->delete($hotel->cover);
+                Storage::disk('public')->delete($hotel->cover);
             }
 
             // Store the new cover image
