@@ -18,11 +18,6 @@
                 <label for="location" class="form-label">Location</label>
                 <input type="text" name="location" id="location" class="form-control">
             </div>
-            <div class="mb-3">
-                <label for="location" class="form-label">Hotel Location</label>
-                <input type="text" name="location" id="location" class="form-control" placeholder="Enter address">
-            </div>
-
             <!-- Map for selecting latitude and longitude -->
             <div id="map" style="height: 400px; margin-bottom: 15px;"></div>
 
