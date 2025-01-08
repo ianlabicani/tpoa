@@ -18,6 +18,8 @@ class Hotel extends Model
         'cover',
         'social_media',
         'services',
+        'latitude',
+        'longitude',
         'availability',
     ];
 

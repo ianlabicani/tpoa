@@ -18,6 +18,65 @@
                 <label for="location" class="form-label">Location</label>
                 <input type="text" name="location" id="location" class="form-control">
             </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Hotel Location</label>
+                <input type="text" name="location" id="location" class="form-control" placeholder="Enter address">
+            </div>
+
+            <!-- Map for selecting latitude and longitude -->
+            <div id="map" style="height: 400px; margin-bottom: 15px;"></div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="latitude" class="form-label">Latitude</label>
+                    <input type="text" name="latitude" id="latitude" class="form-control" readonly>
+                </div>
+                <div class="col-md-6">
+                    <label for="longitude" class="form-label">Longitude</label>
+                    <input type="text" name="longitude" id="longitude" class="form-control" readonly>
+                </div>
+            </div>
+
+            <script>
+                // Initialize the map
+                let map = L.map('map').setView([10.3157, 123.8854], 13); // Default location (e.g., Cebu City)
+
+                // Add OpenStreetMap tiles
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                // Add a marker with drag functionality
+                let marker = L.marker([10.3157, 123.8854], {
+                    draggable: true
+                }).addTo(map);
+
+                // Update latitude and longitude inputs on marker drag
+                marker.on('dragend', function(e) {
+                    let latLng = marker.getLatLng();
+                    document.getElementById('latitude').value = latLng.lat;
+                    document.getElementById('longitude').value = latLng.lng;
+                });
+
+                // Geocode address input to update marker
+                document.getElementById('location').addEventListener('input', function() {
+                    let address = this.value;
+                    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${address}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data && data[0]) {
+                                let lat = data[0].lat;
+                                let lon = data[0].lon;
+                                marker.setLatLng([lat, lon]);
+                                map.setView([lat, lon], 13);
+                                document.getElementById('latitude').value = lat;
+                                document.getElementById('longitude').value = lon;
+                            }
+                        });
+                });
+            </script>
+
 
             <!-- Price Per Night -->
             <div class="mb-3">
