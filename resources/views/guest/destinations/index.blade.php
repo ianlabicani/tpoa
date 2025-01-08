@@ -5,7 +5,8 @@
         /* General Styling */
         .destination-image {
             width: 100%;
-            height: 300px; /* Increased height for larger image */
+            height: 300px;
+            /* Increased height for larger image */
             object-fit: cover;
         }
 
@@ -24,7 +25,8 @@
         }
 
         .card-body {
-            flex-grow: 1; /* Ensures cards have equal height */
+            flex-grow: 1;
+            /* Ensures cards have equal height */
         }
 
         .card-title {
@@ -55,7 +57,8 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .destination-image {
-                height: 200px; /* Adjusted for smaller screens */
+                height: 200px;
+                /* Adjusted for smaller screens */
             }
         }
     </style>
@@ -69,12 +72,11 @@
                         <!-- Destination Cover -->
                         @if ($destination->day_images && count(json_decode($destination->day_images, true)) > 0)
                             @php $dayImages = json_decode($destination->day_images, true); @endphp
-                            
-                                <a href="{{ route('destinations.show', $destination->id) }}"
-                                    >
-                                    <img src="{{ asset('storage/' . $dayImages[0]) }}" class="destination-image"
-                                alt="{{ $destination->name }}">
-                                </a>
+
+                            <a href="{{ route('destinations.show', $destination->id) }}">
+                                <img src="{{ asset('storage/' . $dayImages[0]) }}" class="destination-image"
+                                    alt="{{ $destination->name }}">
+                            </a>
                         @else
                             <div class="card-img-top bg-secondary text-white text-center py-5 rounded-top">
                                 No Image Available
@@ -86,7 +88,7 @@
                             <h5 class="card-title mb-3">{{ $destination->name }}</h5>
                         </div>
 
-                       
+
                     </div>
                 </div>
             @endforeach
