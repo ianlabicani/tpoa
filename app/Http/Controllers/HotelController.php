@@ -37,6 +37,8 @@ class HotelController extends Controller
         }
 
         Hotel::create($validated);
+        activity()->log('Hotel created successfully.');
+
 
         return redirect()->route('admin.hotels.index')->with('success', 'Hotel added successfully.');
     }
@@ -67,6 +69,8 @@ class HotelController extends Controller
         }
 
         $hotel->update($validated);
+        activity()->log('Hotel updated successfully.');
+
 
         return redirect()->route('admin.hotels.index')->with('success', 'Hotel updated successfully.');
     }
@@ -77,6 +81,7 @@ class HotelController extends Controller
         }
 
         $hotel->delete();
+        activity()->log('Hotel deleted successfully.');
 
         return redirect()->route('admin.hotels.index')->with('success', 'Hotel deleted successfully.');
     }
