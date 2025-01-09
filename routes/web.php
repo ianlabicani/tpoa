@@ -23,7 +23,11 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController as ControllersSearchController;
 use App\Http\Controllers\UserController;
+use App\Models\Feedback;
+use App\Models\FeedbackReaction;
+use App\Models\Video;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Models\Activity;
 
 
@@ -75,7 +79,29 @@ require __DIR__ . '/auth.php';
 // ROUTE FOR ADMIN
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('dashboard', function () {
-        return view('admin.dashboard');
+
+
+
+        // Query the FeedbackReaction table
+        $reactionCounts = FeedbackReaction::select('reaction', DB::raw('COUNT(*) as total_count'))
+            ->groupBy('reaction')
+            ->get();
+
+        $totalVisitors = Feedback::distinct('user_id')->count('user_id');
+        $visitorCounts = Feedback::select('destination_id', DB::raw('COUNT(DISTINCT user_id) as total_visitors'))
+            ->groupBy('destination_id')
+            ->get();
+
+            $videoCounts = Video::select('destination_id', DB::raw('COUNT(*) as total_videos'))
+            ->groupBy('destination_id')
+            ->with('destination:id,name') // Include destination name
+            ->get();
+
+        
+
+
+        // Pass data to the view (if needed)
+        return view('admin.dashboard', compact('reactionCounts','totalVisitors','videoCounts'));
     })->name('dashboard');
     Route::resource('destinations', AdminDestinationController::class);
     Route::resource('videos', AdminVideoController::class);
@@ -83,6 +109,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 
 
     Route::get('feedbacks', [AdminDestinationController::class, 'manageFeedbacks'])->name('feedbacks.index');
+    Route::get('details', [AdminDestinationController::class, 'details'])->name('details');
+
     Route::get('activity-logs', function () {
         $activityLogs = Activity::latest()->paginate(10);
         return view('admin.activity-logs.index', compact('activityLogs'));

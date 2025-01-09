@@ -175,4 +175,24 @@ class DestinationController extends Controller
         // Pass feedbacks to the view
         return view('admin.activity-logs.index');
     }
+
+    public function details()
+    {
+        $visitorCounts = Destination::withCount([
+                'feedbacks as likes_count' => function ($query) {
+                    $query->whereHas('reactions', function ($query) {
+                        $query->where('reaction', 'like');
+                    });
+                },
+                'feedbacks as dislikes_count' => function ($query) {
+                    $query->whereHas('reactions', function ($query) {
+                        $query->where('reaction', 'dislike');
+                    });
+                }
+            ])
+            ->paginate(9); // Paginate destinations with reaction counts
+    
+        return view("admin.details", compact('visitorCounts'));
+    }
+    
 }

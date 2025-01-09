@@ -29,19 +29,32 @@ class Destination extends Model
         'longitude'
     ];
 
-    public function feedback()
-    {
-        return $this->hasMany(Feedback::class);
-    }
+  
 
     public function videos()
     {
         return $this->hasMany(Video::class);
     }
 
-    public function reactions()
+  
+
+   // Define the feedbacks relationship (1-to-many)
+    // Define the feedbacks relationship
+    public function feedbacks()
     {
-        return $this->hasMany(FeedbackReaction::class, 'feedback_id');
+        return $this->hasMany(Feedback::class);
     }
 
+    // Define the relationship with FeedbackReaction through Feedback
+    public function reactions()
+    {
+        return $this->hasManyThrough(FeedbackReaction::class, Feedback::class);
+    }
+
+
+    // Define the inverse of the relationship (many-to-one)
+    public function destination()
+    {
+        return $this->belongsTo(Destination::class);
+    }
 }

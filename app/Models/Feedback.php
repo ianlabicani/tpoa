@@ -27,5 +27,6 @@ class Feedback extends Model
     {
         return $this->hasMany(FeedbackReaction::class);
     }
+    
 
 }

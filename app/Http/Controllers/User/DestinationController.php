@@ -16,8 +16,15 @@ class DestinationController extends Controller
 
     public function show(Destination $destination)
     {
-        $feedbacks = $destination->feedback()->orderBy('created_at', 'desc')->paginate(5);
+        // Retrieve feedbacks for the destination
+        $feedbacks = $destination->feedbacks()->orderBy('created_at', 'desc')->paginate(5);
+    
+        // Retrieve videos for the destination
         $videos = $destination->videos()->orderBy('created_at', 'desc')->paginate(5);
-        return view("user.destinations.show", compact('destination', 'feedbacks', 'videos'));
+    
+        return view('user.destinations.show', compact('destination', 'feedbacks', 'videos'));
     }
+    
+    
+    
 }

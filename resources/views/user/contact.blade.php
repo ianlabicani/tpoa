@@ -1,26 +1,6 @@
 @extends('user.shell')
 
 @section('content')
-
-<!-- Map Section -->
-<section class="map-section py-5">
-    <div class="container">
-        <h2 class="text-center display-5 mb-4">Emergency Contact Services in Aparri</h2>
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <!-- Leaflet Map -->
-                <div id="leaflet-map"></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Include Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-ObbJ16WAMsHjZXbJGD9EVldCL6DBw5UHRN6rxBcm8e5DYT9ol/8fXcwLMaVyrkI0" crossorigin=""/>
-
-<!-- Include Leaflet JavaScript -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-SrI3tsw6JJoRfHRlFv51uQ0mBhhgyBF2L6ql96VZTzOKlrsE/YJ94rDnUMQNfo3I" crossorigin=""></script>
-
 <style>
     #leaflet-map {
         width: 100%;
@@ -32,6 +12,148 @@
         }
     }
 </style>
+
+
+<!-- Map Section -->
+<section class="map-section py-5">
+    <div class="container">
+       
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <!-- Leaflet Map -->
+                <div id="leaflet-map"></div>
+            </div>
+        </div>
+
+        <h2 class="text-center display-5 mb-4">Emergency Contact Services in Aparri</h2>
+
+<!-- Contact details for PNP Aparri -->
+<div class="row justify-content-center mb-4">
+    <h4 class="text-center display-5 mb-3">PNP Aparri</h4>
+    <!-- Phone Numbers Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Phone Numbers:</h5>
+        <ul>
+            <li>0917-203-2003</li>
+        </ul>
+    </div>
+    <!-- Address Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Address:</h5>
+        <p>PNP Headquarters, Aparri, Cagayan</p>
+    </div>
+</div>
+
+<!-- Contact details for Coast Guard -->
+<div class="row justify-content-center mb-4">
+    <h4 class="text-center display-5 mb-3">Coast Guard</h4>
+    <!-- Phone Numbers Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Phone Numbers:</h5>
+        <ul>
+            <li>0956-830-1802</li>
+        </ul>
+    </div>
+    <!-- Address Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Address:</h5>
+        <p>Coast Guard Station, Aparri, Cagayan</p>
+    </div>
+</div>
+
+<!-- Contact details for Maritime -->
+<div class="row justify-content-center mb-4">
+    <h4 class="text-center display-5 mb-3">Maritime</h4>
+    <!-- Phone Numbers Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Phone Numbers:</h5>
+        <ul>
+            <li>0906-842-5879</li>
+        </ul>
+    </div>
+    <!-- Address Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Address:</h5>
+        <p>Maritime Office, Aparri, Cagayan</p>
+    </div>
+</div>
+
+<!-- Contact details for BFP Aparri -->
+<div class="row justify-content-center mb-4">
+    <h4 class="text-center display-5 mb-3">BFP Aparri</h4>
+    <!-- Phone Numbers Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Phone Numbers:</h5>
+        <ul>
+            <li>0916-491-0946</li>
+            <li>0956-260-7818</li>
+        </ul>
+    </div>
+    <!-- Address Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Address:</h5>
+        <p>BFP Office, Aparri, Cagayan</p>
+    </div>
+</div>
+
+<!-- Contact details for MDRRMO Aparri -->
+<div class="row justify-content-center mb-4">
+    <h4 class="text-center display-5 mb-3">MDRRMO Aparri</h4>
+    <!-- Phone Numbers Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Phone Numbers:</h5>
+        <ul>
+            <li>0956-654-2894</li>
+            <li>0961-971-2006</li>
+        </ul>
+    </div>
+    <!-- Address Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Address:</h5>
+        <p>MDRRMO Office, Aparri, Cagayan</p>
+    </div>
+</div>
+
+<!-- Contact details for RHU West -->
+<div class="row justify-content-center mb-4">
+    <h4 class="text-center display-5 mb-3">RHU West</h4>
+    <!-- Phone Numbers Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Phone Numbers:</h5>
+        <ul>
+            <li>0935-951-9786</li>
+        </ul>
+    </div>
+    <!-- Address Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Address:</h5>
+        <p>RHU West, Aparri, Cagayan</p>
+    </div>
+</div>
+
+<!-- Contact details for RHU East -->
+<div class="row justify-content-center mb-4">
+    <h4 class="text-center display-5 mb-3">RHU East</h4>
+    <!-- Phone Numbers Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Phone Numbers:</h5>
+        <ul>
+            <li>0953-190-8364</li>
+        </ul>
+    </div>
+    <!-- Address Column -->
+    <div class="col-md-5">
+        <h5 class="font-weight-bold">Address:</h5>
+        <p>RHU East, Aparri, Cagayan</p>
+    </div>
+</div>
+
+    </div>
+
+
+    
+</section>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

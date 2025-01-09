@@ -257,8 +257,7 @@
                     <div class="slider-content">
                         <h1> PAG-ASA </h1>
                         <p>
-                            Explore Aparri where the river meets the sea. Discover breathtaking views and serene
-                            surroundings that leave you in awe.
+                            Pag-Asa Radar in Punta, Aparri
                         </p>
 
                         <a href="{{ route('destinations.index') }}" class="slider-link">Discover more destinations</a>
@@ -269,7 +268,7 @@
             <div class="carousel-item">
                 <div class="slider-item" style="background-image: url('{{ asset('image/church.png') }}');">
                     <div class="slider-content">
-                        <h1> St. Peter Thelmo Parish Church </h1>
+                        <h1> St. Peter Thelmo Parish </h1>
                         <p>
                             Famous Church in Aparri
                         </p>
@@ -326,12 +325,6 @@
         </div>
     </section>
 
-
-
-
-
-
-
     <!-- Articles Section -->
     <div class="container">
 
@@ -373,38 +366,7 @@
             </div>
             <a style="text-decoration:none"  href="{{ route('culture') }}">See More...</a>
 
-            <!-- About Section -->
-            <section id="about" class="py-5">
-                <div class="container text-center">
-                    <h2 class="display-4">About Us</h2>
-                    <!-- Vision and Mission Section -->
-                    <div class="container my-5">
-                        <div class="row">
-                            <!-- Vision Column -->
-                            <div class="col-md-6">
-                                <h4 class="text-center mb-3">Aparri Vision</h4>
-                                <p class="lead mb-4" style="text-align: justify">
-                                    “The golden frontier of the North on international and local trade and commerce,
-                                    education and training, agro-fishery industry and eco-tourism with modern, green,
-                                    disaster-resilient and balanced infrastructure geared towards an innovative, competitive
-                                    and sustained economy with God-loving, empowered and self-reliant citizenry living in a
-                                    safe and ecologically balanced environment under a responsive, transparent and dynamic
-                                    governance”
-                                </p>
-                            </div>
-                            <!-- Mission Column -->
-                            <div class="col-md-6">
-                                <h4 class="text-center mb-3">Aparri Mission</h4>
-                                <p class="lead mb-4" style="text-align: justify">
-                                    The Local Government of Aparri has to serve with humility and advocate earnestly the
-                                    provisions and intentions of Republic Act 7160 known as the Local Government Code of
-                                    1991 for lifelong excellent governance.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+           
             <!-- Map Section -->
             <section class="map-section py-5">
                 <div class="container">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Destination;
 use App\Models\Feedback;
+use App\Models\Feedbacks;
 use App\Models\FeedbackReaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class FeedbackController extends Controller
 
         $destination = Destination::findOrFail($request->destination);
 
-        $destination->feedback()->create([
+        $destination->feedbacks()->create([
             'user_id' => auth()->id(),
             'comment' => $request->comment,
         ]);
