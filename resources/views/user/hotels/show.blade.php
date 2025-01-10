@@ -69,7 +69,8 @@
                     <div class="row mt-4">
                         @foreach ($hotel->images as $image)
                             <div class="col-md-6 mb-3">
-                                <img src="{{ asset('storage/' . $image->path) }}" class="img-fluid rounded" alt="Hotel Image">
+                                <img src="{{ asset('storage/' . $image->path) }}" class="img-fluid rounded"
+                                    alt="Hotel Image">
                             </div>
                         @endforeach
                     </div>
@@ -86,7 +87,7 @@
     <script>
         let lat = {{ $hotel->latitude ?? 0 }};
         let lng = {{ $hotel->longitude ?? 0 }};
-        
+
         if (lat !== 0 && lng !== 0) {
             let map = L.map('map').setView([lat, lng], 13);
 
@@ -94,7 +95,7 @@
                 maxZoom: 19,
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
-
+            
             L.marker([lat, lng]).addTo(map)
                 .bindPopup("{{ $hotel->name }}")
                 .openPopup();

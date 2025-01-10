@@ -19,7 +19,8 @@ class Event extends Model
         'start_date',
         'end_date',
         'image',
-        'source'
+        'source',
+        'history'
     ];
 
     // If you want to define relationships with other models, you can do it here. For example, if each event has many feedbacks:

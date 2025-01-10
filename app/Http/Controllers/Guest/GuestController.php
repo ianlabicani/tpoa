@@ -24,9 +24,13 @@ class GuestController extends Controller
 
     public function events()
     {
-        $events = Event::all();
+        $events = Event::orderBy('start_date', 'asc')->get()->groupBy(function ($event) {
+            return \Carbon\Carbon::parse($event->start_date)->format('F Y'); // Group by Month and Year
+        });
+    
         return view('guest.about-aparri.events.index', compact('events'));
     }
+    
 
     public function show_event($id)
     {

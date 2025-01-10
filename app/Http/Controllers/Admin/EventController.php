@@ -10,9 +10,13 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::paginate(9);
+        $events = Event::orderBy('start_date', 'asc')->get()->groupBy(function ($event) {
+            return \Carbon\Carbon::parse($event->start_date)->format('F Y'); // Group by Month and Year
+        });
+    
         return view('admin.events.index', compact('events'));
     }
+    
 
     // Show the form for creating a new event
     public function create()

@@ -31,26 +31,32 @@
                             </h5>
                             <p class="card-text text-muted text-truncate mb-3">{{ $video->description }}</p>
                             @if (strpos($video->url, 'youtube.com') !== false || strpos($video->url, 'youtu.be') !== false)
-                                @php
-                                    if (strpos($video->url, 'youtu.be') !== false) {
-                                        $videoId = basename($video->url);
-                                        $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
-                                    } elseif (strpos($video->url, 'youtube.com') !== false) {
-                                        parse_str(parse_url($video->url, PHP_URL_QUERY), $params);
-                                        $embedUrl = 'https://www.youtube.com/embed/' . $params['v'];
-                                    }
-                                @endphp
-
+                            @php
+                                if (strpos($video->url, 'youtu.be') !== false) {
+                                    $videoId = basename($video->url);
+                                    $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
+                                } elseif (strpos($video->url, 'youtube.com') !== false) {
+                                    parse_str(parse_url($video->url, PHP_URL_QUERY), $params);
+                                    // Check if 'v' exists in the query parameters
+                                    $embedUrl = isset($params['v']) ? 'https://www.youtube.com/embed/' . $params['v'] : '';
+                                }
+                            @endphp
+                        
+                            @if($embedUrl)
                                 <!-- Embed YouTube Video -->
                                 <iframe width="100%" height="315" src="{{ $embedUrl }}" title="Video player"
                                     frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             @else
-                                <!-- If it's not a YouTube link, just show the media link -->
-                                <a href="{{ $video->url }}" target="_blank" class="btn btn-outline-primary">Watch
-                                    Video</a>
+                                <!-- Handle case where YouTube URL is invalid or malformed -->
+                                <p class="text-danger">Invalid YouTube URL</p>
                             @endif
+                        @else
+                            <!-- If it's not a YouTube link, just show the media link -->
+                            <a href="{{ $video->url }}" target="_blank" class="btn btn-outline-primary">Watch Video</a>
+                        @endif
+                        
 
                             @if (!$video->isReviewed)
                                 <form action="{{ route('admin.videos.review', $video->id) }}" method="POST" class="mt-3">

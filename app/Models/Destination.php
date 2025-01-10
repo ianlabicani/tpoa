@@ -26,7 +26,11 @@ class Destination extends Model
         'day_images',
         'night_images',
         'latitude',
-        'longitude'
+        'longitude',
+        'history',
+        'description',
+        'image_source',
+        'service_offer_image'
     ];
 
   

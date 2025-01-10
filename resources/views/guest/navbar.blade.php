@@ -88,7 +88,7 @@
                                     <a class="btn btn-primary" href="{{ route('user.dashboard') }}">Dashboard</a>
                                 @endif
                             @else
-                                <a class="btn btn-primary" href="{{ route('register') }}">Get Started</a>
+                                <a class="btn btn-primary" href="{{ route('login') }}">Get Started</a>
                             @endif
                         </li>
                     </ul>

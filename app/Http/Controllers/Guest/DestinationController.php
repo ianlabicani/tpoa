@@ -32,7 +32,7 @@ class DestinationController extends Controller
         ])->findOrFail($id);
 
         // Get related feedbacks and videos for the destination
-        $feedbacks = $destination->feedback()->orderBy('created_at', 'desc')->paginate(5);
+        $feedbacks = $destination->feedbacks()->orderBy('created_at', 'desc')->paginate(5);
         $videos = $destination->videos()->orderBy('created_at', 'desc')->paginate(5);
 
         if (auth()->check()) {
