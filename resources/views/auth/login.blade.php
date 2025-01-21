@@ -1,4 +1,6 @@
 @extends('auth.shell')
+
+<title>QuickEnroll</title>
 <style>
      @font-face {
         font-family: 'gugi';
@@ -29,7 +31,7 @@
                         </div>
                     @endif
                     <a class="navbar-brand text-dark text-center " href="/">
-                        <h1 class="m-0">TPOA</h1>
+                        <h1 class="m-0">QuickEnroll</h1>
                     </a>
                     <!-- Login Form -->
                     <form method="POST" action="{{ route('login') }}">

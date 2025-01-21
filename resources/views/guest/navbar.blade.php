@@ -33,7 +33,7 @@
 <nav class="navbar navbar-expand-lg bg-white shadow p-3">
     <div class="container">
         <a class="navbar-brand text-dark" href="/">
-            <h1 class="m-0">TPOA</h1>
+            <h1 class="m-0">QuickEnroll </h1>
         </a>
 
         <!-- Toggler for smaller screens -->
@@ -52,38 +52,26 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 aria-expanded="false">
-                                About Aparri
+                                test
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{ route('history') }}">History</a></li>
-                                <li><a class="dropdown-item" href="{{ route('culture') }}">Culture</a></li>
-                                <li><a class="dropdown-item" href="{{ route('guest.events') }}">Events</a></li>
-                                <li><a class="dropdown-item" href="{{ route('products') }}">Products</a></li>
+                                <li><a class="dropdown-item" href="">Test</a></li>
                             </ul>
                         </li>
-                        <!-- Other Navbar Items -->
+
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('destinations.index') }}">Destinations</a>
+                            <a class="nav-link" href="">Test</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('hotels.index') }}">Hotels</a>
+                            <a class="nav-link" href="">Test</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('destinations.videos') }}">Videos</a>
-                        </li>
-                        {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('/') }}#hotels">Hotels</a>
-                </li> --}}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('contact') }}">Contact</a>
-                        </li>
+
                         <li class="nav-item">
                             @if (Auth::user())
                                 @if (Auth::user()->role === 'admin')
                                     <a class="btn btn-primary" href="{{ route('admin.dashboard') }}">Dashboard</a>
                                 @elseif (Auth::user()->role === 'hotel-owner')
-                                    <a class="btn btn-primary"
-                                        href="{{ route('hotel-owner.dashboard') }}">Dashboard</a>
+                                    <a class="btn btn-primary" href="{{ route('hotel-owner.dashboard') }}">Dashboard</a>
                                 @else
                                     <a class="btn btn-primary" href="{{ route('user.dashboard') }}">Dashboard</a>
                                 @endif

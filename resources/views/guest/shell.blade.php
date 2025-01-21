@@ -7,9 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('tourism-icon.png') }}" type="image/x-icon">
 
-    <title>{{ config('app.name') }}</title>
+    <title>QuickEnroll - Your Learning Hub</title>
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+  
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
@@ -30,7 +30,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha384-SrI3tsw6JJoRfHRlFv51uQ0mBhhgyBF2L6ql96VZTzOKlrsE/YJ94rDnUMQNfo3I" crossorigin=""></script>
 
-
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
         
 
 </head>

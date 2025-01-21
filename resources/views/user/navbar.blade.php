@@ -1,15 +1,13 @@
-<Style>
+<style>
     @font-face {
         font-family: 'gugi';
         src: url('{{ asset('fonts/Gugi-Regular.ttf') }}') format('truetype');
         font-style: normal;
-
     }
-
 
     .navbar-brand {
         font-family: 'gugi';
-        font-weight: 200
+        font-weight: 200;
     }
 
     .nav-item.dropdown:hover .dropdown-menu {
@@ -24,18 +22,15 @@
         position: sticky;
         top: 0;
         z-index: 1000;
-        /* Make sure it sits on top of other content */
         background-color: #fff;
-        /* or any background color */
     }
-</Style>
+</style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
 
 <nav class="navbar navbar-expand-lg bg-white shadow p-3">
     <div class="container">
         <a class="navbar-brand text-dark" href="{{ route('user.dashboard') }}">
-            <h1 class="m-0">TPOA</h1>
+            <h1 class="m-0">QuickEnroll</h1>
         </a>
         <!-- Toggler for smaller screens -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -45,45 +40,47 @@
         <!-- Navbar Links -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-
-
-
                 <!-- About Aparri Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        aria-expanded="false">
-                        About Aparri
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-expanded="false">
+                        Test
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ route('user.history') }}">History</a></li>
-                        <li><a class="dropdown-item" href="{{ route('user.culture') }}">Culture</a></li>
-                        <li><a class="dropdown-item" href="{{ route('user.events') }}">Events</a></li>
-                        <li><a class="dropdown-item" href="{{ route('products') }}">Products</a></li>
-
+                        <li><a class="dropdown-item" href="">Test</a></li>
                     </ul>
                 </li>
+          
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user.destinations.index') }}">Destinations</a>
-                </li>
+                    <a class="nav-link" href="">Test</a>
+                </li>  
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user.hotels.index') }}">Hotels</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('destinations.videos') }}">Videos</a>
+                    <a class="nav-link" href="">Test</a>
                 </li>
 
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('/') }}#hotels">Hotels</a>
-                </li> --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user.contact') }}">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <form action="{{ route('logout') }}" method="POST" class="mb-2">
-                        @csrf
-                        <button class="btn btn-primary" type="submit">Logout</button>
-                    </form>
-                </li>
+                @auth
+                    <!-- User Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Welcome, {{ Auth::user()->name }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="">Profile</a></li>
+                            <li><a class="dropdown-item" href="">Settings</a></li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST" class="mb-2">
+                                    @csrf
+                                    <button class="dropdown-item" type="submit">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    </li>
+                @endauth
+
+             
             </ul>
         </div>
     </div>
