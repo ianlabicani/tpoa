@@ -1,15 +1,13 @@
-<Style>
+<style>
     @font-face {
         font-family: 'gugi';
         src: url('{{ asset('fonts/Gugi-Regular.ttf') }}') format('truetype');
         font-style: normal;
-
     }
-
 
     .navbar-brand {
         font-family: 'gugi';
-        font-weight: 200
+        font-weight: 200;
     }
 
     .nav-item.dropdown:hover .dropdown-menu {
@@ -24,13 +22,10 @@
         position: sticky;
         top: 0;
         z-index: 1000;
-        /* Make sure it sits on top of other content */
         background-color: #fff;
-        /* or any background color */
     }
-</Style>
+</style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
 
 <nav class="navbar navbar-expand-lg bg-white shadow p-3">
     <div class="container">
@@ -45,46 +40,51 @@
         <!-- Navbar Links -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-
-
-
-                <!-- About Aparri Dropdown -->
+                <!-- Enroll Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        aria-expanded="false">
-                        About Aparri
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-expanded="false">
+                        Enrollment            
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ route('user.history') }}">History</a></li>
-                        <li><a class="dropdown-item" href="{{ route('user.culture') }}">Culture</a></li>
-                        <li><a class="dropdown-item" href="{{ route('user.events') }}">Events</a></li>
-                        <li><a class="dropdown-item" href="{{ route('products') }}">Products</a></li>
-
+                        <li><a class="dropdown-item" href="{{ route('user.students.create') }}">enroll</a></li>
                     </ul>
                 </li>
+
+                <!-- Contact Link -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user.destinations.index') }}">Destinations</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user.hotels.index') }}">Hotels</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('destinations.videos') }}">Videos</a>
+                    <a class="nav-link" href="#">Contact</a>
                 </li>
 
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('/') }}#hotels">Hotels</a>
-                </li> --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user.contact') }}">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <form action="{{ route('logout') }}" method="POST" class="mb-2">
-                        @csrf
-                        <button class="btn btn-primary" type="submit">Logout</button>
-                    </form>
-                </li>
+                <!-- User Dropdown (Logged In) -->
+                @auth
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" aria-expanded="false">
+                            {{ Auth::user()->name }} <!-- Display logged-in user's name -->
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
+                         
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST" class="mb-2">
+                                    @csrf
+                                    <button class="dropdown-item" type="submit">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                @endauth
+
+                <!-- Guest Link (Logout for non-authenticated users) -->
+                @guest
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="POST" class="mb-2">
+                            @csrf
+                            <button class="btn btn-primary" type="submit">Logout</button>
+                        </form>
+                    </li>
+                @endguest
             </ul>
         </div>
     </div>
 </nav>
+

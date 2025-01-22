@@ -120,6 +120,7 @@
                             });
                         </script>
                     </div>
+
                     {{-- service offer --}}
                     <div class="mb-3">
                         <label for="service_offer" class="form-label"><strong>List of Services Offered</strong></label>
@@ -141,6 +142,32 @@
                             });
                         </script>
                     </div>
+
+                     <!-- Description & History -->
+                     <div class="mb-3">
+                        <label for="description" class="form-label"><strong>Description</strong></label>
+                        <textarea id="description" name="description" rows="5" class="form-control">{{ old('description') }}</textarea>
+                        @error('description')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="history" class="form-label"><strong>History</strong></label>
+                        <textarea id="history" name="history" rows="5" class="form-control">{{ old('history') }}</textarea>
+                        @error('history')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Service Offer Image -->
+                    <div class="mb-3">
+                        <label for="service_offer_image" class="form-label"><strong>Service Offer Image</strong></label>
+                        <input type="file" name="service_offer_image[]" class="form-control" multiple>
+                        @error('service_offer_image')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>  
 
                     <!-- Images -->
                     <div class="row">
