@@ -101,16 +101,14 @@
             <div class="carousel-item active">
                 <div class="slider-item" style="background-image: url('{{ asset('image/arko.jpg') }}');">
                     <div class="slider-content">
-                        <h1>ENROLL NOW  </h1>
-                       
-                      
-                    
-                    
+                        <h1>ENROLL NOW</h1>
+                        <p>Join our community and start your journey today!</p>
+                        <a href="" class="btn-main">Get Started</a>
                     </div>
                 </div>
             </div>
-
-       
+            <!-- Add more carousel items here if needed -->
+        </div>
 
         <button class="carousel-control-prev" type="button" data-bs-target="#heroSlider" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -122,5 +120,32 @@
         </button>
     </div>
 
+    <section class="enrollment-info">
+        <div class="container">
+            <h2>Why Enroll with Us?</h2>
+            <p>We offer a variety of courses and programs to help you achieve your goals. Our experienced instructors and comprehensive curriculum ensure that you get the best education possible.</p>
+            <a href="" class="btn-main">Explore Courses</a>
+        </div>
+    </section>
 
+    <section class="testimonials">
+        <div class="container">
+            <h2>What Our Students Say</h2>
+            <div class="testimonial-item">
+                <p>"This program changed my life! The instructors are amazing and the curriculum is top-notch."</p>
+                <p>- Jane Doe</p>
+            </div>
+            <div class="testimonial-item">
+                <p>"I learned so much and made great connections. Highly recommend to anyone looking to further their education."</p>
+                <p>- John Smith</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Enrollment. All rights reserved.</p>
+            <a href="}" class="footer-link">Contact Us</a>
+        </div>
+    </footer>
 @endsection

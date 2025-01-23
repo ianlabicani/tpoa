@@ -30,7 +30,7 @@
 <nav class="navbar navbar-expand-lg bg-white shadow p-3">
     <div class="container">
         <a class="navbar-brand text-dark" href="{{ route('user.dashboard') }}">
-            <h1 class="m-0">TPOA</h1>
+            <h1 class="m-0">QuickEnroll</h1>
         </a>
         <!-- Toggler for smaller screens -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
