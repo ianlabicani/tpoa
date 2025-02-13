@@ -95,18 +95,48 @@
 
 
 @section('content')
+
+    <div class="container">
+        <h2>Events for {{ now()->format('F Y') }}</h2>
+
+        @if ($events->isNotEmpty())
+            @foreach ($events as $monthYear => $monthEvents)
+                <h3>{{ $monthYear }}</h3>
+                <ul class="list-group">
+                    @foreach ($monthEvents as $event)
+                        <li class="list-group-item">
+                            <h4>{{ $event->name }}</h4>
+                            <p>{{ $event->description }}</p>
+                            <p><strong>Start Date:</strong>
+                                {{ \Carbon\Carbon::parse($event->start_date)->format('M d, Y') }}</p>
+                            <p><strong>End Date:</strong> {{ \Carbon\Carbon::parse($event->end_date)->format('M d, Y') }}
+                            </p>
+
+                            @if ($event->image)
+                                <img src="{{ asset('storage/' . $event->image) }}" alt="{{ $event->name }}"
+                                    style="max-width: 200px;">
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            @endforeach
+        @else
+            <p>No events for this month.</p>
+        @endif
+    </div>
+
     <div id="heroSlider" class="carousel slide carousel-fade hero-slider" data-bs-ride="carousel" data-bs-pause="false"
         data-bs-wrap="true">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <div class="slider-item" style="background-image: url('{{ asset('image/arko.jpg') }}');">
                     <div class="slider-content">
-                        <h1>ARKO  </h1>
+                        <h1>ARKO </h1>
                         <p>
                             Explore Aparri where the river meets the sea. Discover breathtaking views and serene
                             surroundings that leave you in awe.
                         </p>
-                    
+
                         <a href="{{ route('destinations.index') }}" class="slider-link">Discover more destinations</a>
                     </div>
                 </div>
@@ -129,7 +159,7 @@
             <div class="carousel-item">
                 <div class="slider-item" style="background-image: url('{{ asset('image/night-pier.jpg') }}');">
                     <div class="slider-content">
-                        <h1> PAG-ASA   </h1>
+                        <h1> PAG-ASA </h1>
                         <p>
                             Explore Aparri where the river meets the sea. Discover breathtaking views and serene
                             surroundings that leave you in awe.
@@ -157,28 +187,36 @@
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <p class="lead mb-4" style="text-align: justify">
-                        Aparri is known for its foods such as the "bulung-unas", or Ribbon Fish (aka Belt Fish), which are in abundance during January and early February. "Kilawin naguilas-asan" is a fillet of smaller "bulung-unas" which are leftover baits, soaked in Ilocos vinegar, seasoned with salt and pepper, finely cut onions and ginger. Ludong, a variety of Pacific salmon, is the Philippines' most expensive fish, ranging from 4,000 pesos to 5,000 per kilo. Because of its price and its distinct taste and smell, it is also nicknamed "President Fish". Caught only in the Aparri delta when, after a heavy rainfall, these fish are washed down by the fast raging water from the south, down to the mouth of the Cagayan River where it meets the Babuyan Sea. Freshwater fish by nature, the salt water contributes to their super delicious taste. Ludong is available only in the rainy months of October and early November.
-    
-                       
+                        Aparri is known for its foods such as the "bulung-unas", or Ribbon Fish (aka Belt Fish), which are
+                        in abundance during January and early February. "Kilawin naguilas-asan" is a fillet of smaller
+                        "bulung-unas" which are leftover baits, soaked in Ilocos vinegar, seasoned with salt and pepper,
+                        finely cut onions and ginger. Ludong, a variety of Pacific salmon, is the Philippines' most
+                        expensive fish, ranging from 4,000 pesos to 5,000 per kilo. Because of its price and its distinct
+                        taste and smell, it is also nicknamed "President Fish". Caught only in the Aparri delta when, after
+                        a heavy rainfall, these fish are washed down by the fast raging water from the south, down to the
+                        mouth of the Cagayan River where it meets the Babuyan Sea. Freshwater fish by nature, the salt water
+                        contributes to their super delicious taste. Ludong is available only in the rainy months of October
+                        and early November.
+
+
                     </p>
                     <p class="lead mb-4" style="text-align: justify">
-                        Aparri's attractions also include its sandy beaches and town fiesta. May 1 to 12 of every year, the town's fiesta celebrates the patron saint San Pedro Gonzales of Thelmo with nightly festivities at the auditorium, crowning of Miss Aparri beauty pageant and the "Comparza."
+                        Aparri's attractions also include its sandy beaches and town fiesta. May 1 to 12 of every year, the
+                        town's fiesta celebrates the patron saint San Pedro Gonzales of Thelmo with nightly festivities at
+                        the auditorium, crowning of Miss Aparri beauty pageant and the "Comparza."
                     </p>
                 </div>
                 <div class="col-md-6">
-                    <img 
-                        src="{{ asset('image/bulung-unas.jpg') }}" 
-                        alt="Map showing the location of Aparri" 
-                        class="img-fluid shadow" 
-                        style="height: 600px;">
+                    <img src="{{ asset('image/bulung-unas.jpg') }}" alt="Map showing the location of Aparri"
+                        class="img-fluid shadow" style="height: 600px;">
                     <p class="text-center text-muted mt-2">
                         <small>Source: Jerc Cariño Cinco</small>
                     </p>
                 </div>
-    
+
             </div>
         </div>
-    </section>  
+    </section>
 
     <style>
         /* Section Styling */
@@ -274,7 +312,7 @@
                 <img src="{{ asset('image/farming.jpg') }}" alt="Farming in Aparri" class="article-image">
 
                 <div class="article-content">
-                  
+
                     <h3>Farming</h3>
                     <p class="text-justify">
                         Farming is integral to Aparri's culture, showcasing traditional agricultural
@@ -289,20 +327,17 @@
                 <img src="{{ asset('image/fishing.jpg') }}" alt="Fishing in Aparri" class="article-image">
 
                 <div class="article-content">
-                   
+
                     <h3>Fishing</h3>
                     <p class="text-justify">
                         Fishing has been a cornerstone of Aparri's livelihood and culture. The town is known for its
                         sustainable practices and reverence for the sea.
                     </p>
                 </div>
-                
+
             </div>
             <a href="{{ route('culture') }}">See More...</a>
-         
+
         </div>
     </div>
-
-   
-
 @endsection

@@ -26,7 +26,6 @@ use App\Models\Video;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Models\Activity;
-use App\Http\Controllers\Guest\HotelController;
 use App\Http\Middleware\TrackVisitor;
 use App\Models\Event;
 use Carbon\Carbon;
@@ -35,7 +34,8 @@ use Carbon\Carbon;
 
 Route::get('/', function () {
     $events = Event::orderBy('start_date', 'asc')
-        ->where('start_date', '>=', Carbon::now())
+        ->whereMonth('start_date', Carbon::now()->month)
+        ->whereYear('start_date', Carbon::now()->year)
         ->get()
         ->groupBy(function ($event) {
             return Carbon::parse($event->start_date)->format('F Y');
@@ -54,8 +54,7 @@ Route::get('culture', [GuestController::class, 'culture'])->name('culture');
 Route::get('events', [GuestController::class, 'events'])->name('guest.events');
 Route::get('events/{event}', [GuestController::class, 'show_event'])->name('events.show');
 Route::get('contact', [GuestController::class, 'contact'])->name('contact');
-Route::get('hotels', [HotelController::class, 'index'])->name('hotels.index');
-Route::get('hotels/{hotel}', [HotelController::class, 'show'])->name('hotels.show');
+Route::resource('hotels', UserHotelController::class)->only(['index', 'show']);
 Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
 
 
@@ -192,7 +191,7 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
     Route::get('events', [GuestController::class, 'events'])->name('events');
     Route::get('events/{event}', [GuestController::class, 'show_event'])->name('events.show');
     Route::get('contact', [GuestController::class, 'user_contact'])->name('contact');
-    Route::get('/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
+    Route::get('gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
 
     Route::get('products', [GuestController::class, 'products'])->name('products');
     Route::get('alamang', [GuestController::class, 'alamang'])->name('alamang');
@@ -205,14 +204,14 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
 
 
 
-Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
+Route::get('search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
 
 
 
 
 // Wrap routes with the middleware
-Route::middleware([TrackVisitor::class])->group(function () {
-    Route::get('/', function () {
-        return view('guest.welcome');
-    })->name('/');
-});
+// Route::middleware([TrackVisitor::class])->group(function () {
+//     Route::get('/', function () {
+//         return view('guest.welcome');
+//     })->name('/');
+// });
