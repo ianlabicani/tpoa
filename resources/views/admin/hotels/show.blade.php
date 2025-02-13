@@ -86,6 +86,10 @@
                 </div>
             </div>
 
+            <div class=" card-footer d-flex justify-content-start ">
+                <a href="{{ route('admin.hotels.edit', $hotel->id) }}"
+                    class="btn btn-warning btn-sm">Edit</a>
+            </div>
            
         </div>
     </div>

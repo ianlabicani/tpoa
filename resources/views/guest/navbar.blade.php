@@ -71,9 +71,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('destinations.videos') }}">Videos</a>
                         </li>
-                        {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('/') }}#hotels">Hotels</a>
-                </li> --}}
+                 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('contact') }}">Contact</a>
                         </li>

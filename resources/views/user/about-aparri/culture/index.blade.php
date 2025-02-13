@@ -148,13 +148,12 @@
                     <span class="tag">Culture</span>
                     <h3>Aramang Ukoy</h3>
                     <p class="text-justify">
-                        The gathering of Gakka sea clams is a unique cultural practice in Aparri. It highlights the
-                        ingenuity of the local people and their deep connection to the coastal ecosystem.
+
                     </p>
                 </div>
             </div>
 
-           
+
             <!-- Article Item 5 -->
             <div class="article-item mb-4">
 

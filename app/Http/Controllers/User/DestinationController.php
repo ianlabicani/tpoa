@@ -8,11 +8,20 @@ use Illuminate\Http\Request;
 
 class DestinationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $destinations = Destination::paginate(9);
-        return view("user.destinations.index", compact("destinations"));
+        $query = Destination::query();
+    
+        // Apply search filter if search query is provided
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+    
+        $destinations = $query->paginate(9); // Adjust number per page as needed
+    
+        return view('user.destinations.index', compact('destinations'));
     }
+    
 
     public function show(Destination $destination)
     {

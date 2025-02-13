@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class DestinationController extends Controller
 {
-   
+
     public function index()
     {
         $destinations = Destination::paginate(9);
@@ -46,13 +46,13 @@ class DestinationController extends Controller
             'night_images' => 'nullable|array',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
-            'history' => 'nullable|string|max:15',
-            'description' => 'nullable|string|max:15',
+            'history' => 'nullable|string|max:5000',
+            'description' => 'nullable|string|max:5000',
             'image_source' => 'nullable|string|max:100',
             'service_offer_image' => 'nullable|array',
-            'service_offer_image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate each image file
+
         ]);
-    
+
         // Save day images if present
         if ($request->hasFile('day_images')) {
             $dayImages = [];
@@ -61,7 +61,7 @@ class DestinationController extends Controller
             }
             $validated['day_images'] = json_encode($dayImages); // Save as a JSON array of file paths
         }
-    
+
         // Save night images if present
         if ($request->hasFile('night_images')) {
             $nightImages = [];
@@ -70,7 +70,7 @@ class DestinationController extends Controller
             }
             $validated['night_images'] = json_encode($nightImages); // Save as a JSON array of file paths
         }
-    
+
         // Save service offer images if present
         if ($request->hasFile('service_offer_image')) {
             $serviceOfferImages = [];
@@ -79,14 +79,14 @@ class DestinationController extends Controller
             }
             $validated['service_offer_image'] = json_encode($serviceOfferImages); // Save as a JSON array of file paths
         }
-    
+
         // Create a new destination with the validated data
         $destination = Destination::create($validated);
         activity()->log('admin created destination');
-    
+
         return redirect()->route('admin.destinations.show', $destination)->with('success', 'Destination created successfully');
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -126,13 +126,13 @@ class DestinationController extends Controller
             'night_images' => 'nullable|array',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
-            'history' => 'nullable|string|max:15',
-            'description' => 'nullable|string|max:15',
+            'history' => 'nullable|string|max:5000',
+            'description' => 'nullable|string|max:5000',
             'image_source' => 'nullable|string|max:100',
             'service_offer_image' => 'nullable|array',
             'service_offer_image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate each image file
         ]);
-    
+
         // Save day images if present
         if ($request->hasFile('day_images')) {
             $dayImages = [];
@@ -141,7 +141,7 @@ class DestinationController extends Controller
             }
             $validated['day_images'] = json_encode($dayImages);  // Save as a JSON array of file paths
         }
-    
+
         // Save night images if present
         if ($request->hasFile('night_images')) {
             $nightImages = [];
@@ -150,7 +150,7 @@ class DestinationController extends Controller
             }
             $validated['night_images'] = json_encode($nightImages);  // Save as a JSON array of file paths
         }
-    
+
         // Save service offer images if present
         if ($request->hasFile('service_offer_image')) {
             $serviceOfferImages = [];
@@ -159,14 +159,14 @@ class DestinationController extends Controller
             }
             $validated['service_offer_image'] = json_encode($serviceOfferImages);  // Save as a JSON array of file paths
         }
-    
+
         // Update the destination with the validated data
         $destination->update($validated);
         activity()->log('admin updated destination');
-    
+
         return redirect()->route('admin.destinations.show', $destination)->with('success', 'Destination updated successfully');
     }
-    
+
 
 
     /**
@@ -205,20 +205,19 @@ class DestinationController extends Controller
     public function details()
     {
         $visitorCounts = Destination::withCount([
-                'feedbacks as likes_count' => function ($query) {
-                    $query->whereHas('reactions', function ($query) {
-                        $query->where('reaction', 'like');
-                    });
-                },
-                'feedbacks as dislikes_count' => function ($query) {
-                    $query->whereHas('reactions', function ($query) {
-                        $query->where('reaction', 'dislike');
-                    });
-                }
-            ])
+            'feedbacks as likes_count' => function ($query) {
+                $query->whereHas('reactions', function ($query) {
+                    $query->where('reaction', 'like');
+                });
+            },
+            'feedbacks as dislikes_count' => function ($query) {
+                $query->whereHas('reactions', function ($query) {
+                    $query->where('reaction', 'dislike');
+                });
+            }
+        ])
             ->paginate(9); // Paginate destinations with reaction counts
-    
+
         return view("admin.details", compact('visitorCounts'));
     }
-    
 }

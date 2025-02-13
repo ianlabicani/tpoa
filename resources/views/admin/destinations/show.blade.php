@@ -1,166 +1,150 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="mt-4">Destinations</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-        <li class="breadcrumb-item active"> View Destinations</li>
-    </ol>
     <div class="container mt-4">
-        <!-- Destination Card -->
-        <div class="card shadow-sm">
-            <div class="card-header text-center">
-                <h3>{{ $destination->name }}</h3>
-            </div>
-            <!-- Location Map View -->
-            <div class="mb-4 p-4">
-
-                <div id="map" style="height: 400px;"></div>
-
-                <!-- Display Latitude, Longitude, and Location Name -->
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label for="location_name" class="form-label"><strong>Location Name</strong></label>
-                        <input type="text" id="location_name" name="location_name" class="form-control"
-                            value="{{ $destination->name ?? 'Unnamed Location' }}" readonly>
-                    </div>
-                    <div class="col-md-6 mt-3">
-                        <label for="latitude" class="form-label"><strong>Latitude</strong></label>
-                        <input type="text" id="latitude" name="latitude" class="form-control"
-                            value="{{ $destination->latitude }}" readonly>
-                    </div>
-                    <div class="col-md-6 mt-3">
-                        <label for="longitude" class="form-label"><strong>Longitude</strong></label>
-                        <input type="text" id="longitude" name="longitude" class="form-control"
-                            value="{{ $destination->longitude }}" readonly>
-                    </div>
-                </div>
-
-                <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                        const latitude = {{ $destination->latitude }};
-                        const longitude = {{ $destination->longitude }};
-                        const locationName = "{{ $destination->name ?? 'Unnamed Location' }}";
-
-                        const map = L.map('map').setView([latitude, longitude], 13);
-
-                        const baseLayers = {
-                            "OpenStreetMap": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                attribution: '&copy; OpenStreetMap contributors'
-                            }),
-                            "Google Streets": L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
-                                attribution: '© Google Maps'
-                            }),
-                            "Google Satellite": L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-                                attribution: '© Google Maps'
-                            })
-                        };
-
-                        baseLayers["OpenStreetMap"].addTo(map);
-
-                        L.control.layers(baseLayers).addTo(map);
-
-                        L.marker([latitude, longitude]).addTo(map)
-                            .bindPopup(`<b>${locationName}</b><br>Latitude: ${latitude}<br>Longitude: ${longitude}`)
-                            .openPopup();
-                    });
-                </script>
-            </div>
-
-            <div class="card-footer text-end">
-                <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
-                <a href="{{ route('admin.destinations.edit', $destination->id) }}" class="btn btn-warning">Edit</a>
-            </div>
-        </div>
-
-        <!-- Image Galleries -->
-        <div class="my-4">
-            <h4 class="mb-3">Day Images</h4>
+        <!-- Destination Section -->
+        <div class="card shadow-sm p-4">
             <div class="row">
-                @forelse (json_decode($destination->day_images, true) ?? [] as $dayImage)
-                    <div class="col-lg-3 col-md-4 col-6 mb-4">
-                        <div class="card shadow-sm">
-                            <a href="{{ asset('storage/' . $dayImage) }}" target="_blank">
-                                <img src="{{ asset('storage/' . $dayImage) }}" alt="Day Image"
-                                    class="card-img-top img-fluid rounded">
-                            </a>
-                        </div>
-                    </div>
-                @empty
-                    <p class="text-muted">No day images available.</p>
-                @endforelse
-            </div>
-        </div>
-
-        <div class="my-4">
-            <h4 class="mb-3">Night Images</h4>
-            <div class="row">
-                @forelse (json_decode($destination->night_images, true) ?? [] as $nightImage)
-                    <div class="col-lg-3 col-md-4 col-6 mb-4">
-                        <div class="card shadow-sm">
-                            <a href="{{ asset('storage/' . $nightImage) }}" target="_blank">
-                                <img src="{{ asset('storage/' . $nightImage) }}" alt="Night Image"
-                                    class="card-img-top img-fluid rounded">
-                            </a>
-                        </div>
-                    </div>
-                @empty
-                    <p class="text-muted">No night images available.</p>
-                @endforelse
-            </div>
-        </div>
-
-        <!-- Related Videos -->
-        <div class="my-4">
-            <h4>Related Videos</h4>
-            @if ($videos->isEmpty())
-                <p>No videos available for this destination.</p>
-            @else
-                <div class="row">
-                    @foreach ($videos as $video)
-                        <div class="col-md-6 mb-3">
-                            <div class="card {{ $video->isReviewed ? 'border-info' : 'border-warning' }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $video->title }}</h5>
-
-                                    <div class="mb-3">
-                                        @if (strpos($video->url, 'youtube.com') !== false || strpos($video->url, 'youtu.be') !== false)
-                                            @php
-                                                if (strpos($video->url, 'youtu.be') !== false) {
-                                                    $videoId = basename($video->url);
-                                                    $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
-                                                } elseif (strpos($video->url, 'youtube.com') !== false) {
-                                                    parse_str(parse_url($video->url, PHP_URL_QUERY), $params);
-                                                    $embedUrl = 'https://www.youtube.com/embed/' . $params['v'];
-                                                }
-                                            @endphp
-                                            <iframe width="100%" height="315" src="{{ $embedUrl }}"
-                                                title="Video player" frameborder="0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                        @else
-                                            <a href="{{ $video->url }}" target="_blank"
-                                                class="btn btn-outline-primary">Watch Video</a>
-                                        @endif
+                <!-- Column 1: Destination Details -->
+                <div class="col-md-6">
+                    <h3 class="mb-3">
+                        <i class="fas fa-map-marker-alt me-2"></i>{{ $destination->name }}
+                    </h3>
+                    <p><strong>Location:</strong> {{ $destination->location ?? 'Not specified' }}</p>
+                    <p><strong>Contact:</strong> {{ $destination->contact ?? 'Not specified' }}</p>
+                    <p><strong>Email:</strong> {{ $destination->email ?? 'Not specified' }}</p>
+                    <p><strong>Entrance Fee:</strong>
+                        {{ $destination->entrance_fee ? '₱' . number_format($destination->entrance_fee, 2) : 'Not specified' }}
+                    </p>
+                    <p><strong>Availability:</strong> {{ $destination->availability ? 'Available' : 'Unavailable' }}</p>
+                    <p><strong>How to Get There:</strong></p>
+                    <div>{!! $destination->how_to_get_there ?? 'No information available' !!}</div>
+                   
+                    <p><strong>Description:</strong> {{ $destination->description ?? 'Not provided' }}</p>
+                    <p><strong>History:</strong> {{ $destination->history ?? 'Not provided' }}</p>      
+                    <p><strong>Image Source:</strong> {{ $destination->image_source ?? 'Not provided' }}</p>            
+                    <p><strong>Social Media:</strong></p>
+                    <div>{!! $destination->description ?? 'No information available' !!}</div>               
+                    <p><strong>Service Offer:</strong></p>
+                    <div>{!! $destination->service_offer ?? 'No information available' !!}</div>
+                    
+                    <div class="mb-3">
+                        <h4 class="mb-3">Service Offer Images</h4>
+                        @php
+                            $serviceOfferImages = json_decode($destination->service_offer_image, true) ?? [];
+                        @endphp
+                        @if (count($serviceOfferImages) > 0)
+                            <div class="row mt-3">
+                                @foreach ($serviceOfferImages as $image)
+                                    <div class="col-md-6 mb-3">
+                                        <img src="{{ asset('storage/' . $image) }}" 
+                                             alt="Service Offer Image" 
+                                             class="img-fluid rounded" 
+                                             style="object-fit: cover; height: 250px; width: 100%;">
                                     </div>
-
-                                    <p class="card-text">{{ $video->description }}</p>
-
-                                    @if (!$video->isReviewed)
-                                        <p class="mt-2">This video is pending review.</p>
-                                        <form action="{{ route('admin.videos.review', $video->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                        </form>
-                                    @endif
-                                </div>
+                                @endforeach
                             </div>
+                        @else
+                            <p class="text-muted">No images available.</p>
+                        @endif
+                    </div>
+                    
+                    
+                    <!-- Day Images -->
+                    <div class="my-4">
+                        <h4 class="mb-3">Day Images</h4>
+                        <div class="row mt-4">
+                            @forelse (json_decode($destination->day_images, true) ?? [] as $dayImage)
+                                <div class="col-md-6 mb-3">
+                                    <img src="{{ asset('storage/' . $dayImage) }}" alt="Day Image" class="img-fluid rounded" style="object-fit: cover; height: 250px; width: 100%;">
+                                </div>
+                            @empty
+                                <p class="text-muted">No day images available.</p>
+                            @endforelse
                         </div>
-                    @endforeach
+                    </div>
+                    
+                    <!-- Night Images -->
+                    <div class="my-4">
+                        <h4 class="mb-3">Night Images</h4>
+                        <div class="row mt-4">
+                            @forelse (json_decode($destination->night_images, true) ?? [] as $nightImage)
+                                <div class="col-md-6 mb-3">
+                                    <img src="{{ asset('storage/' . $nightImage) }}" alt="Night Image" class="img-fluid rounded" style="object-fit: cover; height: 250px; width: 100%;">
+                                </div>
+                            @empty
+                                <p class="text-muted">No night images available.</p>
+                            @endforelse
+                        </div>
+                    </div>
+                    
                 </div>
-            @endif
+
+                <!-- Column 2: Map and Related Videos -->
+                <div class="col-md-6">
+                    <!-- Map -->
+                    <div id="map" style="height: 300px;" class="mb-4"></div>
+
+                    <!-- Related Videos -->
+                    <h4>Related Videos</h4>
+                    @if ($videos->isEmpty())
+                        <p>No videos available for this destination.</p>
+                    @else
+                        <div class="row">
+                            @foreach ($videos as $video)
+                                <div class="col-md-12 mb-3">
+                                    <div class="card shadow-sm">
+                                        <div class="card-body">
+                                            <!-- Video Title -->
+                                            <h5 class="card-title">{{ $video->title }}</h5>
+                                            <!-- Embed YouTube Video -->
+                                            @if (strpos($video->url, 'youtube.com') !== false || strpos($video->url, 'youtu.be') !== false)
+                                                @php
+                                                    if (strpos($video->url, 'youtu.be') !== false) {
+                                                        $videoId = basename($video->url);
+                                                        $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
+                                                    } elseif (strpos($video->url, 'youtube.com') !== false) {
+                                                        parse_str(parse_url($video->url, PHP_URL_QUERY), $params);
+                                                        $embedUrl = 'https://www.youtube.com/embed/' . $params['v'];
+                                                    }
+                                                @endphp
+                                                <iframe width="100%" height="200" src="{{ $embedUrl }}"
+                                                    frameborder="0" allowfullscreen></iframe>
+                                            @else
+                                                <a href="{{ $video->url }}" target="_blank"
+                                                    class="btn btn-outline-primary">Watch Video</a>
+                                            @endif
+                                            <!-- Video Description -->
+                                            <p class="mt-2">{{ $video->description }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+                <div class=" card-footer d-flex justify-content-start ">
+                    <a href="{{ route('admin.destinations.edit', $destination->id) }}"
+                        class="btn btn-warning btn-sm">Edit</a>
+                </div>
+            </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const latitude = {{ $destination->latitude }};
+            const longitude = {{ $destination->longitude }};
+            const locationName = "{{ $destination->name ?? 'Unnamed Location' }}";
+
+            const map = L.map('map').setView([latitude, longitude], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            L.marker([latitude, longitude]).addTo(map)
+                .bindPopup(`<b>${locationName}</b>`)
+                .openPopup();
+        });
+    </script>
 @endsection

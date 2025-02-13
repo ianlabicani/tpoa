@@ -33,6 +33,7 @@ class EventController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'history' => 'nullable|string',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -49,6 +50,7 @@ class EventController extends Controller
         $event = Event::create([
             'name' => $validated['name'],
             'description' => $validated['description'],
+            'history' => $validated['history'],
             'start_date' => $validated['start_date'],
             'end_date' => $validated['end_date'],
             'image' => $imagePath,
@@ -77,6 +79,7 @@ class EventController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'history' => 'nullable|string',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'image' => 'nullable|image|max:1024',
@@ -93,6 +96,7 @@ class EventController extends Controller
         $event->update([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
+            'history' => $request->input('history'),
             'start_date' => $request->input('start_date'),
             'end_date' => $request->input('end_date'),
             'source' => $request->input('source'), // Update the source

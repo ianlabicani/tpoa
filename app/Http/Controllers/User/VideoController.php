@@ -8,7 +8,21 @@ use App\Models\Video;
 use Illuminate\Http\Request;
 
 class VideoController extends Controller
+
 {
+
+    public function showDestinationVideos()
+    {
+
+        $videos = Video::with('destination')
+            ->where('isReviewed', true)
+            ->get()
+            ->unique('destination_id');
+
+        // Return the view with the videos data
+        return view('user.videos.index', compact('videos'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -57,6 +71,4 @@ class VideoController extends Controller
 
         return redirect()->route('user.destinations.show', $destinationId)->with('success', 'Video updated and submitted for review.');
     }
-
-
 }

@@ -7,35 +7,80 @@
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
     <li class="breadcrumb-item active">Hotels</li>
 </ol>
+
 <div class="container">
-    <a href="{{ route('admin.hotels.create') }}" class="btn btn-primary mb-3">Add New Hotel</a>
-    <div class="row g-3"> <!-- Added g-3 for spacing -->
+   
+    <div class="row g-3"> <!-- Spacing between columns -->
         @foreach ($hotels as $hotel)
             <div class="col-md-4">
-                <div class="card" style="height: 100%; display: flex; flex-direction: column;">
+                <div class="card shadow-sm h-100">
                     <div class="image-container" style="height: 200px; overflow: hidden; display: flex; justify-content: center; align-items: center;">
                         @if ($hotel->cover)
-                            <img src="{{ asset('storage/' . $hotel->cover) }}" class="card-img-top" alt="{{ $hotel->name }}" style="object-fit: cover; height: 100%; width: 100%;">
+                         <a href="{{ route('admin.hotels.show', $hotel->id)     }}"><img src="{{ asset('storage/' . $hotel->cover) }}" 
+                            class="card-img-top" 
+                            alt="{{ $hotel->name }}" 
+                            style="object-fit: cover; height: 100%; width: 100%;"></a>   
                         @else
                             <div class="bg-secondary text-white text-center w-100 h-100 d-flex align-items-center justify-content-center">No Image</div>
                         @endif
                     </div>
                     <div class="card-body d-flex flex-column">
+                        <!-- Hotel Information -->
                         <h5 class="card-title">{{ $hotel->name }}</h5>
-                        <p class="card-text"><strong>Location:</strong> {{ $hotel->location }}</p>
-                        <p class="card-text"><strong>Price per Night:</strong>
-                            {{ $hotel->price_per_night ? '₱' . number_format($hotel->price_per_night, 2) : 'Contact for pricing' }}
-                        </p>
-                        <div class="mt-auto">
-                            <a href="{{ route('admin.hotels.show', $hotel->id) }}" class="btn btn-primary btn-sm">View Details</a>
-                        </div>
+                       
+                  
+                     
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
-    <div class="d-flex justify-content-center mt-4">
-        {{ $hotels->links() }}
+
+    <!-- Pagination Section -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <p class="text-muted">
+            Showing {{ $hotels->firstItem() }} to {{ $hotels->lastItem() }} of {{ $hotels->total() }} hotels
+        </p>
+        <div class="d-flex justify-content-center">
+            {{ $hotels->links('pagination::bootstrap-5') }}
+        </div>
     </div>
 </div>
+
+<!-- Additional Styles -->
+<style>
+    .card {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .breadcrumb {
+        background-color: #f8f9fa;
+    }
+
+    .pagination .page-item .page-link {
+        color: #007bff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin: 0 2px;
+        transition: all 0.3s ease;
+    }
+
+    .pagination .page-item .page-link:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+    }
+</style>
+
 @endsection
+    

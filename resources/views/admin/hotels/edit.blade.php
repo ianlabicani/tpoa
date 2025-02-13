@@ -2,13 +2,13 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.1/classic/ckeditor.js"></script>
 
 @section('content')
-<h1 class="mt-4">Edit Hotel</h1>
-<ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-    <li class="breadcrumb-item active">Edit Hotel</li>
-</ol>
+    <h1 class="mt-4">Edit Hotel</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Edit Hotel</li>
+    </ol>
     <div class="container">
-       
+
 
         <form action="{{ route('admin.hotels.update', $hotel->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -17,7 +17,8 @@
             <!-- Hotel Name -->
             <div class="mb-3">
                 <label for="name" class="form-label">Hotel Name</label>
-                <input type="text" name="name" id="name" class="form-control" value="{{ $hotel->name }}" required>
+                <input type="text" name="name" id="name" class="form-control" value="{{ $hotel->name }}"
+                    required>
             </div>
 
             <!-- Location -->
@@ -26,21 +27,21 @@
                 <input type="text" name="location" id="location" class="form-control" value="{{ $hotel->location }}">
             </div>
 
-              <!-- Price Per Night -->
-              <div class="mb-3">
+            <!-- Price Per Night -->
+            <div class="mb-3">
                 <label for="price_per_night" class="form-label">Price Per Night</label>
                 <input type="number" name="price_per_night" id="price_per_night" class="form-control" step="0.01"
                     value="{{ $hotel->price_per_night }}">
             </div>
 
-             <!-- Social Media Links -->
-             <div class="mb-3">
+            <!-- Social Media Links -->
+            <div class="mb-3">
                 <label for="social_media" class="form-label">Social Media Links (JSON)</label>
                 <textarea name="social_media" id="social_media" rows="3" class="form-control">{{ $hotel->social_media }}</textarea>
             </div>
 
-             <!-- Services Offered -->
-             <div class="mb-3">
+            <!-- Services Offered -->
+            <div class="mb-3">
                 <label for="services" class="form-label">Services Offered</label>
                 <textarea name="services" id="services" rows="3" class="form-control">{{ old('services', $hotel->services ?? '') }}</textarea>
                 <script>
@@ -50,7 +51,7 @@
                     });
                 </script>
             </div>
-            
+
 
             <!-- Availability -->
             <div class="mb-3">
@@ -74,8 +75,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="latitude" class="form-label">Latitude</label>
-                    <input type="text" name="latitude" id="latitude" class="form-control" value="{{ $hotel->latitude }}"
-                        readonly>
+                    <input type="text" name="latitude" id="latitude" class="form-control"
+                        value="{{ $hotel->latitude }}" readonly>
                 </div>
                 <div class="col-md-6">
                     <label for="longitude" class="form-label">Longitude</label>
@@ -126,32 +127,27 @@
                 });
             </script>
 
-          
+
             <!-- Cover Image -->
             <div class="mb-3">
                 <label for="cover" class="form-label">Cover Image</label>
-                <input type="file" name="cover" id="cover" class="form-control">
-                {{-- @if ($hotel->cover)
-                    <img src="{{ asset('storage/' . $hotel->cover) }}" alt="Cover Image"
-                        style="max-height: 200px; margin-top: 10px;">
-                @endif --}}
+                <input type="file" name="cover" id="cover" class="form-control"
+                    onchange="previewCoverImage(event)">
+                <img id="cover-preview" src="#" alt="Cover Image Preview"
+                    style="max-height: 200px; margin-top: 10px; display: none;">
             </div>
 
             <!-- Multiple Images -->
             <div class="mb-3">
                 <label for="images" class="form-label">Hotel Images</label>
-                <input type="file" name="images[]" id="images" class="form-control" multiple>
-                {{-- @if ($hotel->images)
-                    <div class="mt-3">
-                        @foreach ($hotel->images as $image)
-                            <img src="{{ asset('storage/' . $image->path) }}" alt="Hotel Image"
-                                style="max-height: 100px; margin-right: 10px;">
-                        @endforeach
-                    </div>
-                @endif --}}
+                <input type="file" name="images[]" id="images" class="form-control" multiple
+                    onchange="previewImages(event)">
+                <div id="images-preview" class="mt-3"></div>
             </div>
 
-           
+        
+
+
 
             <!-- Submit Button -->
             <button type="submit" class="btn btn-primary">Update Hotel</button>

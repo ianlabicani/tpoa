@@ -5,16 +5,23 @@ namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 use App\Models\Destination;
 use App\Models\Feedback;
+use App\Models\Hotel;
 use App\Models\Video;
 use Illuminate\Http\Request;
 
 class DestinationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Retrieve all destinations
-        $destinations = Destination::paginate(9);
-
+        $query = Destination::query();
+    
+        // Apply search filter if search query is provided
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+    
+        $destinations = $query->paginate(9); // Adjust number per page as needed
+    
         return view('guest.destinations.index', compact('destinations'));
     }
 
@@ -42,4 +49,7 @@ class DestinationController extends Controller
         // dd('test');
         return view("guest.destinations.show", compact('destination', 'feedbacks', 'videos'));
     }
+
+
+   
 }

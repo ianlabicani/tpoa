@@ -65,19 +65,24 @@
                         @endif
                     </div>
 
-                    <!-- Image Gallery -->
-                    <div class="row mt-4">
-                        @foreach ($hotel->images as $image)
-                            <div class="col-md-6 mb-3">
-                                <img src="{{ asset('storage/' . $image->path) }}" class="img-fluid rounded" alt="Hotel Image">
-                            </div>
-                        @endforeach
-                    </div>
+                    
                 </div>
 
                 <!-- Column 2: Map -->
                 <div class="col-md-6">
                     <div id="map" style="height: 400px;"></div>
+                </div>
+
+                <div class="card-body">
+                    <!-- Image Gallery -->
+                    <div class="row mt-4">
+                        @foreach ($hotel->images as $image)
+                            <div class="col-md-6 mb-3">
+                                <img src="{{ asset('storage/' . $image->path) }}" class="img-fluid rounded"
+                                    alt="Hotel Image">
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,7 +91,7 @@
     <script>
         let lat = {{ $hotel->latitude ?? 0 }};
         let lng = {{ $hotel->longitude ?? 0 }};
-        
+
         if (lat !== 0 && lng !== 0) {
             let map = L.map('map').setView([lat, lng], 13);
 
