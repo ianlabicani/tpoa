@@ -10,7 +10,6 @@ use App\Http\Controllers\HotelController as AdminHotelController;
 
 // user
 use App\Http\Controllers\ShareDestinationController;
-use App\Http\Controllers\ShareVideoController;
 use App\Http\Controllers\User\DestinationController as UserDestinationController;
 use App\Http\Controllers\User\FeedbackController as UserFeedbackController;
 use App\Http\Controllers\User\VideoController as UserVideoController;
@@ -18,20 +17,17 @@ use App\Http\Controllers\User\HotelController as UserHotelController;
 // guest
 use App\Http\Controllers\Guest\DestinationController as GuestDestinationController;
 use App\Http\Controllers\Guest\VideoController as GuestVideoController;
-use App\Http\Controllers\User\HotelController as GuestHotelController;
 use App\Http\Controllers\Guest\GuestController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SearchController as ControllersSearchController;
 use App\Http\Controllers\UserController;
-use App\Models\Feedback;
 use App\Models\FeedbackReaction;
 use App\Models\Video;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Models\Activity;
 use App\Http\Controllers\Guest\HotelController;
-use App\Http\Middleware\TrackVisitor;       
+use App\Http\Middleware\TrackVisitor;
 use App\Models\Event;
 use Carbon\Carbon;
 
@@ -58,9 +54,10 @@ Route::get('culture', [GuestController::class, 'culture'])->name('culture');
 Route::get('events', [GuestController::class, 'events'])->name('guest.events');
 Route::get('events/{event}', [GuestController::class, 'show_event'])->name('events.show');
 Route::get('contact', [GuestController::class, 'contact'])->name('contact');
-
 Route::get('hotels', [HotelController::class, 'index'])->name('hotels.index');
 Route::get('hotels/{hotel}', [HotelController::class, 'show'])->name('hotels.show');
+Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
+
 
 
 //CULTURE ROUTES
@@ -72,7 +69,7 @@ Route::get('nipa_thatch', [GuestController::class, 'nipa_thatch'])->name('nipa_t
 Route::get('miki_niladdit', [GuestController::class, 'miki_niladdit'])->name('miki_niladdit');
 Route::get('web/culture/aramang_ukoy', [GuestController::class, 'aramang_ukoy'])->name('aramang_ukoy');
 Route::get('gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
-//PRODUCTS 
+//PRODUCTS
 Route::get('products', [GuestController::class, 'products'])->name('products');
 Route::get('alamang', [GuestController::class, 'alamang'])->name('alamang');
 Route::get('daing', [GuestController::class, 'daing'])->name('daing');
@@ -91,58 +88,58 @@ require __DIR__ . '/auth.php';
 // ROUTE FOR ADMIN
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('dashboard', function () {
-         // Query for reaction counts
-    $reactionCounts = FeedbackReaction::select('reaction', DB::raw('COUNT(*) as total_count'))
-    ->groupBy('reaction')
-    ->get();
+        // Query for reaction counts
+        $reactionCounts = FeedbackReaction::select('reaction', DB::raw('COUNT(*) as total_count'))
+            ->groupBy('reaction')
+            ->get();
 
-// Total number of unique visitors based on visitor_logs
-$totalVisitors = DB::table('visitor_logs')
-    ->distinct('ip_address') // Count unique IP addresses
-    ->count('ip_address');
+        // Total number of unique visitors based on visitor_logs
+        $totalVisitors = DB::table('visitor_logs')
+            ->distinct('ip_address') // Count unique IP addresses
+            ->count('ip_address');
 
-// Visitor counts grouped by date (for graph)
-$visitorData = DB::table('visitor_logs')
-    ->select(DB::raw('DATE(visited_at) as date'), DB::raw('COUNT(DISTINCT ip_address) as count'))
-    ->groupBy('date')
-    ->orderBy('date')
-    ->get();
+        // Visitor counts grouped by date (for graph)
+        $visitorData = DB::table('visitor_logs')
+            ->select(DB::raw('DATE(visited_at) as date'), DB::raw('COUNT(DISTINCT ip_address) as count'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
-$visitorDates = $visitorData->pluck('date'); // Dates for the visitor graph
-$visitorCounts = $visitorData->pluck('count'); // Counts for the visitor graph
+        $visitorDates = $visitorData->pluck('date'); // Dates for the visitor graph
+        $visitorCounts = $visitorData->pluck('count'); // Counts for the visitor graph
 
-// Video counts grouped by destinations
-$videoCounts = Video::select('destination_id', DB::raw('COUNT(*) as total_videos'))
-    ->groupBy('destination_id')
-    ->with('destination:id,name') // Include destination name
-    ->get();
+        // Video counts grouped by destinations
+        $videoCounts = Video::select('destination_id', DB::raw('COUNT(*) as total_videos'))
+            ->groupBy('destination_id')
+            ->with('destination:id,name') // Include destination name
+            ->get();
 
-// Extract video labels and data for the chart
-$videoLabels = $videoCounts->map(function ($videoCount) {
-    return $videoCount->destination->name ?? 'Unknown';
-});
+        // Extract video labels and data for the chart
+        $videoLabels = $videoCounts->map(function ($videoCount) {
+            return $videoCount->destination->name ?? 'Unknown';
+        });
 
-$videoData = $videoCounts->pluck('total_videos');
+        $videoData = $videoCounts->pluck('total_videos');
 
-// Reaction labels and data for graph
-$reactionLabels = ['Like', 'Dislike'];
-$reactionData = [
-    $reactionCounts->where('reaction', 'like')->first()?->total_count ?? 0,
-    $reactionCounts->where('reaction', 'dislike')->first()?->total_count ?? 0,
-];
+        // Reaction labels and data for graph
+        $reactionLabels = ['Like', 'Dislike'];
+        $reactionData = [
+            $reactionCounts->where('reaction', 'like')->first()?->total_count ?? 0,
+            $reactionCounts->where('reaction', 'dislike')->first()?->total_count ?? 0,
+        ];
 
-// Return the view with all the data
-return view('admin.dashboard', compact(
-    'reactionCounts',
-    'totalVisitors',
-    'videoCounts',
-    'visitorDates',
-    'visitorCounts',
-    'reactionLabels',
-    'reactionData',
-    'videoLabels',
-    'videoData'
-));
+        // Return the view with all the data
+        return view('admin.dashboard', compact(
+            'reactionCounts',
+            'totalVisitors',
+            'videoCounts',
+            'visitorDates',
+            'visitorCounts',
+            'reactionLabels',
+            'reactionData',
+            'videoLabels',
+            'videoData'
+        ));
     })->name('dashboard');
 
 
