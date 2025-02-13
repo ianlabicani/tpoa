@@ -124,6 +124,17 @@
                         @enderror
                     </div>
 
+<<<<<<< HEAD
+=======
+                    <div class="mb-3">
+                        <label for="image_source" class="form-label"><strong>Image Source</strong></label>
+                        <textarea id="image_source" name="image_source" rows="5" class="form-control">{{ old('image_source') }}</textarea>
+                        @error('image_source')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+>>>>>>> d8040f8 (feb 13)
                     <!-- Service Offer Image -->
                     <div class="mb-3">
                         <label for="service_offer_image" class="form-label"><strong>Service Offer Image</strong></label>

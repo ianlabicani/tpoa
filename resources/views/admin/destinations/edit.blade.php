@@ -150,6 +150,7 @@
                         @error('description')
                             <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror
+<<<<<<< HEAD
                     </div>
 
                     <div class="mb-3">
@@ -183,7 +184,109 @@
                                 <input type="file" name="night_images[]" class="form-control" multiple>
                             </div>
                         </div>
+=======
+>>>>>>> d8040f8 (feb 13)
                     </div>
+
+                    <div class="mb-3">
+                        <label for="history" class="form-label"><strong>History</strong></label>
+                        <textarea id="history" name="history" rows="5" class="form-control">{{ old('history') }}</textarea>
+                        @error('history')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image_source" class="form-label"><strong>Image Source</strong></label>
+                        <textarea id="image_source" name="image_source" rows="5" class="form-control">{{ old('image_source') }}</textarea>
+                        @error('image_source')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                <!-- Service Offer Image -->
+<div class="mb-3">
+    <label for="service_offer_image" class="form-label"><strong>Service Offer Image</strong></label>
+    <input type="file" id="service_offer_image" name="service_offer_image[]" class="form-control" multiple onchange="previewImages('service_offer_image', 'serviceOfferPreview')">
+    @error('service_offer_image')
+        <div class="text-danger mt-1">{{ $message }}</div>
+    @enderror
+
+    <!-- Preview Section -->
+    <div id="serviceOfferPreview" class="mt-3 d-flex flex-wrap gap-3">
+        @php $serviceOfferImages = json_decode($destination->service_offer_image, true) ?? []; @endphp
+        @foreach ($serviceOfferImages as $image)
+            <div class="image-preview-container">
+                <img src="{{ asset('storage/' . $image) }}" alt="Service Offer Image" class="img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;">
+            </div>
+        @endforeach
+    </div>
+</div>
+
+<!-- Day Images -->
+<div class="col-12">
+    <div class="mb-3">
+        <label for="day_images" class="form-label"><strong>Day Images</strong></label>
+        <input type="file" id="day_images" name="day_images[]" class="form-control" multiple onchange="previewImages('day_images', 'dayImagesPreview')">
+
+        <!-- Preview Section -->
+        <div id="dayImagesPreview" class="mt-3 d-flex flex-wrap gap-3">
+            @php $dayImages = json_decode($destination->day_images, true) ?? []; @endphp
+            @foreach ($dayImages as $image)
+                <div class="image-preview-container">
+                    <img src="{{ asset('storage/' . $image) }}" alt="Day Image" class="img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;">
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+<!-- Night Images -->
+<div class="col-12">
+    <div class="mb-3">
+        <label for="night_images" class="form-label"><strong>Night Images</strong></label>
+        <input type="file" id="night_images" name="night_images[]" class="form-control" multiple onchange="previewImages('night_images', 'nightImagesPreview')">
+
+        <!-- Preview Section -->
+        <div id="nightImagesPreview" class="mt-3 d-flex flex-wrap gap-3">
+            @php $nightImages = json_decode($destination->night_images, true) ?? []; @endphp
+            @foreach ($nightImages as $image)
+                <div class="image-preview-container">
+                    <img src="{{ asset('storage/' . $image) }}" alt="Night Image" class="img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;">
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImages(inputId, previewContainerId) {
+        const input = document.getElementById(inputId);
+        const container = document.getElementById(previewContainerId);
+
+        // Clear existing previews
+        container.innerHTML = '';
+
+        if (input.files) {
+            Array.from(input.files).forEach(file => {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'img-thumbnail';
+                    img.style.width = '150px';
+                    img.style.height = '150px';
+                    img.style.objectFit = 'cover';
+                    container.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+            });
+        }
+    }
+</script>
+
 
                    <!-- Location Map Edit -->
 <div class="mb-4">

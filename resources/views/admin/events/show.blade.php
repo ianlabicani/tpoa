@@ -22,6 +22,8 @@
         <div class="card-body">
             <h5 class="card-title text-center">{{ $event->name }}</h5>
             <p class="card-text"><strong>Description:</strong> {{ Str::limit($event->description, 150) }}</p>
+            <p class="card-text"><strong>History:</strong> {{ $event->history ?? 'No history available' }}</p>
+
             <p class="card-text"><strong>Start Date:</strong> {{ $event->start_date }}</p>
             <p class="card-text"><strong>End Date:</strong> {{ $event->end_date }}</p>
             <small> <p class="card-text">Image Source: {{ $event->source }}</p></small>

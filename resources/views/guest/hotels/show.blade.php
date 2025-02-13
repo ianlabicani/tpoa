@@ -1,11 +1,6 @@
-@extends('layouts.admin')
+@extends('guest.shell')
 
 @section('content')
-<h1 class="mt-4">View Details</h1>
-<ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-    <li class="breadcrumb-item active">View Details</li>
-</ol>
     <div class="container p-4">
         <div class="card mb-4 p-4">
             <div class="row g-0">
@@ -37,12 +32,12 @@
                             {{ $hotel->description ?? 'No description available' }}
                         </p>
 
-                       <!-- Services Offered -->
-<p class="card-text">
-    <strong>Services Offered:</strong>
-    {!! $hotel->services ?? 'No services specified' !!}
-</p>
-
+                        <!-- Services Offered -->
+                        <p class="card-text">
+                            <i class="fas fa-concierge-bell me-2"></i>
+                            <strong>Services Offered:</strong>
+                            {!! $hotel->services ?? 'No services specified' !!}
+                        </p>
 
                         <!-- Availability -->
                         <p class="card-text">
@@ -70,42 +65,47 @@
                         @endif
                     </div>
 
-                    <!-- Image Gallery -->
-                    <div class="row mt-4">
-                        @foreach ($hotel->images as $image)
-                            <div class="col-md-6 mb-3">
-                                <img src="{{ asset('storage/' . $image->path) }}" class="img-fluid rounded" alt="Hotel Image">
-                            </div>
-                        @endforeach
-                    </div>
+                    
                 </div>
 
                 <!-- Column 2: Map -->
                 <div class="col-md-6">
-                    <div id="map" style="height: 100%; min-height: 400px;"></div>
+                    <div id="map" style="height: 400px;"></div>
+                </div>
+
+                <div class="card-body">
+                    <!-- Image Gallery -->
+                    <div class="row mt-4">
+                        @foreach ($hotel->images as $image)
+                            <div class="col-md-6 mb-3">
+                                <img src="{{ asset('storage/' . $image->path) }}" class="img-fluid rounded"
+                                    alt="Hotel Image">
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-
-            <div class=" card-footer d-flex justify-content-start ">
-                <a href="{{ route('admin.hotels.edit', $hotel->id) }}"
-                    class="btn btn-warning btn-sm">Edit</a>
-            </div>
-           
         </div>
     </div>
 
     <script>
-        let lat = {{ $hotel->latitude }};
-        let lng = {{ $hotel->longitude }};
-        let map = L.map('map').setView([lat, lng], 13);
+        let lat = {{ $hotel->latitude ?? 0 }};
+        let lng = {{ $hotel->longitude ?? 0 }};
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+        if (lat !== 0 && lng !== 0) {
+            let map = L.map('map').setView([lat, lng], 13);
 
-        L.marker([lat, lng]).addTo(map)
-            .bindPopup("{{ $hotel->name }}")
-            .openPopup();
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            L.marker([lat, lng]).addTo(map)
+                .bindPopup("{{ $hotel->name }}")
+                .openPopup();
+        } else {
+            document.getElementById('map').innerText = 'No location data available for this hotel.';
+        }
     </script>
+
 @endsection

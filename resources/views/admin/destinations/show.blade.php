@@ -19,6 +19,7 @@
                     <p><strong>Availability:</strong> {{ $destination->availability ? 'Available' : 'Unavailable' }}</p>
                     <p><strong>How to Get There:</strong></p>
                     <div>{!! $destination->how_to_get_there ?? 'No information available' !!}</div>
+<<<<<<< HEAD
                     <p><strong>Description:</strong> {{ $destination->description ?? 'Not provided' }}</p>
                     <p><strong>History:</strong> {{ $destination->history ?? 'Not provided' }}</p>
                     <p><strong>Social Media:</strong> {{ $destination->social_media ?? 'None' }}</p>
@@ -27,14 +28,35 @@
                    
                     <div class="mb-3">
                         <label for="service_offer_images" class="form-label"><strong>Service Offer Images</strong></label>
+=======
+                   
+                    <p><strong>Description:</strong> {{ $destination->description ?? 'Not provided' }}</p>
+                    <p><strong>History:</strong> {{ $destination->history ?? 'Not provided' }}</p>      
+                    <p><strong>Image Source:</strong> {{ $destination->image_source ?? 'Not provided' }}</p>            
+                    <p><strong>Social Media:</strong></p>
+                    <div>{!! $destination->description ?? 'No information available' !!}</div>               
+                    <p><strong>Service Offer:</strong></p>
+                    <div>{!! $destination->service_offer ?? 'No information available' !!}</div>
+                    
+                    <div class="mb-3">
+                        <h4 class="mb-3">Service Offer Images</h4>
+>>>>>>> d8040f8 (feb 13)
                         @php
                             $serviceOfferImages = json_decode($destination->service_offer_image, true) ?? [];
                         @endphp
                         @if (count($serviceOfferImages) > 0)
                             <div class="row mt-3">
                                 @foreach ($serviceOfferImages as $image)
+<<<<<<< HEAD
                                     <div class="col-md-4 mb-3">
                                         <img src="{{ asset('storage/' . $image) }}" alt="Service Offer Image" class="img-fluid rounded">
+=======
+                                    <div class="col-md-6 mb-3">
+                                        <img src="{{ asset('storage/' . $image) }}" 
+                                             alt="Service Offer Image" 
+                                             class="img-fluid rounded" 
+                                             style="object-fit: cover; height: 250px; width: 100%;">
+>>>>>>> d8040f8 (feb 13)
                                     </div>
                                 @endforeach
                             </div>
@@ -43,37 +65,57 @@
                         @endif
                     </div>
                     
+<<<<<<< HEAD
 
 
+=======
+                    
+>>>>>>> d8040f8 (feb 13)
                     <!-- Day Images -->
                     <div class="my-4">
                         <h4 class="mb-3">Day Images</h4>
                         <div class="row mt-4">
                             @forelse (json_decode($destination->day_images, true) ?? [] as $dayImage)
                                 <div class="col-md-6 mb-3">
+<<<<<<< HEAD
                                     <img src="{{ asset('storage/' . $dayImage) }}" alt="Day Image"
                                         class="img-fluid rounded" style="object-fit: cover; height: 250px;">
+=======
+                                    <img src="{{ asset('storage/' . $dayImage) }}" alt="Day Image" class="img-fluid rounded" style="object-fit: cover; height: 250px; width: 100%;">
+>>>>>>> d8040f8 (feb 13)
                                 </div>
                             @empty
                                 <p class="text-muted">No day images available.</p>
                             @endforelse
                         </div>
                     </div>
+<<<<<<< HEAD
 
+=======
+                    
+>>>>>>> d8040f8 (feb 13)
                     <!-- Night Images -->
                     <div class="my-4">
                         <h4 class="mb-3">Night Images</h4>
                         <div class="row mt-4">
                             @forelse (json_decode($destination->night_images, true) ?? [] as $nightImage)
                                 <div class="col-md-6 mb-3">
+<<<<<<< HEAD
                                     <img src="{{ asset('storage/' . $nightImage) }}" alt="Night Image"
                                         class="img-fluid rounded" style="object-fit: cover; height: 250px;">
+=======
+                                    <img src="{{ asset('storage/' . $nightImage) }}" alt="Night Image" class="img-fluid rounded" style="object-fit: cover; height: 250px; width: 100%;">
+>>>>>>> d8040f8 (feb 13)
                                 </div>
                             @empty
                                 <p class="text-muted">No night images available.</p>
                             @endforelse
                         </div>
                     </div>
+<<<<<<< HEAD
+=======
+                    
+>>>>>>> d8040f8 (feb 13)
                 </div>
 
                 <!-- Column 2: Map and Related Videos -->
@@ -126,7 +168,10 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> d8040f8 (feb 13)
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const latitude = {{ $destination->latitude }};

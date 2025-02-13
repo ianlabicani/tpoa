@@ -96,6 +96,8 @@
                 Activity Logs
             </a>
 
+
+
             <!-- Logout -->
             <a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit();">
                 <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>

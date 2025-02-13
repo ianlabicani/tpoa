@@ -29,6 +29,11 @@
             </div>
 
             <div class="form-group">
+                <label for="history">History</label>
+                <textarea name="history" class="form-control" id="history" rows="4">{{ old('history', $event->history) }}</textarea>
+            </div>
+
+            <div class="form-group">
                 <label for="start_date">Start Date</label>
                 <input type="date" name="start_date" class="form-control" id="start_date" value="{{ old('start_date', $event->start_date) }}" required>
             </div>

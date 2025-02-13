@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<<<<<<< HEAD
     <title>QuickEnroll</title>
+=======
+<title>Tpoa</title>
+>>>>>>> d8040f8 (feb 13)
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

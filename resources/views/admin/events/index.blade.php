@@ -20,13 +20,15 @@
                         @foreach ($monthlyEvents as $event)
                             <div class="col-md-4 mb-4">
                                 <div class="card h-100">
-                                    @if ($event->image)
-                                        <img src="{{ asset('storage/' . $event->image) }}" class="card-img-top" 
-                                             alt="{{ $event->name }}" style="height: 200px; object-fit: cover;">
-                                    @else
-                                        <img src="{{ asset('images/default-event.jpg') }}" class="card-img-top"
-                                             alt="Default Event Image" style="height: 200px; object-fit: cover;">
-                                    @endif
+                                    <a href="{{ route('admin.events.show', $event->id) }}">
+                                        @if ($event->image)
+                                            <img src="{{ asset('storage/' . $event->image) }}" class="card-img-top" 
+                                                 alt="{{ $event->name }}" style="height: 200px; object-fit: cover;">
+                                        @else
+                                            <img src="{{ asset('images/default-event.jpg') }}" class="card-img-top"
+                                                 alt="Default Event Image" style="height: 200px; object-fit: cover;">
+                                        @endif
+                                    </a>
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $event->name }}</h5>
                                         <p class="card-text text-muted">
@@ -34,10 +36,7 @@
                                             {{ \Carbon\Carbon::parse($event->end_date)->format('M d, Y') }}
                                         </p>
                                     </div>
-                                    <div class="card-footer text-center d-flex justify-content-between">
-                                        <a href="{{ route('admin.events.show', $event->id) }}" 
-                                           class="btn btn-info btn-sm">View</a>
-                                    </div>
+                                    <!-- Removed the View Button -->
                                 </div>
                             </div>
                         @endforeach
